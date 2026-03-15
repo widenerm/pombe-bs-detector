@@ -1,0 +1,43 @@
+# Data files — never commit raw microscopy data to git
+*.h5
+*.hdf5
+*.tif
+*.tiff
+*.nd2
+*.czi
+
+# Results outputs
+outputs/
+pombe_results/
+measurements.csv
+*.png
+*.svg
+*.pdf
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+.eggs/
+*.egg
+.venv/
+venv/
+env/
+
+# Jupyter
+.ipynb_checkpoints/
+*/.ipynb_checkpoints/
+
+# Cellpose model cache (large, auto-downloaded)
+*.npy
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
