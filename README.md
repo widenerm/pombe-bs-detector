@@ -1,7 +1,7 @@
 # BS-Detector
 ### Birth Scar Detector for *Schizosaccharomyces pombe*
 
-Automated detection of birth scars, old/new pole identity, cell lineage tracking, and morphometric measurements in fission yeast time-lapse fluorescence microscopy.
+Automated detection of birth scars, old/new pole identity, cell lineage tracking, and morphometric measurements in fission yeast time-lapse brightfield microscopy.
 
 <img src="docs/figs/key_example.png" width="700" alt="Detected birth scar with new pole (green), old pole (magenta), and compartment lengths">
 
