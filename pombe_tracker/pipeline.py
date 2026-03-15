@@ -194,6 +194,7 @@ def check_segmentation_quality(contour, kappa, frame_shape, config):
     return 'ok', ''
 
 
+def filter_valid_cells(regions, frame_shape, min_area):
     """Remove cells that are too small or touch the image border."""
     h, w   = frame_shape[:2]
     valid  = {}
