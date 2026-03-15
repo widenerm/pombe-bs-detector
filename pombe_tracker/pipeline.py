@@ -59,6 +59,12 @@ class CellProcessor:
 
         fingerprint = compute_curvature_fingerprint(kappa)
 
+        # ── Segmentation quality gate ─────────────────────────────────────────
+        seg_quality, seg_reason = check_segmentation_quality(
+            contour, kappa, frame.shape, self.cfg)
+        # Processing continues for suspect cells so the overlay is still shown,
+        # but seg_quality is stored so researchers can filter or review them.
+
         # ── Step 1 : tentative new pole from neighbours ───────────────────────
         neighbors = find_pole_to_pole_neighbors(
             region.label, endpoints, all_cell_info,
@@ -117,6 +123,8 @@ class CellProcessor:
             'neighbors':      neighbors,
             'length':         cell_length,
             'width_centroid': width_centroid,
+            'seg_quality':    seg_quality,   # 'ok' | 'border_clip' | 'septum_fragment'
+            'seg_reason':     seg_reason,
         }
 
         if scar_pair is not None:
@@ -147,7 +155,45 @@ class CellProcessor:
 
 # ── Frame-level helpers ───────────────────────────────────────────────────────
 
-def filter_valid_cells(regions, frame_shape, min_area):
+def check_segmentation_quality(contour, kappa, frame_shape, config):
+    """
+    Detect Cellpose segmentation artefacts before any analysis is run.
+
+    Two failure modes are caught:
+
+    1. BORDER CLIP  – the contour actually touches the image boundary (not just
+       the bounding box).  This produces a straight-line edge that looks like
+       a very flat, zero-curvature run followed by a sharp corner.
+
+    2. SEPTUM FRAGMENT – Cellpose sometimes segments one half of a dividing
+       cell (pole → septum).  The septum wall is nearly perpendicular to the
+       cell axis and produces an extremely high curvature spike, well above
+       anything seen on a healthy contour.
+
+    Returns
+    -------
+    quality : 'ok' | 'border_clip' | 'septum_fragment'
+    reason  : human-readable string for the researcher
+    """
+    h, w = frame_shape[:2]
+
+    # ── Check 1: contour touches frame boundary ───────────────────────────────
+    rows = contour[:, 0]
+    cols = contour[:, 1]
+    if rows.min() <= 1 or cols.min() <= 1 or rows.max() >= h - 2 or cols.max() >= w - 2:
+        return 'border_clip', 'Contour touches image boundary (incomplete cell)'
+
+    # ── Check 2: pathological curvature spike ────────────────────────────────
+    max_kappa = float(np.max(np.abs(kappa)))
+    threshold = getattr(config, 'CURVATURE_QUALITY_THRESHOLD', 0.1)
+    if max_kappa > threshold:
+        return 'septum_fragment', (
+            f'Max |κ| = {max_kappa:.3f} exceeds threshold {threshold} '
+            f'(likely septum or clipped boundary)')
+
+    return 'ok', ''
+
+
     """Remove cells that are too small or touch the image border."""
     h, w   = frame_shape[:2]
     valid  = {}

@@ -81,6 +81,30 @@ class Config:
     # of the parent's area to be considered a valid daughter.
     DIVISION_AREA_RATIO = 0.35
 
+    # ── SEGMENTATION QUALITY ──────────────────────────────────────────────────
+    # Cells that fail either check are flagged with an orange warning overlay
+    # but are still processed so you can inspect them.
+    #
+    # Maximum absolute curvature on a healthy S. pombe contour is typically
+    # < 0.05. Values above 0.10–0.15 indicate a septum wall or image-boundary
+    # artefact from Cellpose.
+    CURVATURE_QUALITY_THRESHOLD = 0.10
+
+    # ── SCAR TEMPORAL STABILITY ───────────────────────────────────────────────
+    # After the pipeline runs, a post-processing step checks whether the
+    # detected scar position jumps between frames for the same tracked cell.
+
+    # Number of adjacent frames to use as a rolling reference.
+    SCAR_STABILITY_WINDOW    = 3
+
+    # Max allowed deviation (0–1, in normalised cell-length units) before a
+    # frame is flagged as suspect.  0.12 ≈ 12% of cell length.
+    SCAR_STABILITY_THRESHOLD = 0.12
+
+    # If True, suspect frames are corrected by linear interpolation and
+    # marked 'interpolated'.  If False, they are flagged but unchanged.
+    SCAR_INTERPOLATE         = True
+
     # ── VISUALIZATIONS ────────────────────────────────────────────────────
     # Set any of these to False to skip that visualisation.
 

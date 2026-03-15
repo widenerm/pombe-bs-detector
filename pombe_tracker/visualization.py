@@ -43,15 +43,25 @@ def plot_frame_overview(frame, results, frame_idx, config=None):
                     ha='center', va='center',
                     bbox=dict(boxstyle='round,pad=0.2', fc='firebrick', alpha=0.7, lw=0))
 
+        # Orange warning for bad segmentations (drawn on top)
+        if r.get('seg_quality', 'ok') != 'ok':
+            ax.plot(contour[:, 1], contour[:, 0], color='orange',
+                    lw=2.5, alpha=0.95, zorder=4)
+            ax.text(cx, cy - 10, f"⚠ {r['seg_quality'].replace('_', ' ')}",
+                    color='orange', fontsize=6, ha='center', va='bottom',
+                    fontweight='bold',
+                    bbox=dict(boxstyle='round,pad=0.1', fc='black', alpha=0.6, lw=0))
+
         for nb in r.get('neighbors', []):
             op, tp = nb['our_pole'], nb['their_pole']
             ax.plot([op[1], tp[1]], [op[0], tp[0]], color='cyan',
                     lw=0.8, ls=':', alpha=0.6)
 
     legend = [
-        mpatches.Patch(color='lime',     label='Scar detected'),
-        mpatches.Patch(color='tomato',   label='Not detected'),
-        Line2D([0], [0],  color='cyan', ls=':', lw=1, label='Pole neighbour'),
+        mpatches.Patch(color='lime',    label='Scar detected'),
+        mpatches.Patch(color='tomato',  label='Not detected'),
+        mpatches.Patch(color='orange',  label='⚠ Bad segmentation'),
+        Line2D([0], [0], color='cyan',  ls=':', lw=1, label='Pole neighbour'),
     ]
     ax.legend(handles=legend, loc='upper right', fontsize=8, framealpha=0.8)
     fig.tight_layout()
@@ -227,8 +237,25 @@ def plot_curvature_heatmaps(frame, results, frame_idx, config=None):
 # 4. Curvature profiles
 # ══════════════════════════════════════════════════════════════════════════════
 
-def plot_curvature_profiles(results, frame_idx, config=None):
-    """κ vs. contour-index plots for every cell in the frame."""
+def plot_curvature_profiles(frame_or_results, results_or_frame_idx, frame_idx_or_config=None, config=None):
+    """
+    κ vs. contour-index plots for every cell in the frame.
+
+    Accepts two calling conventions so it works both standalone and inside
+    the single-cell inspect loop alongside plot_individual_cells /
+    plot_curvature_heatmaps (which all take frame as their first argument):
+
+        plot_curvature_profiles(frame, results, frame_idx, config)   ← 4-arg
+        plot_curvature_profiles(results, frame_idx, config)          ← 3-arg
+    """
+    if hasattr(frame_or_results, 'shape'):   # numpy image array → 4-arg form
+        results   = results_or_frame_idx
+        frame_idx = frame_idx_or_config
+        # config already bound via keyword
+    else:                                    # list of result dicts → 3-arg form
+        results   = frame_or_results
+        frame_idx = results_or_frame_idx
+        config    = frame_idx_or_config
     n     = len(results)
     ncols = min(n, 3)
     nrows = max(1, (n + ncols - 1) // ncols)
@@ -244,13 +271,23 @@ def plot_curvature_profiles(results, frame_idx, config=None):
             ax.set_title(name); continue
 
         kappa      = dbg['kappa']
-        valid_mask = dbg.get('valid_mask', np.ones(len(kappa), dtype=bool))
+        # display_mask is always all-True (full cell searched).
+        # valid_mask is the internal hemisphere hint — not shown here because
+        # the hemisphere is not an exclusion zone.
+        display_mask = dbg.get('display_mask', np.ones(len(kappa), dtype=bool))
         idx_arr    = np.arange(len(kappa))
 
         ax.plot(idx_arr, kappa, 'steelblue', lw=1, alpha=0.7)
         ax.axhline(0, color='k', ls='--', lw=0.5, alpha=0.4)
-        ax.fill_between(idx_arr, 0, kappa, where=valid_mask,
-                        color='green', alpha=0.15, label='Search region')
+        ax.fill_between(idx_arr, 0, kappa, where=display_mask,
+                        color='steelblue', alpha=0.08, label='Full cell (searched)')
+
+        # Show the quality threshold so researchers can see what trips the QC flag
+        if config is not None:
+            thresh = getattr(config, 'CURVATURE_QUALITY_THRESHOLD', 0.10)
+            ax.axhline( thresh, color='orange', ls=':', lw=1, alpha=0.7,
+                       label=f'QC threshold (±{thresh})')
+            ax.axhline(-thresh, color='orange', ls=':', lw=1, alpha=0.7)
 
         if 'peaks' in dbg and len(dbg['peaks']) > 0:
             pk = dbg['peaks']

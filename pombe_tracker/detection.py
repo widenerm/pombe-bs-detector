@@ -75,13 +75,17 @@ class BirthScarDetector:
         min_scar_width = self.cfg.MIN_SCAR_WIDTH_RATIO * max_thickness
 
         debug_info = {
-            'smooth_pts':   smooth_pts,
-            'kappa':        kappa,
-            'centre':       centre,
-            'center':       centre,   # alias for backward compat
-            'axis':         axis,
-            'long_norm':    long_norm,
-            'valid_mask':   valid_mask,
+            'smooth_pts':    smooth_pts,
+            'kappa':         kappa,
+            'centre':        centre,
+            'center':        centre,   # alias for backward compat
+            'axis':          axis,
+            'long_norm':     long_norm,
+            'valid_mask':    valid_mask,
+            # display_mask is always full-cell. The hemisphere is an internal
+            # first-pass hint, not an exclusion zone — showing a restricted
+            # region in the curvature plot would be misleading.
+            'display_mask':  np.ones(len(smooth_pts), dtype=bool),
             'search_region': search_region,
         }
 
