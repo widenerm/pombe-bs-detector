@@ -3,6 +3,10 @@
 
 Automated detection of birth scars, old/new pole identity, cell lineage tracking, and morphometric measurements in fission yeast time-lapse fluorescence microscopy.
 
+<img src="docs/figs/key_example.png" width="700" alt="Detected birth scar with new pole (green), old pole (magenta), and compartment lengths">
+
+*Birth scar detection output. Yellow line: birth scar. Green marker: new pole. Magenta marker: old pole. Dashed lines: new-end and old-end compartment lengths.*
+
 ---
 
 ## What it does
@@ -21,9 +25,29 @@ BS-Detector finds these scars automatically by:
 5. **Tracking** cells across frames with a Hungarian algorithm that uses centre displacement, area change, and a curvature fingerprint
 6. **Assigning lineage names**: `A → A0 / A1 → A00 / A01 / A10 / A11 → …`
 
+### Curvature analysis
+
+Signed curvature is computed along a smoothed B-spline contour. Birth scars appear as paired curvature peaks on opposite sides of the cell. The curvature heatmap and profile are available for every cell to aid manual inspection and parameter tuning.
+
+<img src="docs/figs/heatmap.png" width="500" alt="Curvature heatmap overlaid on cell contour">
+
+*Curvature heatmap. Red regions indicate high positive curvature; blue regions indicate low or negative curvature.*
+
+<img src="docs/figs/curvature.png" width="600" alt="Curvature profile plot showing peaks and selected scar pair">
+
+*Curvature profile. Red dots: detected peaks. Green triangles: the selected scar pair. Orange dotted lines: segmentation quality threshold.*
+
 ### Why no pole exclusion zone?
 
 Earlier approaches excluded a fixed fraction of the cell ends from the scar search to avoid false positives at the high-curvature poles. The width and orthogonality constraints above make this unnecessary — a pole-tip pair fails the width test because the cell is narrow there, and fails the angle test because the peaks are separated *along* the axis rather than *across* it. Removing the exclusion zone lets the algorithm detect birth scars in recently divided cells, where the scar may legitimately sit close to the new pole.
+
+### Segmentation quality control
+
+Cellpose occasionally produces artefact segmentations — most commonly a septum fragment (one half of a dividing cell) or a cell whose mask clips the image boundary. Both produce pathological curvature spikes well above the range of a healthy contour. BS-Detector flags these automatically with an orange overlay so they can be reviewed or excluded without disrupting the rest of the analysis.
+
+<img src="docs/figs/bad_seg.png" width="600" alt="Example of flagged bad segmentations with orange outlines">
+
+*Orange outlines indicate cells flagged by the segmentation quality check. Green outlines are clean detections.*
 
 ---
 
@@ -42,6 +66,7 @@ For each frame and each cell, BS-Detector produces:
 | `old_end_length` | Scar midpoint → old pole [px] |
 | `area` | Cell area [px²] |
 | `scar_detected` | True / False |
+| `seg_quality` | `ok`, `border_clip`, or `septum_fragment` |
 | `pole_method` | How poles were assigned |
 | `pole_confidence` | Confidence level of pole assignment |
 
@@ -87,6 +112,8 @@ export_csv(results, 'measurements.csv')
 
 ```
 pombe-bs-detector/
+├── docs/
+│   └── figs/              example figures
 ├── notebooks/
 │   └── BS_Detector_Colab.ipynb   ← start here
 ├── pombe_tracker/
@@ -98,6 +125,7 @@ pombe-bs-detector/
 │   ├── tracking.py        Hungarian tracker + lineage naming
 │   ├── pipeline.py        CellProcessor, frame loop, run_pipeline
 │   ├── visualization.py   all plotting functions
+│   ├── postprocessing.py  temporal scar stabilisation
 │   └── io_utils.py        HDF5 loading, CSV export
 ├── requirements.txt
 ├── .gitignore
@@ -115,6 +143,8 @@ pombe-bs-detector/
 | `MAX_ANGLE_DEVIATION` | 20.0° | Max deviation from perpendicular; decrease to be stricter |
 | `POLE_PROXIMITY_THRESHOLD` | 100 px | Max tip-to-tip distance to call two cells neighbours |
 | `MAX_TRACKING_DISTANCE` | 80 px | Max centre displacement between frames |
+| `CURVATURE_QUALITY_THRESHOLD` | 0.10 | Max curvature before a cell is flagged as a segmentation artefact |
+| `SCAR_STABILITY_THRESHOLD` | 0.12 | Max scar position shift (normalised) before a frame is flagged |
 
 All parameters are documented in [`pombe_tracker/config.py`](pombe_tracker/config.py).
 
