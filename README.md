@@ -1,4 +1,4 @@
-# 🔬 BS-Detector
+# BS-Detector
 ### Birth Scar Detector for *Schizosaccharomyces pombe*
 
 Automated detection of birth scars, old/new pole identity, cell lineage tracking, and morphometric measurements in fission yeast time-lapse fluorescence microscopy.
@@ -60,7 +60,7 @@ Your HDF5 data file and results folder live on Google Drive; the code is pulled 
 ### Local installation
 
 ```bash
-git clone https://github.com/YOUR-USERNAME/pombe-bs-detector.git
+git clone https://github.com/widenerm/pombe-bs-detector.git
 cd pombe-bs-detector
 pip install -r requirements.txt
 ```
