@@ -140,7 +140,9 @@ def _normalised_scar_position(result):
     cell's long axis.  Returns None if geometry is unavailable.
     """
     dbg = result.get('debug_info', {})
-    centre = dbg.get('centre') or dbg.get('center')
+    centre = dbg.get('centre')
+    if centre is None:
+        centre = dbg.get('center')
     axis   = dbg.get('axis')
     mp     = result.get('scar_midpoint')
 
