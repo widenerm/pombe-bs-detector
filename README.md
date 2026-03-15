@@ -1,4 +1,4 @@
-# 🔬 BS-Detector
+# BS-Detector
 ### Birth Scar Detector for *Schizosaccharomyces pombe*
 
 Automated detection of birth scars, old/new pole identity, cell lineage tracking, and morphometric measurements in fission yeast time-lapse fluorescence microscopy.
