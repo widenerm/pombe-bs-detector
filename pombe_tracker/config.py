@@ -80,6 +80,10 @@ class Config:
     # we call it a division. Each daughter must be at least this fraction
     # of the parent's area to be considered a valid daughter.
     DIVISION_AREA_RATIO = 0.35
+    
+    # When a tracked cell disappears and reappears later, it should have the same ID
+    GHOST_FRAMES                = 3     # frames to keep a lost track alive
+    GHOST_FINGERPRINT_THRESHOLD = 1.0   # max curvature fingerprint distance for ghost match
 
     # ── SEGMENTATION QUALITY ──────────────────────────────────────────────────
     # Cells that fail either check are flagged with an orange warning overlay
