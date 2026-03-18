@@ -24,28 +24,39 @@ def export_csv(all_results, output_path, columns=None):
     """
     Write per-frame, per-cell measurements to a CSV file.
 
+    Cells with seg_quality == 'border_clip' are excluded entirely: they are
+    incompletely segmented and their measurements are unreliable.
+
     Parameters
     ----------
-    all_results : list returned by run_pipeline
+    all_results : list returned by run_pipeline (after stabilise_scars)
     output_path : destination file path (.csv)
     columns     : list of column names; if None, uses a sensible default set
     """
     default_cols = [
         'cell_name', 'frame', 'length', 'width_centroid', 'width_scar',
         'new_end_length', 'old_end_length', 'area',
-        'scar_detected', 'pole_method', 'pole_confidence',
+        'scar_detected', 'scar_source', 'scar_stable',
+        'seg_quality', 'pole_method', 'pole_confidence',
     ]
     columns = columns or default_cols
 
     os.makedirs(os.path.dirname(os.path.abspath(output_path)), exist_ok=True)
 
-    rows = []
+    rows        = []
+    n_excluded  = 0
+
     for fd in all_results:
         fidx = fd['frame_idx']
         for cell in fd['cells']:
+
+            # Exclude cells that are incompletely segmented at the image border
+            if cell.get('seg_quality') == 'border_clip':
+                n_excluded += 1
+                continue
+
             row = {}
             for col in columns:
-                # Check cell dict first, then debug_info
                 if col in cell:
                     val = cell[col]
                 elif col in cell.get('debug_info', {}):
@@ -65,7 +76,6 @@ def export_csv(all_results, output_path, columns=None):
 
                 row[col] = val
 
-            # Always include frame even if not in columns list
             row.setdefault('frame', fidx)
             rows.append(row)
 
@@ -73,7 +83,9 @@ def export_csv(all_results, output_path, columns=None):
         print("No data to export.")
         return None
 
-    # Collect all unique keys (in specified order)
+    if n_excluded:
+        print(f"  Excluded {n_excluded} border_clip cell(s) from CSV.")
+
     all_keys = list(dict.fromkeys(['frame'] + columns))
 
     with open(output_path, 'w', newline='') as f:

@@ -8,16 +8,10 @@ class Config:
     """
 
     # ── DATA ──────────────────────────────────────────────────────────────
-    # Path to your HDF5 file (must be accessible from Colab, e.g. via Drive)
     H5_FILE_PATH   = '/content/drive/MyDrive/your_experiment.h5'
-    H5_DATASET_KEY = 'frames'        # Key inside the H5 file that holds the image stack
-
-    # How many frames to analyse. Set to an integer (e.g. 10) to limit,
-    # or None to process every frame in the file.
-    NUM_FRAMES = None
-
-    # Where to save results (CSV, figures). Created automatically if absent.
-    OUTPUT_DIR = '/content/drive/MyDrive/pombe_results'
+    H5_DATASET_KEY = 'frames'
+    NUM_FRAMES     = None
+    OUTPUT_DIR     = '/content/drive/MyDrive/pombe_results'
 
     # ── SEGMENTATION ──────────────────────────────────────────────────────
     # Minimum cell area in pixels. Anything smaller is treated as debris.
@@ -26,101 +20,112 @@ class Config:
     # Expected cell diameter for Cellpose. None = auto-detect (usually fine).
     CELLPOSE_DIAMETER = None
 
-    # ── CONTOUR & CURVATURE ───────────────────────────────────────────────
-    # B-spline smoothing factor. Higher → smoother contour, fewer spurious
-    # peaks. Lower → noisier but more sensitive to subtle features.
-    SMOOTH_FACTOR = 40.0
+    # ── SHAPE FILTER (debris / noise rejection) ───────────────────────────
+    # These two filters run before tracking so noise blobs never receive a
+    # lineage name or appear in the CSV.
+    #
+    # Aspect ratio = major_axis_length / minor_axis_length (from regionprops).
+    # S. pombe rods typically have AR > 2.0; round debris will be < 1.5.
+    ASPECT_RATIO_MIN = 1.5
 
-    # Number of points to resample each contour to before computing
-    # curvature. Higher → smoother profile, slower.
+    # Circularity = 4π × area / perimeter².  A perfect circle = 1.0; a rod
+    # ≈ 0.4–0.7.  Blobs above this threshold are rejected as non-rod-shaped.
+    # Default 0.85 is conservative — lower (e.g. 0.75) if round contaminants
+    # are sneaking through.
+    MAX_CIRCULARITY = 0.85
+
+    # ── CONTOUR & CURVATURE ───────────────────────────────────────────────
+    SMOOTH_FACTOR    = 40.0
     N_CONTOUR_POINTS = 300
 
     # ── BIRTH SCAR DETECTION ─────────────────────────────────────────────
     # HOW SCAR DETECTION WORKS
     # ─────────────────────────
-    # We look for two curvature peaks on OPPOSITE SIDES of the cell that
-    # are connected by a vector PERPENDICULAR to the cell's long axis.
-    # This geometric constraint eliminates the poles naturally:
-    #   • At a pole the cell is NARROW → fails the width test
-    #   • At a pole the opposite-side curvature peak would require a vector
-    #     PARALLEL (not perpendicular) to the axis → fails the angle test
-    # Therefore we no longer exclude any fraction of the cell from search.
+    # The full cell contour is always searched.  Two geometric constraints
+    # naturally suppress false positives at the poles:
+    #   1. WIDTH   Scar must span >= MIN_SCAR_WIDTH_RATIO × max cell width.
+    #   2. ANGLE   Scar vector must be ⊥ to the long axis within
+    #              MAX_ANGLE_DEVIATION degrees.
+    #
+    # ALL valid candidates are retained in debug_info['scar_candidates'] so
+    # the temporal stabilisation pass can retroactively enforce consensus.
 
-    # A scar must span at least this fraction of the cell's maximum width.
-    # This is the primary guard against false positives at the poles.
-    MIN_SCAR_WIDTH_RATIO = 0.80   # 0.0–1.0;  increase to be more strict
-
-    # Maximum deviation from perfectly perpendicular (90°) that is still
-    # accepted as a valid scar. Smaller = stricter.
-    MAX_ANGLE_DEVIATION  = 20.0   # degrees;  try 15–25
+    MIN_SCAR_WIDTH_RATIO = 0.80
+    MAX_ANGLE_DEVIATION  = 20.0
 
     # ── NEIGHBOR / POLE DETECTION ─────────────────────────────────────────
-    # After division, the two daughters touch tip-to-tip. We use this to
-    # identify the new (division-site) pole.
-
-    # Maximum pole-to-pole distance (pixels) to even consider two cells
-    # as touching neighbours.
     POLE_PROXIMITY_THRESHOLD      = 100.0
-
-    # If the touching distance is below this, confidence is 'high'.
     NEIGHBOR_HIGH_CONFIDENCE_DIST =  75.0
 
     # ── TRACKING (HUNGARIAN ALGORITHM) ────────────────────────────────────
-    # Maximum distance (pixels) a cell centre can move between frames
-    # and still be considered the same cell.
     MAX_TRACKING_DISTANCE = 80.0
+    COST_WEIGHT_DISTANCE  = 1.0
+    COST_WEIGHT_AREA      = 0.5
+    COST_WEIGHT_CURVATURE = 0.3
+    DIVISION_AREA_RATIO   = 0.35
 
-    # Relative weights for the three cost components used for matching.
-    # All are normalised so 1.0 means "at the maximum tolerated value".
-    COST_WEIGHT_DISTANCE  = 1.0   # centre displacement
-    COST_WEIGHT_AREA      = 0.5   # change in cell area
-    COST_WEIGHT_CURVATURE = 0.3   # curvature fingerprint dissimilarity
+    # ── GHOST TRACK MATCHING ──────────────────────────────────────────────
+    # When Cellpose produces a bad segmentation for a frame or two, the
+    # original cell track is temporarily lost.  Before minting a new base
+    # name for an unmatched current cell, BS-Detector checks whether a
+    # recently lost track is compatible (by centroid, area, and curvature).
+    # If a match is found, the track is resumed under its original name.
 
-    # When a tracked cell disappears and two smaller cells appear nearby,
-    # we call it a division. Each daughter must be at least this fraction
-    # of the parent's area to be considered a valid daughter.
-    DIVISION_AREA_RATIO = 0.35
+    # How many frames a lost track is kept in the ghost buffer.
+    GHOST_FRAMES = 3
 
-    # ── SEGMENTATION QUALITY ──────────────────────────────────────────────────
+    # Maximum curvature fingerprint L2 distance for a ghost match to be
+    # accepted.  Increase if cells change shape significantly between frames.
+    GHOST_FINGERPRINT_THRESHOLD = 1.0
+
+    # ── SEGMENTATION QUALITY ──────────────────────────────────────────────
     # Cells that fail either check are flagged with an orange warning overlay
     # but are still processed so you can inspect them.
     #
-    # Maximum absolute curvature on a healthy S. pombe contour is typically
-    # < 0.05. Values above 0.10–0.15 indicate a septum wall or image-boundary
-    # artefact from Cellpose.
+    # seg_quality values:
+    #   'ok'               – passes all checks
+    #   'border_clip'      – contour touches image boundary; EXCLUDED from CSV
+    #   'septum_fragment'  – high-curvature spike indicating a half-cell;
+    #                        INCLUDED in CSV with flag, measurements interpolated
     CURVATURE_QUALITY_THRESHOLD = 0.10
 
-    # ── SCAR TEMPORAL STABILITY ───────────────────────────────────────────────
-    # After the pipeline runs, a post-processing step checks whether the
-    # detected scar position jumps between frames for the same tracked cell.
+    # ── SCAR TEMPORAL STABILITY ───────────────────────────────────────────
+    # After the pipeline runs, a consensus-based post-processing step:
+    #   1. Collects ALL valid scar candidates across all frames for each cell.
+    #   2. Finds the canonical scar position (the one with the most support).
+    #   3. Retroactively corrects frames where a different candidate was
+    #      selected (scar_source = 'corrected').
+    #   4. Interpolates frames where no matching candidate exists
+    #      (scar_source = 'interpolated').
 
-    # Number of adjacent frames to use as a rolling reference.
+    # Rolling window for initial median computation (used in rolling median
+    # pass that feeds into consensus candidate gathering).
     SCAR_STABILITY_WINDOW    = 3
 
-    # Max allowed deviation (0–1, in normalised cell-length units) before a
-    # frame is flagged as suspect.  0.12 ≈ 12% of cell length.
+    # Max allowed deviation (0–1, normalised cell-length units) for a frame
+    # to be considered consistent with the consensus.  0.12 ≈ 12% of cell length.
     SCAR_STABILITY_THRESHOLD = 0.12
 
-    # If True, suspect frames are corrected by linear interpolation and
-    # marked 'interpolated'.  If False, they are flagged but unchanged.
-    SCAR_INTERPOLATE         = True
+    # If True, inconsistent frames are corrected by the consensus candidate
+    # or by linear interpolation.  If False, they are flagged but unchanged.
+    SCAR_INTERPOLATE = True
+
+    # Fraction of a cell's frames that can be corrected or interpolated before
+    # the entire cell is flagged scar_stable = False in the CSV.
+    # E.g. 0.30 means "flag if more than 30% of frames were touched."
+    SCAR_INSTABILITY_FRACTION = 0.30
 
     # ── VISUALIZATIONS ────────────────────────────────────────────────────
-    # Set any of these to False to skip that visualisation.
-
-    SHOW_CELL_OVERVIEW      = True   # Frame overview: all cells outlined
-    SHOW_INDIVIDUAL_CELLS   = True   # Per-cell: scar line, poles, measurements
-    SHOW_CURVATURE_HEATMAPS = True   # Curvature colour-mapped onto contour
-    SHOW_CURVATURE_PROFILES = True   # Curvature vs. contour-index plots
-    SHOW_LINEAGE_TREE       = True   # Gantt-style lineage diagram
-
-    # Save figures to OUTPUT_DIR as PNG files (in addition to displaying).
-    SAVE_FIGURES = False
+    SHOW_CELL_OVERVIEW      = True
+    SHOW_INDIVIDUAL_CELLS   = True
+    SHOW_CURVATURE_HEATMAPS = True
+    SHOW_CURVATURE_PROFILES = True
+    SHOW_LINEAGE_TREE       = True
+    SAVE_FIGURES            = False
 
     # ── CSV EXPORT ────────────────────────────────────────────────────────
     EXPORT_CSV = True
 
-    # Which columns to include in the CSV. Remove any you don't need.
     CSV_COLUMNS = [
         'cell_name',        # Lineage-encoded name  (e.g. A, A0, A01 …)
         'frame',            # Frame index (0-based)
@@ -131,6 +136,9 @@ class Config:
         'old_end_length',   # Scar midpoint → old pole  [pixels]
         'area',             # Cell area  [pixels²]
         'scar_detected',    # True / False
+        'scar_source',      # raw | corrected | interpolated | no_detection
+        'scar_stable',      # True if scar position is consistent across frames
+        'seg_quality',      # ok | border_clip | septum_fragment
         'pole_method',      # How the poles were assigned
         'pole_confidence',  # Confidence level of pole assignment
     ]

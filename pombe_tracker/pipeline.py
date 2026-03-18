@@ -1,12 +1,15 @@
 """
 pipeline.py  –  CellProcessor, frame-level helpers, run_pipeline.
 
-Bug fixes vs. original notebook
-────────────────────────────────
+Changes vs. previous version
+──────────────────────────────
+• filter_valid_cells now accepts a config object and enforces aspect-ratio
+  and circularity thresholds to reject debris / noise before tracking.
+• process_cell makes a single detect() call (the detector always does a
+  full-cell search internally; hemisphere preference is passed as a hint).
 • All Config access goes through the passed config object (no singleton leaks).
-• determine_new_pole_from_neighbors now always receives config.
-• debug_info no longer contains 'flat_mask' or 'angles' (removed ghost keys).
-• CellProcessor uses self.cfg everywhere.
+• determine_new_pole_from_neighbors always receives config.
+• debug_info contains no ghost keys.
 """
 import numpy as np
 from skimage.measure import find_contours, regionprops
@@ -62,50 +65,42 @@ class CellProcessor:
         # ── Segmentation quality gate ─────────────────────────────────────────
         seg_quality, seg_reason = check_segmentation_quality(
             contour, kappa, frame.shape, self.cfg)
-        # Processing continues for suspect cells so the overlay is still shown,
-        # but seg_quality is stored so researchers can filter or review them.
 
         # ── Step 1 : tentative new pole from neighbours ───────────────────────
         neighbors = find_pole_to_pole_neighbors(
             region.label, endpoints, all_cell_info,
-            self.cfg.POLE_PROXIMITY_THRESHOLD)   # ← cfg, not Config
+            self.cfg.POLE_PROXIMITY_THRESHOLD)
         new_pole_idx, neighbor_conf = determine_new_pole_from_neighbors(
-            neighbors, endpoints, self.cfg)      # ← cfg always passed
+            neighbors, endpoints, self.cfg)
 
         tentative_new_pole = None
         if new_pole_idx is not None and neighbor_conf in ('high', 'medium'):
             tentative_new_pole = endpoints[new_pole_idx]
 
-        # ── Step 2 : birth scar detection ────────────────────────────────────
-        scar_pair, debug_info = None, {}
-
-        if tentative_new_pole is not None:
-            scar_pair, debug_info = self.detector.detect(
-                contour, tentative_new_pole, search_mode='hemisphere')
-
-        if scar_pair is None:
-            scar_pair, debug_info = self.detector.detect(
-                contour, search_mode='full')
+        # ── Step 2 : birth scar detection (single full-cell pass) ────────────
+        # The detector always searches the full contour; new_pole_point is used
+        # only as a hemisphere preference for candidate selection.
+        scar_pair, debug_info = self.detector.detect(
+            contour, new_pole_point=tentative_new_pole)
 
         # ── Step 3 : final pole assignment ───────────────────────────────────
         scar_midpoint = (scar_pair[0] + scar_pair[1]) / 2 if scar_pair is not None else None
 
         if new_pole_idx is not None and neighbor_conf == 'high':
-            # Neighbours touching → that IS the new pole, high certainty
             new_pole   = endpoints[new_pole_idx]
             old_pole   = endpoints[1 - new_pole_idx]
             method, confidence = 'neighbor_proximity', 'high'
         else:
             new_pole, old_pole, _, method, confidence = determine_poles_strategy(
                 region.label, endpoints, centre, axis, contour,
-                all_cell_info, self.cfg, scar_midpoint)  # ← cfg passed
+                all_cell_info, self.cfg, scar_midpoint)
 
         # ── Measurements ─────────────────────────────────────────────────────
         cell_length    = measure_cell_length(endpoints[0], endpoints[1])
         width_centroid = measure_width_at_position(
             smooth_pts, centre, axis, long_norm, target_norm=0.5)
 
-        # ── Populate debug_info (no ghost keys) ──────────────────────────────
+        # ── Populate debug_info ──────────────────────────────────────────────
         debug_info.update({
             'new_pole_point':        new_pole,
             'old_pole_point':        old_pole,
@@ -145,10 +140,12 @@ class CellProcessor:
                 'old_end_length': old_len,
             })
         else:
-            result.update({'scar_detected': False,
-                           'width_scar': None,
-                           'new_end_length': None,
-                           'old_end_length': None})
+            result.update({
+                'scar_detected':  False,
+                'width_scar':     None,
+                'new_end_length': None,
+                'old_end_length': None,
+            })
 
         return result
 
@@ -161,14 +158,9 @@ def check_segmentation_quality(contour, kappa, frame_shape, config):
 
     Two failure modes are caught:
 
-    1. BORDER CLIP  – the contour actually touches the image boundary (not just
-       the bounding box).  This produces a straight-line edge that looks like
-       a very flat, zero-curvature run followed by a sharp corner.
-
-    2. SEPTUM FRAGMENT – Cellpose sometimes segments one half of a dividing
-       cell (pole → septum).  The septum wall is nearly perpendicular to the
-       cell axis and produces an extremely high curvature spike, well above
-       anything seen on a healthy contour.
+    1. BORDER CLIP  – the contour actually touches the image boundary.
+    2. SEPTUM FRAGMENT – extremely high curvature spike, well above anything
+       seen on a healthy contour.
 
     Returns
     -------
@@ -177,13 +169,11 @@ def check_segmentation_quality(contour, kappa, frame_shape, config):
     """
     h, w = frame_shape[:2]
 
-    # ── Check 1: contour touches frame boundary ───────────────────────────────
     rows = contour[:, 0]
     cols = contour[:, 1]
     if rows.min() <= 1 or cols.min() <= 1 or rows.max() >= h - 2 or cols.max() >= w - 2:
         return 'border_clip', 'Contour touches image boundary (incomplete cell)'
 
-    # ── Check 2: pathological curvature spike ────────────────────────────────
     max_kappa = float(np.max(np.abs(kappa)))
     threshold = getattr(config, 'CURVATURE_QUALITY_THRESHOLD', 0.1)
     if max_kappa > threshold:
@@ -194,17 +184,55 @@ def check_segmentation_quality(contour, kappa, frame_shape, config):
     return 'ok', ''
 
 
-def filter_valid_cells(regions, frame_shape, min_area):
-    """Remove cells that are too small or touch the image border."""
-    h, w   = frame_shape[:2]
-    valid  = {}
+def filter_valid_cells(regions, frame_shape, config):
+    """
+    Remove cells that are too small, touch the image border, have wrong
+    aspect ratio (too round → debris), or are too circular (not rod-shaped).
+
+    Parameters
+    ----------
+    regions     : list of regionprops objects
+    frame_shape : (H, W[, ...]) shape of the frame
+    config      : Config instance
+
+    Returns
+    -------
+    dict  label → region  for all cells that pass all filters
+    """
+    h, w        = frame_shape[:2]
+    min_area    = config.MIN_CELL_AREA
+    min_ar      = getattr(config, 'ASPECT_RATIO_MIN', 1.5)
+    max_circ    = getattr(config, 'MAX_CIRCULARITY',  0.85)
+    valid       = {}
+
     for region in regions:
+        # ── Area ──────────────────────────────────────────────────────────────
         if region.area < min_area:
             continue
+
+        # ── Bounding-box border contact ───────────────────────────────────────
         r0, c0, r1, c1 = region.bbox
         if r0 == 0 or c0 == 0 or r1 == h or c1 == w:
             continue
+
+        # ── Aspect ratio (rejects round blobs) ────────────────────────────────
+        minor = region.minor_axis_length
+        if minor < 1e-3:
+            continue
+        ar = region.major_axis_length / minor
+        if ar < min_ar:
+            continue
+
+        # ── Circularity  (4π × area / perimeter²; circle = 1.0, rod ≈ 0.4–0.7)
+        perim = region.perimeter
+        if perim < 1e-3:
+            continue
+        circularity = (4.0 * np.pi * region.area) / (perim ** 2)
+        if circularity > max_circ:
+            continue
+
         valid[region.label] = region
+
     return valid
 
 
@@ -240,12 +268,12 @@ def process_frame(frame, segmenter, processor):
     if not regions:
         return []
 
-    valid_cells   = filter_valid_cells(regions, frame.shape, processor.cfg.MIN_CELL_AREA)
+    valid_cells = filter_valid_cells(regions, frame.shape, processor.cfg)
     if not valid_cells:
         return []
 
-    valid_regions  = list(valid_cells.values())
-    all_cell_info  = prepare_cell_info(valid_regions, labels, processor.cfg)
+    valid_regions = list(valid_cells.values())
+    all_cell_info = prepare_cell_info(valid_regions, labels, processor.cfg)
 
     results = []
     for region in valid_regions:
@@ -286,13 +314,11 @@ def run_pipeline(frames, config, tracker=None):
         print(f"\n[Frame {frame_idx + 1}/{n_frames}]")
         results = process_frame(frame, segmenter, processor)
 
-        # Assign lineage names via tracker
         name_map = tracker.update(results, frame_idx=frame_idx)
         for r in results:
             r['cell_name'] = name_map.get(r['label'], '?')
 
-        # Console summary
-        detected   = sum(1 for r in results if r['scar_detected'])
+        detected = sum(1 for r in results if r['scar_detected'])
         print(f"  {len(results)} cells  |  {detected} scars detected")
         for r in results:
             name = r['cell_name']
