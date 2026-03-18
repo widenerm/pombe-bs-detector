@@ -1,9 +1,9 @@
 # BS-Detector
 ### Birth Scar Detector for *Schizosaccharomyces pombe*
 
-Automated detection of birth scars, old/new pole identity, cell lineage tracking, and morphometric measurements in fission yeast time-lapse fluorescence microscopy.
+Automated detection of birth scars, old/new pole identity, cell lineage tracking, and morphometric measurements in fission yeast time-lapse brightfield microscopy.
 
-<img src="docs/figs/key_example.png" width="700" alt="Detected birth scar with new pole (green), old pole (magenta), and compartment lengths">
+<img src="docs/figs/key_example.png" width="300" alt="Detected birth scar with new pole (green), old pole (magenta), and compartment lengths">
 
 *Birth scar detection output. Yellow line: birth scar. Green marker: new pole. Magenta marker: old pole. Dashed lines: new-end and old-end compartment lengths.*
 
@@ -11,7 +11,7 @@ Automated detection of birth scars, old/new pole identity, cell lineage tracking
 
 ## What it does
 
-*S. pombe* cells divide asymmetrically: one daughter inherits an **old pole** (present before the division) and one a **new pole** (the freshly formed division site). The division site leaves behind a **birth scar** — a subtle ridge of elevated curvature on opposite sides of the cell wall.
+*S. pombe* cells divide asymmetrically: each daughter inherits an **old pole** (present before the division) and one a **new pole** (the freshly formed division site). The division site leaves behind a **birth scar**: a subtle ridge of elevated curvature on opposite sides of the cell wall.
 
 BS-Detector finds these scars automatically by:
 
@@ -29,23 +29,19 @@ BS-Detector finds these scars automatically by:
 
 Signed curvature is computed along a smoothed B-spline contour. Birth scars appear as paired curvature peaks on opposite sides of the cell. The curvature heatmap and profile are available for every cell to aid manual inspection and parameter tuning.
 
-<img src="docs/figs/heatmap.png" width="500" alt="Curvature heatmap overlaid on cell contour">
+<img src="docs/figs/heatmap.png" width="300" alt="Curvature heatmap overlaid on cell contour">
 
 *Curvature heatmap. Red regions indicate high positive curvature; blue regions indicate low or negative curvature.*
 
-<img src="docs/figs/curvature.png" width="600" alt="Curvature profile plot showing peaks and selected scar pair">
+<img src="docs/figs/curvature.png" width="300" alt="Curvature profile plot showing peaks and selected scar pair">
 
 *Curvature profile. Red dots: detected peaks. Green triangles: the selected scar pair. Orange dotted lines: segmentation quality threshold.*
 
-### Why no pole exclusion zone?
-
-Earlier approaches excluded a fixed fraction of the cell ends from the scar search to avoid false positives at the high-curvature poles. The width and orthogonality constraints above make this unnecessary — a pole-tip pair fails the width test because the cell is narrow there, and fails the angle test because the peaks are separated *along* the axis rather than *across* it. Removing the exclusion zone lets the algorithm detect birth scars in recently divided cells, where the scar may legitimately sit close to the new pole.
-
 ### Segmentation quality control
 
-Cellpose occasionally produces artefact segmentations — most commonly a septum fragment (one half of a dividing cell) or a cell whose mask clips the image boundary. Both produce pathological curvature spikes well above the range of a healthy contour. BS-Detector flags these automatically with an orange overlay so they can be reviewed or excluded without disrupting the rest of the analysis.
+Cellpose occasionally produces artifact segmentations, most commonly a septum fragment (one half of a dividing cell) or a cell whose mask clips the image boundary. Both produce pathological curvature spikes well above the range of a healthy contour. BS-Detector flags these automatically with an orange overlay so they can be reviewed or excluded without disrupting the rest of the analysis.
 
-<img src="docs/figs/bad_seg.png" width="600" alt="Example of flagged bad segmentations with orange outlines">
+<img src="docs/figs/bad_seg.png" width="300" alt="Example of flagged bad segmentations with orange outlines">
 
 *Orange outlines indicate cells flagged by the segmentation quality check. Green outlines are clean detections.*
 
