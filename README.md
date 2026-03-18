@@ -41,7 +41,7 @@ Signed curvature is computed along a smoothed B-spline contour. Birth scars appe
 
 Cellpose occasionally produces artifact segmentations, most commonly a septum fragment (one half of a dividing cell) or a cell whose mask clips the image boundary. Both produce pathological curvature spikes well above the range of a healthy contour. BS-Detector flags these automatically with an orange overlay so they can be reviewed or excluded without disrupting the rest of the analysis.
 
-<img src="docs/figs/bad_seg.png" width="600" alt="Example of flagged bad segmentations with orange outlines">
+<img src="docs/figs/bad_seg.png" width="300" alt="Example of flagged bad segmentations with orange outlines">
 
 *Orange outlines indicate cells flagged by the segmentation quality check. Green outlines are clean detections.*
 
