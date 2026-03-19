@@ -6,4 +6,4 @@ from .config import Config
 from .pipeline import run_pipeline
 from .io_utils import load_h5_data, export_csv
 from .tracking import CellTracker
-from .postprocessing import stabilise_scars, print_stability_report
+from .postprocessing import stabilize_scars, print_stability_report

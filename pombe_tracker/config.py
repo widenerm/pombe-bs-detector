@@ -35,23 +35,28 @@ class Config:
     MAX_CIRCULARITY = 0.85
 
     # ── CONTOUR & CURVATURE ───────────────────────────────────────────────
-    SMOOTH_FACTOR    = 40.0
+    # B-spline smoothing factor. Higher → smoother contour, fewer spurious
+    # peaks. Lower → noisier but more sensitive to subtle features.
+    SMOOTH_FACTOR = 40.0
+
+    # Number of points to resample each contour to before computing
+    # curvature. Higher → smoother profile, slower.
     N_CONTOUR_POINTS = 300
 
     # ── BIRTH SCAR DETECTION ─────────────────────────────────────────────
     # HOW SCAR DETECTION WORKS
     # ─────────────────────────
-    # The full cell contour is always searched.  Two geometric constraints
-    # naturally suppress false positives at the poles:
-    #   1. WIDTH   Scar must span >= MIN_SCAR_WIDTH_RATIO × max cell width.
+    # The full cell contour is always searched.  All valid candidates are
+    # stored per frame and used by the temporal stabilization pass to enforce
+    # a cross-frame consensus without re-running the detector.
+    #
+    # Two geometric constraints suppress false positives at the poles:
+    #   1. WIDTH   Scar must span >= MIN_SCAR_WIDTH_RATIO x max cell width.
     #   2. ANGLE   Scar vector must be ⊥ to the long axis within
     #              MAX_ANGLE_DEVIATION degrees.
-    #
-    # ALL valid candidates are retained in debug_info['scar_candidates'] so
-    # the temporal stabilisation pass can retroactively enforce consensus.
 
-    MIN_SCAR_WIDTH_RATIO = 0.80
-    MAX_ANGLE_DEVIATION  = 20.0
+    MIN_SCAR_WIDTH_RATIO = 0.80   # 0.0–1.0;  increase to be more strict
+    MAX_ANGLE_DEVIATION  = 20.0   # degrees;  try 15–25
 
     # ── NEIGHBOR / POLE DETECTION ─────────────────────────────────────────
     POLE_PROXIMITY_THRESHOLD      = 100.0
@@ -79,9 +84,6 @@ class Config:
     GHOST_FINGERPRINT_THRESHOLD = 1.0
 
     # ── SEGMENTATION QUALITY ──────────────────────────────────────────────
-    # Cells that fail either check are flagged with an orange warning overlay
-    # but are still processed so you can inspect them.
-    #
     # seg_quality values:
     #   'ok'               – passes all checks
     #   'border_clip'      – contour touches image boundary; EXCLUDED from CSV
@@ -98,21 +100,12 @@ class Config:
     #   4. Interpolates frames where no matching candidate exists
     #      (scar_source = 'interpolated').
 
-    # Rolling window for initial median computation (used in rolling median
-    # pass that feeds into consensus candidate gathering).
     SCAR_STABILITY_WINDOW    = 3
-
-    # Max allowed deviation (0–1, normalised cell-length units) for a frame
-    # to be considered consistent with the consensus.  0.12 ≈ 12% of cell length.
     SCAR_STABILITY_THRESHOLD = 0.12
-
-    # If True, inconsistent frames are corrected by the consensus candidate
-    # or by linear interpolation.  If False, they are flagged but unchanged.
-    SCAR_INTERPOLATE = True
+    SCAR_INTERPOLATE         = True
 
     # Fraction of a cell's frames that can be corrected or interpolated before
     # the entire cell is flagged scar_stable = False in the CSV.
-    # E.g. 0.30 means "flag if more than 30% of frames were touched."
     SCAR_INSTABILITY_FRACTION = 0.30
 
     # ── VISUALIZATIONS ────────────────────────────────────────────────────
@@ -130,7 +123,7 @@ class Config:
         'cell_name',        # Lineage-encoded name  (e.g. A, A0, A01 …)
         'frame',            # Frame index (0-based)
         'length',           # Pole-to-pole distance  [pixels]
-        'width_centroid',   # Cell width ⊥ long axis at centre  [pixels]
+        'width_centroid',   # Cell width ⊥ long axis at center  [pixels]
         'width_scar',       # Distance between the two scar endpoints  [pixels]
         'new_end_length',   # Scar midpoint → new pole  [pixels]
         'old_end_length',   # Scar midpoint → old pole  [pixels]

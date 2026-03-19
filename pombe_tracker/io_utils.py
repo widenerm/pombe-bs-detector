@@ -29,7 +29,7 @@ def export_csv(all_results, output_path, columns=None):
 
     Parameters
     ----------
-    all_results : list returned by run_pipeline (after stabilise_scars)
+    all_results : list returned by run_pipeline (after stabilize_scars)
     output_path : destination file path (.csv)
     columns     : list of column names; if None, uses a sensible default set
     """
@@ -43,8 +43,8 @@ def export_csv(all_results, output_path, columns=None):
 
     os.makedirs(os.path.dirname(os.path.abspath(output_path)), exist_ok=True)
 
-    rows        = []
-    n_excluded  = 0
+    rows       = []
+    n_excluded = 0
 
     for fd in all_results:
         fidx = fd['frame_idx']

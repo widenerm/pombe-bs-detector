@@ -53,10 +53,10 @@ class CellProcessor:
         # ── Geometry ─────────────────────────────────────────────────────────
         smooth_pts, kappa = compute_smoothed_curvature(
             contour, self.cfg.SMOOTH_FACTOR, self.cfg.N_CONTOUR_POINTS)
-        centre, axis  = compute_pca_axis(smooth_pts)
-        endpoints     = get_contour_endpoints(contour, centre, axis)
+        center, axis  = compute_pca_axis(smooth_pts)
+        endpoints     = get_contour_endpoints(contour, center, axis)
 
-        rel       = smooth_pts - centre
+        rel       = smooth_pts - center
         long_proj = rel @ axis
         long_norm = (long_proj - long_proj.min()) / (long_proj.max() - long_proj.min() + 1e-10)
 
@@ -66,7 +66,7 @@ class CellProcessor:
         seg_quality, seg_reason = check_segmentation_quality(
             contour, kappa, frame.shape, self.cfg)
 
-        # ── Step 1 : tentative new pole from neighbours ───────────────────────
+        # ── Step 1 : tentative new pole from neighbors ────────────────────────
         neighbors = find_pole_to_pole_neighbors(
             region.label, endpoints, all_cell_info,
             self.cfg.POLE_PROXIMITY_THRESHOLD)
@@ -92,13 +92,13 @@ class CellProcessor:
             method, confidence = 'neighbor_proximity', 'high'
         else:
             new_pole, old_pole, _, method, confidence = determine_poles_strategy(
-                region.label, endpoints, centre, axis, contour,
+                region.label, endpoints, center, axis, contour,
                 all_cell_info, self.cfg, scar_midpoint)
 
         # ── Measurements ─────────────────────────────────────────────────────
         cell_length    = measure_cell_length(endpoints[0], endpoints[1])
         width_centroid = measure_width_at_position(
-            smooth_pts, centre, axis, long_norm, target_norm=0.5)
+            smooth_pts, center, axis, long_norm, target_norm=0.5)
 
         # ── Populate debug_info ──────────────────────────────────────────────
         debug_info.update({
@@ -154,7 +154,7 @@ class CellProcessor:
 
 def check_segmentation_quality(contour, kappa, frame_shape, config):
     """
-    Detect Cellpose segmentation artefacts before any analysis is run.
+    Detect Cellpose segmentation artifacts before any analysis is run.
 
     Two failure modes are caught:
 
@@ -199,11 +199,11 @@ def filter_valid_cells(regions, frame_shape, config):
     -------
     dict  label → region  for all cells that pass all filters
     """
-    h, w        = frame_shape[:2]
-    min_area    = config.MIN_CELL_AREA
-    min_ar      = getattr(config, 'ASPECT_RATIO_MIN', 1.5)
-    max_circ    = getattr(config, 'MAX_CIRCULARITY',  0.85)
-    valid       = {}
+    h, w     = frame_shape[:2]
+    min_area = config.MIN_CELL_AREA
+    min_ar   = getattr(config, 'ASPECT_RATIO_MIN', 1.5)
+    max_circ = getattr(config, 'MAX_CIRCULARITY',  0.85)
+    valid    = {}
 
     for region in regions:
         # ── Area ──────────────────────────────────────────────────────────────
@@ -238,7 +238,7 @@ def filter_valid_cells(regions, frame_shape, config):
 
 def prepare_cell_info(valid_regions, labels, config):
     """
-    Pre-compute geometry for all cells so neighbour analysis can reference
+    Pre-compute geometry for all cells so neighbor analysis can reference
     any cell without reprocessing.
     """
     all_cell_info = {}
@@ -247,15 +247,15 @@ def prepare_cell_info(valid_regions, labels, config):
         contours = find_contours(mask, 0.5)
         if not contours:
             continue
-        contour    = max(contours, key=len)
+        contour       = max(contours, key=len)
         smooth_pts, _ = compute_smoothed_curvature(
             contour, config.SMOOTH_FACTOR, config.N_CONTOUR_POINTS)
-        centre, axis = compute_pca_axis(smooth_pts)
-        endpoints    = get_contour_endpoints(contour, centre, axis)
+        center, axis  = compute_pca_axis(smooth_pts)
+        endpoints     = get_contour_endpoints(contour, center, axis)
         all_cell_info[region.label] = {
             'endpoints': endpoints,
             'centroid':  region.centroid,
-            'centre':    centre,
+            'center':    center,
             'axis':      axis,
         }
     return all_cell_info
@@ -293,7 +293,7 @@ def run_pipeline(frames, config, tracker=None):
     ----------
     frames  : list/array of 2-D images
     config  : Config instance
-    tracker : optional pre-initialised CellTracker (for resuming)
+    tracker : optional pre-initialized CellTracker (for resuming)
 
     Returns
     -------

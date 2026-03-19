@@ -1,5 +1,5 @@
 """
-postprocessing.py  –  Consensus-based temporal scar stabilisation.
+postprocessing.py  –  Consensus-based temporal scar stabilization.
 
 Problem
 ───────
@@ -13,8 +13,8 @@ Strategy (replaces the old rolling-median approach)
 All valid scar candidates are now stored per frame by the detector.  After
 the full pipeline has run, for each tracked cell:
 
-  1. Collect the normalised scar position of EVERY candidate across ALL frames.
-  2. Find the consensus position: the normalised coordinate supported by the
+  1. Collect the normalized scar position of EVERY candidate across ALL frames.
+  2. Find the consensus position: the normalized coordinate supported by the
      most candidates across the most frames (vote-count with a distance
      tolerance of SCAR_STABILITY_THRESHOLD).
   3. For each frame:
@@ -23,7 +23,7 @@ the full pipeline has run, for each tracked cell:
        c. If no candidate matches but scar was detected → 'interpolated'.
        d. If scar was not detected at all → also 'interpolated' (if SCAR_INTERPOLATE).
   4. Interpolate all frames marked 'interpolated' by linearly blending
-     scar_midpoint from the nearest valid neighbours.
+     scar_midpoint from the nearest valid neighbors.
   5. Write scar_source ('raw' | 'corrected' | 'interpolated' | 'no_detection')
      and scar_stable (bool) into each result dict so they appear in the CSV.
 
@@ -36,9 +36,9 @@ import numpy as np
 
 # ── Public entry point ────────────────────────────────────────────────────────
 
-def stabilise_scars(all_results, config):
+def stabilize_scars(all_results, config):
     """
-    Run in-place consensus scar stabilisation on the output of run_pipeline.
+    Run in-place consensus scar stabilization on the output of run_pipeline.
 
     Parameters
     ----------
@@ -68,7 +68,7 @@ def stabilise_scars(all_results, config):
         results       = [t[1] for t in timeline]
 
         if len(timeline) < 2:
-            # Single-frame cell — nothing to stabilise
+            # Single-frame cell — nothing to stabilize
             for r in results:
                 r.setdefault('scar_source',
                              'raw' if r['scar_detected'] else 'no_detection')
@@ -76,8 +76,6 @@ def stabilise_scars(all_results, config):
             continue
 
         # ── Collect per-frame candidate pools ────────────────────────────────
-        # frame_cands[i] = list of
-        #   {'norm_pos': float, 'points': (pt1, pt2), 'score': float, 'match_type': str}
         frame_cands = []
         for r in results:
             dbg       = r.get('debug_info', {})
@@ -86,7 +84,7 @@ def stabilise_scars(all_results, config):
 
             for c in raw_cands:
                 mp  = _midpoint_from_candidate(c)
-                pos = _normalised_position_from_midpoint(r, mp)
+                pos = _normalized_position_from_midpoint(r, mp)
                 if pos is not None:
                     fc.append({
                         'norm_pos':   pos,
@@ -98,7 +96,7 @@ def stabilise_scars(all_results, config):
             # Backward-compat: if scar_candidates absent (old data), use
             # the selected scar as the single candidate.
             if not raw_cands and r['scar_detected'] and r.get('scar_midpoint') is not None:
-                pos = _normalised_scar_position(r)
+                pos = _normalized_scar_position(r)
                 if pos is not None:
                     fc.append({
                         'norm_pos':   pos,
@@ -129,7 +127,7 @@ def stabilise_scars(all_results, config):
                 r['scar_stable'] = False
             report[name] = [{'frame': fi, 'status': 'no_consensus'}
                              for fi in frame_indices]
-            print(f"  Scar stabilisation – {name}: no consensus found, cell flagged unstable")
+            print(f"  Scar stabilization – {name}: no consensus found, cell flagged unstable")
             continue
 
         # ── Enforce consensus on each frame ──────────────────────────────────
@@ -140,10 +138,9 @@ def stabilise_scars(all_results, config):
             fcs = frame_cands[i]
 
             if r['scar_detected']:
-                curr_pos = _normalised_scar_position(r)
+                curr_pos = _normalized_scar_position(r)
 
                 if curr_pos is not None and abs(curr_pos - consensus_pos) <= threshold:
-                    # Already consistent with consensus
                     r['scar_source']    = 'raw'
                     r['scar_stability'] = 'stable'
                     continue
@@ -175,7 +172,7 @@ def stabilise_scars(all_results, config):
                     })
 
             else:
-                # No detection at all — look for any candidate near consensus
+                # No detection — look for any candidate near consensus
                 near = [fc for fc in fcs
                         if abs(fc['norm_pos'] - consensus_pos) <= threshold]
                 if near:
@@ -203,7 +200,6 @@ def stabilise_scars(all_results, config):
                 for i in interp_indices:
                     r = results[i]
                     r['scar_stability'] = 'interpolated'
-                    # Update report entry status
                     for entry in cell_report:
                         if entry['frame'] == frame_indices[i] and entry['status'] in (
                                 'pre_interpolate', 'no_candidate'):
@@ -223,7 +219,7 @@ def stabilise_scars(all_results, config):
             status_counts = {}
             for e in cell_report:
                 status_counts[e['status']] = status_counts.get(e['status'], 0) + 1
-            print(f"  Scar stabilisation – {name}: {status_counts}"
+            print(f"  Scar stabilization – {name}: {status_counts}"
                   f"  [{'stable' if stable else 'UNSTABLE'}]")
 
     # ── Ensure every result has scar_source / scar_stable ────────────────────
@@ -244,22 +240,22 @@ def _midpoint_from_candidate(candidate):
     return (pt1 + pt2) / 2.0
 
 
-def _normalised_position_from_midpoint(result, midpoint):
+def _normalized_position_from_midpoint(result, midpoint):
     """
-    Compute normalised scar position [0, 1] for an arbitrary midpoint,
+    Compute normalized scar position [0, 1] for an arbitrary midpoint,
     using the cell geometry already stored in debug_info.
     """
     dbg    = result.get('debug_info', {})
-    centre = dbg.get('centre') or dbg.get('center')
+    center = dbg.get('center')
     axis   = dbg.get('axis')
     ep1    = dbg.get('new_pole_point')
     ep2    = dbg.get('old_pole_point')
 
-    if any(x is None for x in [centre, axis, ep1, ep2]) or midpoint is None:
+    if any(x is None for x in [center, axis, ep1, ep2]) or midpoint is None:
         return None
 
     def proj(pt):
-        return float(np.dot(np.array(pt) - np.array(centre), np.array(axis)))
+        return float(np.dot(np.array(pt) - np.array(center), np.array(axis)))
 
     p_ep1 = proj(ep1)
     p_ep2 = proj(ep2)
@@ -273,20 +269,19 @@ def _normalised_position_from_midpoint(result, midpoint):
     return float(np.clip((p_mp - lo) / span, 0.0, 1.0))
 
 
-def _normalised_scar_position(result):
+def _normalized_scar_position(result):
     """
-    Express the currently selected scar midpoint as a normalised position.
-    Delegates to _normalised_position_from_midpoint.
+    Express the currently selected scar midpoint as a normalized position.
     """
     mp = result.get('scar_midpoint')
     if mp is None:
         return None
-    return _normalised_position_from_midpoint(result, np.array(mp))
+    return _normalized_position_from_midpoint(result, np.array(mp))
 
 
 def _find_consensus_position(positions, threshold):
     """
-    Find the normalised scar position with the most support.
+    Find the normalized scar position with the most support.
 
     Each position casts a vote for every position within *threshold* of
     itself.  The consensus is the median of the highest-supported cluster.
@@ -307,7 +302,7 @@ def _find_consensus_position(positions, threshold):
     if best_support < 2:
         return None
 
-    # One refinement pass: recompute median around the found centre
+    # One refinement pass: recompute median around the found center
     supporters = [p for p in positions if abs(p - best_pos) <= threshold]
     if len(supporters) < 2:
         return None
@@ -329,9 +324,9 @@ def _apply_candidate(result, candidate):
     result['scar_midpoint'] = new_mp
     result['width_scar']    = float(np.linalg.norm(pt1 - pt2))
 
-    dbg    = result.get('debug_info', {})
-    np_pt  = dbg.get('new_pole_point')
-    op_pt  = dbg.get('old_pole_point')
+    dbg   = result.get('debug_info', {})
+    np_pt = dbg.get('new_pole_point')
+    op_pt = dbg.get('old_pole_point')
 
     if np_pt is not None and op_pt is not None:
         from .geometry import measure_pole_lengths
@@ -347,7 +342,7 @@ def _apply_candidate(result, candidate):
 def _interpolate_frames(results, suspect_indices):
     """
     For each suspect frame, linearly interpolate scar_midpoint between the
-    nearest valid neighbours and recompute new/old end lengths.
+    nearest valid neighbors and recompute new/old end lengths.
     """
     n           = len(results)
     suspect_set = set(suspect_indices)
@@ -404,7 +399,7 @@ def _ratio(result):
     return None
 
 
-# ── Pretty-print the stabilisation report ────────────────────────────────────
+# ── Pretty-print the stabilization report ────────────────────────────────────
 
 def print_stability_report(report):
     if not report:

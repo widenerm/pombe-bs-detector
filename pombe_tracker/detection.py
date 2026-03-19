@@ -6,7 +6,7 @@ Strategy
 The full cell contour is always searched.  If a new-pole hint is provided,
 it is used to prefer candidates in that hemisphere during selection, but
 the full-cell search always runs so that ALL valid candidates are available
-for downstream consensus stabilisation in postprocessing.py.
+for downstream consensus stabilization in postprocessing.py.
 
 Two geometric constraints suppress false positives at the poles:
 
@@ -51,10 +51,10 @@ class BirthScarDetector:
         """
         smooth_pts, kappa = compute_smoothed_curvature(
             contour, self.cfg.SMOOTH_FACTOR, self.cfg.N_CONTOUR_POINTS)
-        centre, axis = compute_pca_axis(smooth_pts)
-        normal_vec = np.array([-axis[1], axis[0]])
+        center, axis = compute_pca_axis(smooth_pts)
+        normal_vec   = np.array([-axis[1], axis[0]])
 
-        rel       = smooth_pts - centre
+        rel       = smooth_pts - center
         long_proj = rel @ axis
         rng       = long_proj.max() - long_proj.min()
         long_norm = (long_proj - long_proj.min()) / (rng + 1e-10)
@@ -66,8 +66,7 @@ class BirthScarDetector:
         debug_info = {
             'smooth_pts':   smooth_pts,
             'kappa':        kappa,
-            'centre':       centre,
-            'center':       centre,    # alias for backward compat
+            'center':       center,
             'axis':         axis,
             'long_norm':    long_norm,
             # display_mask is always full-cell for visualization
@@ -84,9 +83,9 @@ class BirthScarDetector:
 
         # ── Collect ALL valid candidates over the full cell ───────────────────
         strict_cands = self._collect_strict_candidates(
-            peaks, smooth_pts, kappa, centre, axis, normal_vec, min_scar_width, long_norm)
+            peaks, smooth_pts, kappa, center, axis, normal_vec, min_scar_width, long_norm)
         asym_cands   = self._collect_asymmetric_candidates(
-            peaks, smooth_pts, kappa, centre, axis, normal_vec, long_norm, min_scar_width)
+            peaks, smooth_pts, kappa, center, axis, normal_vec, long_norm, min_scar_width)
 
         for c in strict_cands:
             c['match_type'] = 'strict'
@@ -111,7 +110,7 @@ class BirthScarDetector:
 
         # ── Select best candidate (hemisphere-aware) ─────────────────────────
         best = self._select_best_candidate(
-            strict_cands, asym_cands, centre, axis, new_pole_point)
+            strict_cands, asym_cands, center, axis, new_pole_point)
 
         debug_info.update(
             match_type = best['match_type'],
@@ -132,21 +131,21 @@ class BirthScarDetector:
 
     def _score(self, i1, i2, kappa, long_norm):
         """
-        Pair quality score.  Upweight candidates away from the cell centre
+        Pair quality score.  Upweight candidates away from the cell center
         because the most recent scar is typically close to the new pole.
         """
         base    = float(kappa[i1]) + float(kappa[i2])
         avg_pos = (long_norm[i1] + long_norm[i2]) / 2.0
-        weight  = 1.0 + 4.0 * abs(avg_pos - 0.5)   # 1.0 at centre, 3.0 at poles
+        weight  = 1.0 + 4.0 * abs(avg_pos - 0.5)   # 1.0 at center, 3.0 at poles
         return base * weight
 
-    def _is_valid_scar_vector(self, pt1, pt2, centre, axis, normal_vec, min_width):
+    def _is_valid_scar_vector(self, pt1, pt2, center, axis, normal_vec, min_width):
         """
         Return (is_valid, scar_width) for a candidate scar pt1 → pt2.
         Checks: opposite sides of cell, minimum width, perpendicularity.
         """
-        side1 = np.dot(pt1 - centre, normal_vec)
-        side2 = np.dot(pt2 - centre, normal_vec)
+        side1 = np.dot(pt1 - center, normal_vec)
+        side2 = np.dot(pt2 - center, normal_vec)
         if side1 * side2 >= 0:
             return False, 0.0
 
@@ -163,7 +162,7 @@ class BirthScarDetector:
 
         return True, width
 
-    def _collect_strict_candidates(self, peaks, smooth_pts, kappa, centre, axis,
+    def _collect_strict_candidates(self, peaks, smooth_pts, kappa, center, axis,
                                     normal_vec, min_width, long_norm):
         """All valid peak-pair candidates (both endpoints are curvature peaks)."""
         candidates = []
@@ -172,7 +171,7 @@ class BirthScarDetector:
                 p1, p2   = peaks[i], peaks[j]
                 pt1, pt2 = smooth_pts[p1], smooth_pts[p2]
                 valid, _ = self._is_valid_scar_vector(
-                    pt1, pt2, centre, axis, normal_vec, min_width)
+                    pt1, pt2, center, axis, normal_vec, min_width)
                 if valid:
                     candidates.append(dict(
                         indices = (p1, p2),
@@ -181,12 +180,12 @@ class BirthScarDetector:
                     ))
         return candidates
 
-    def _collect_asymmetric_candidates(self, peaks, smooth_pts, kappa, centre, axis,
+    def _collect_asymmetric_candidates(self, peaks, smooth_pts, kappa, center, axis,
                                         normal_vec, long_norm, min_width):
         """
         Asymmetric candidates: one strong curvature peak paired with the
         highest-curvature point on the opposite side at the same longitudinal
-        position (within ±5% of normalised cell length).
+        position (within ±5% of normalized cell length).
         """
         n           = len(smooth_pts)
         all_indices = np.arange(n)
@@ -194,12 +193,12 @@ class BirthScarDetector:
 
         for p_strong in peaks:
             pt_strong   = smooth_pts[p_strong]
-            side_strong = np.sign(np.dot(pt_strong - centre, normal_vec))
+            side_strong = np.sign(np.dot(pt_strong - center, normal_vec))
             long_pos    = long_norm[p_strong]
 
             partners = [
                 idx for idx in all_indices
-                if np.sign(np.dot(smooth_pts[idx] - centre, normal_vec)) != side_strong
+                if np.sign(np.dot(smooth_pts[idx] - center, normal_vec)) != side_strong
                 and abs(long_norm[idx] - long_pos) <= 0.05
             ]
             if not partners:
@@ -208,7 +207,7 @@ class BirthScarDetector:
             best_weak = max(partners, key=lambda idx: kappa[idx])
             pt_weak   = smooth_pts[best_weak]
             valid, _  = self._is_valid_scar_vector(
-                pt_strong, pt_weak, centre, axis, normal_vec, min_width)
+                pt_strong, pt_weak, center, axis, normal_vec, min_width)
             if valid:
                 candidates.append(dict(
                     indices = (p_strong, best_weak),
@@ -217,7 +216,7 @@ class BirthScarDetector:
                 ))
         return candidates
 
-    def _select_best_candidate(self, strict_cands, asym_cands, centre, axis,
+    def _select_best_candidate(self, strict_cands, asym_cands, center, axis,
                                 new_pole_point):
         """
         Select the best candidate.
@@ -230,10 +229,10 @@ class BirthScarDetector:
         """
         def midpoint_side(c):
             mp = (np.array(c['points'][0]) + np.array(c['points'][1])) / 2
-            return np.sign(float(np.dot(mp - centre, axis)))
+            return np.sign(float(np.dot(mp - center, axis)))
 
         if new_pole_point is not None:
-            new_side = np.sign(float(np.dot(np.array(new_pole_point) - centre, axis)))
+            new_side = np.sign(float(np.dot(np.array(new_pole_point) - center, axis)))
 
             hemi_strict = [c for c in strict_cands if midpoint_side(c) == new_side]
             if hemi_strict:
@@ -254,7 +253,6 @@ class BirthScarDetector:
             if asym_cands:
                 return max(asym_cands, key=lambda x: x['score'])
 
-        # Should not be reached (caller checks all_cands is non-empty)
         raise RuntimeError('_select_best_candidate called with no candidates')
 
     def _map_to_original(self, smooth_points, original_contour):
