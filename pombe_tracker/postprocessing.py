@@ -343,6 +343,11 @@ def _interpolate_frames(results, suspect_indices):
     """
     For each suspect frame, linearly interpolate scar_midpoint between the
     nearest valid neighbors and recompute new/old end lengths.
+
+    scar_points is set to a degenerate pair (midpoint, midpoint) for
+    interpolated frames so that visualization code that accesses scar_points
+    does not crash.  The two points being identical signals that this is a
+    synthetic measurement, not a detected pair.
     """
     n           = len(results)
     suspect_set = set(suspect_indices)
@@ -379,6 +384,9 @@ def _interpolate_frames(results, suspect_indices):
 
         r['scar_midpoint'] = new_mp
         r['scar_detected'] = True
+        # Degenerate pair so visualization never hits a KeyError on scar_points
+        r['scar_points']   = (new_mp, new_mp)
+        r['width_scar']    = 0.0   # explicitly zero — not a real measurement
 
         if np_pt is not None and op_pt is not None:
             from .geometry import measure_pole_lengths

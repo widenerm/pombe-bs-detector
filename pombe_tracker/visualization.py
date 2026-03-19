@@ -61,7 +61,7 @@ def plot_frame_overview(frame, results, frame_idx, config=None):
         mpatches.Patch(color='lime',    label='Scar detected'),
         mpatches.Patch(color='tomato',  label='Not detected'),
         mpatches.Patch(color='orange',  label='⚠ Bad segmentation'),
-        Line2D([0], [0], color='cyan',  ls=':', lw=1, label='Pole neighbour'),
+        Line2D([0], [0], color='cyan',  ls=':', lw=1, label='Pole neighbor'),
     ]
     ax.legend(handles=legend, loc='upper right', fontsize=8, framealpha=0.8)
     fig.tight_layout()
@@ -97,7 +97,6 @@ def plot_individual_cells(frame, results, frame_idx, config=None):
         ax.imshow(crop, cmap='gray',
                   vmin=np.percentile(crop, 1), vmax=np.percentile(crop, 99))
 
-        # Helper: shift to local coords
         def loc(pt):
             return np.array(pt) - np.array([r0, c0])
 
@@ -106,19 +105,23 @@ def plot_individual_cells(frame, results, frame_idx, config=None):
         ax.plot(local_c[:, 1], local_c[:, 0], 'cyan', lw=1.5, alpha=0.8)
 
         if r['scar_detected']:
-            sp   = r['scar_points']
-            mp   = loc(r['scar_midpoint'])
-            np_  = loc(dbg['new_pole_point'])
-            op_  = loc(dbg['old_pole_point'])
-            s1   = loc(sp[0]);  s2 = loc(sp[1])
+            # scar_points may be absent on interpolated frames (degenerate pair)
+            sp  = r.get('scar_points')
+            mp  = loc(r['scar_midpoint'])
+            np_ = loc(dbg['new_pole_point'])
+            op_ = loc(dbg['old_pole_point'])
 
-            # Scar line
-            ax.plot([s1[1], s2[1]], [s1[0], s2[0]], 'yellow', lw=2.5, zorder=5,
-                    label='Birth scar')
-            ax.plot(s1[1], s1[0], 'o', color='yellow', ms=6,
-                    mec='black', mew=1.5, zorder=6)
-            ax.plot(s2[1], s2[0], 'o', color='yellow', ms=6,
-                    mec='black', mew=1.5, zorder=6)
+            if sp is not None:
+                s1 = loc(sp[0]);  s2 = loc(sp[1])
+                # Only draw scar line if the two points are genuinely distinct
+                if np.linalg.norm(np.array(s1) - np.array(s2)) > 1.0:
+                    ax.plot([s1[1], s2[1]], [s1[0], s2[0]], 'yellow', lw=2.5, zorder=5,
+                            label='Birth scar')
+                    ax.plot(s1[1], s1[0], 'o', color='yellow', ms=6,
+                            mec='black', mew=1.5, zorder=6)
+                    ax.plot(s2[1], s2[0], 'o', color='yellow', ms=6,
+                            mec='black', mew=1.5, zorder=6)
+
             ax.plot(mp[1], mp[0], 'o', color='white', ms=9,
                     mec='black', mew=1.5, zorder=7, label='Scar midpoint')
 
@@ -138,13 +141,13 @@ def plot_individual_cells(frame, results, frame_idx, config=None):
             pm  = dbg.get('pole_method', '?')
             pc  = dbg.get('pole_confidence', '?')
             mt  = dbg.get('match_type', '?')
-            title = (f'{name}  ✓  [{mt}]\n'
+            src = r.get('scar_source', 'raw')
+            title = (f'{name}  ✓  [{mt}] [{src}]\n'
                      f'N={ni:.0f}  O={oi:.0f}  R={ni/max(oi,1e-3):.2f}\n'
                      f'{pm} ({pc})')
             ax.set_title(title, fontsize=8, fontweight='bold', color='green')
         else:
             err = dbg.get('error', '?')
-            # Still draw poles if available
             for key, marker, color in [('new_pole_point', 'X', 'lime'),
                                         ('old_pole_point', 'D', 'magenta')]:
                 if dbg.get(key) is not None:
@@ -160,7 +163,6 @@ def plot_individual_cells(frame, results, frame_idx, config=None):
         ax.set_aspect('equal')
         ax.axis('off')
 
-    # Hide empty panels
     for ax in axes_flat[n:]:
         ax.axis('off')
 
@@ -189,8 +191,8 @@ def plot_curvature_heatmaps(frame, results, frame_idx, config=None):
             ax.text(0.5, 0.5, 'No data', ha='center', va='center')
             ax.set_title(name); ax.axis('off'); continue
 
-        sp     = dbg['smooth_pts']
-        kappa  = dbg['kappa']
+        sp    = dbg['smooth_pts']
+        kappa = dbg['kappa']
 
         pad  = 20
         r0   = max(0, int(sp[:, 0].min()) - pad)
@@ -209,11 +211,22 @@ def plot_curvature_heatmaps(frame, results, frame_idx, config=None):
                           cmap='RdBu_r', s=8, vmin=-vlim, vmax=vlim, zorder=3)
         plt.colorbar(sc, ax=ax, fraction=0.04, pad=0.02, label='κ')
 
-        # Mark detected scar if present
+        # Mark detected scar if present — guard against missing scar_points
+        # (can happen for interpolated frames which use a degenerate pair)
         if r['scar_detected']:
-            for pt in r['scar_points']:
-                lp = np.array(pt) - np.array([r0, c0])
-                ax.plot(lp[1], lp[0], 'y*', ms=10, mec='black', mew=1, zorder=5)
+            sp_pts = r.get('scar_points')
+            if sp_pts is not None:
+                pt1, pt2 = np.array(sp_pts[0]), np.array(sp_pts[1])
+                # Only mark if the two points are genuinely distinct
+                for pt in [pt1, pt2]:
+                    if np.linalg.norm(pt1 - pt2) > 1.0:
+                        lp = pt - np.array([r0, c0])
+                        ax.plot(lp[1], lp[0], 'y*', ms=10, mec='black', mew=1, zorder=5)
+            # Always mark midpoint
+            if r.get('scar_midpoint') is not None:
+                mp = np.array(r['scar_midpoint']) - np.array([r0, c0])
+                ax.plot(mp[1], mp[0], 'w*', ms=8, mec='black', mew=0.8, zorder=5,
+                        label='Scar midpoint')
 
         # Mark peaks
         if 'peaks' in dbg and len(dbg['peaks']) > 0:
@@ -221,7 +234,9 @@ def plot_curvature_heatmaps(frame, results, frame_idx, config=None):
             ax.plot(local_sp[pk, 1], local_sp[pk, 0], 'ko', ms=3, zorder=4,
                     label=f'{len(pk)} peaks')
 
-        ax.set_title(f'{name}  {"✓" if r["scar_detected"] else "✗"}',
+        src = r.get('scar_source', '')
+        src_tag = f' [{src}]' if src and src != 'raw' else ''
+        ax.set_title(f'{name}  {"✓" if r["scar_detected"] else "✗"}{src_tag}',
                      fontsize=9, color='green' if r['scar_detected'] else 'firebrick')
         ax.axis('off')
 
@@ -251,11 +266,11 @@ def plot_curvature_profiles(frame_or_results, results_or_frame_idx, frame_idx_or
     if hasattr(frame_or_results, 'shape'):   # numpy image array → 4-arg form
         results   = results_or_frame_idx
         frame_idx = frame_idx_or_config
-        # config already bound via keyword
     else:                                    # list of result dicts → 3-arg form
         results   = frame_or_results
         frame_idx = results_or_frame_idx
         config    = frame_idx_or_config
+
     n     = len(results)
     ncols = min(n, 3)
     nrows = max(1, (n + ncols - 1) // ncols)
@@ -270,19 +285,16 @@ def plot_curvature_profiles(frame_or_results, results_or_frame_idx, frame_idx_or
             ax.text(0.5, 0.5, 'No data', ha='center', va='center')
             ax.set_title(name); continue
 
-        kappa      = dbg['kappa']
-        # display_mask is always all-True (full cell searched).
-        # valid_mask is the internal hemisphere hint — not shown here because
-        # the hemisphere is not an exclusion zone.
+        kappa        = dbg['kappa']
         display_mask = dbg.get('display_mask', np.ones(len(kappa), dtype=bool))
-        idx_arr    = np.arange(len(kappa))
+        idx_arr      = np.arange(len(kappa))
 
         ax.plot(idx_arr, kappa, 'steelblue', lw=1, alpha=0.7)
         ax.axhline(0, color='k', ls='--', lw=0.5, alpha=0.4)
         ax.fill_between(idx_arr, 0, kappa, where=display_mask,
                         color='steelblue', alpha=0.08, label='Full cell (searched)')
 
-        # Show the quality threshold so researchers can see what trips the QC flag
+        # Show the quality threshold
         if config is not None:
             thresh = getattr(config, 'CURVATURE_QUALITY_THRESHOLD', 0.10)
             ax.axhline( thresh, color='orange', ls=':', lw=1, alpha=0.7,
@@ -323,9 +335,8 @@ def plot_lineage_tree(all_results, config=None):
     Horizontal Gantt chart with one row per unique cell name.
     Branch points mark observed division events.
     """
-    # Collect timeline data
-    timeline = {}       # name → {'first': int, 'last': int}
-    divisions = {}      # parent_name → [(frame, [d0, d1])]
+    timeline  = {}
+    divisions = {}
 
     for fd in all_results:
         fidx = fd['frame_idx']
@@ -336,7 +347,6 @@ def plot_lineage_tree(all_results, config=None):
             else:
                 timeline[name]['last'] = fidx
 
-    # Collect division events from tracker lineage log
     if all_results and 'tracker' in all_results[-1]:
         tracker = all_results[-1]['tracker']
         for ev in tracker.lineage_log:
@@ -350,19 +360,17 @@ def plot_lineage_tree(all_results, config=None):
         ax.text(0.5, 0.5, 'No tracking data', ha='center', va='center', fontsize=14)
         return fig
 
-    # Sort names: base names alphabetically, then by depth
     def sort_key(n):
-        depth = len(n) - len(n.lstrip('ABCDEFGHIJKLMNOPQRSTUVWXYZ'))
         return (len(n), n)
 
-    names   = sorted(timeline.keys(), key=sort_key)
-    n_cells = len(names)
-    y_map   = {name: i for i, name in enumerate(names)}
+    names    = sorted(timeline.keys(), key=sort_key)
+    n_cells  = len(names)
+    y_map    = {name: i for i, name in enumerate(names)}
     n_frames = max(fd['frame_idx'] for fd in all_results) + 1
 
     fig, ax  = plt.subplots(figsize=(max(10, n_frames * 0.6), max(4, n_cells * 0.5)))
 
-    palette = plt.cm.tab20.colors
+    palette   = plt.cm.tab20.colors
     color_map = {name: palette[i % len(palette)] for i, name in enumerate(names)}
 
     for name, span in timeline.items():
@@ -372,7 +380,6 @@ def plot_lineage_tree(all_results, config=None):
                 height=0.6, color=color, alpha=0.8, edgecolor='k', lw=0.5)
         ax.text(span['first'] - 0.3, y, name, va='center', ha='right', fontsize=8)
 
-    # Division branch markers
     for parent, events in divisions.items():
         if parent not in y_map:
             continue
@@ -383,8 +390,7 @@ def plot_lineage_tree(all_results, config=None):
                 if d in y_map:
                     dy = y_map[d]
                     ax.annotate('', xy=(frame, dy), xytext=(frame, py),
-                                arrowprops=dict(arrowstyle='->', color='gray',
-                                                lw=1.0))
+                                arrowprops=dict(arrowstyle='->', color='gray', lw=1.0))
 
     ax.set_xlabel('Frame', fontsize=10)
     ax.set_yticks([])
@@ -404,11 +410,6 @@ def plot_lineage_tree(all_results, config=None):
 def visualize_all(all_results, config, save_dir=None):
     """
     Generate all enabled visualisations for every frame.
-
-    Parameters
-    ----------
-    config   : Config object (SHOW_* flags control which plots are made)
-    save_dir : if provided, figures are saved as PNGs here
     """
     if save_dir:
         os.makedirs(save_dir, exist_ok=True)
