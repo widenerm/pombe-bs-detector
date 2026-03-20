@@ -42,7 +42,7 @@ Signed curvature is computed along a smoothed B-spline contour. Birth scars appe
 
 ### Segmentation quality control
 
-Cellpose occasionally produces artifact segmentations — most commonly a septum fragment (one half of a dividing cell) or a cell whose mask clips the image boundary. Both produce pathological curvature spikes well above the range of a healthy contour. BS-Detector flags these automatically with an orange overlay so they can be reviewed or excluded without disrupting the rest of the analysis.
+Cellpose occasionally produces artifact segmentations, most commonly a septum fragment (one half of a dividing cell) or a cell whose mask clips the image boundary. Both produce pathological curvature spikes well above the range of a healthy contour. BS-Detector flags these automatically with an orange overlay so they can be reviewed or excluded without disrupting the rest of the analysis.
 
 <img src="docs/figs/bad_seg.png" width="300" alt="Example of flagged bad segmentations with orange outlines">
 
@@ -77,7 +77,7 @@ Cells with `seg_quality = border_clip` are excluded from the CSV entirely (incom
 
 ## Sample dataset
 
-A 10-frame sample dataset is bundled at `data/sample/sample.h5` for testing and demonstration without needing your own data. The Colab notebook uses it by default — no configuration required for a first run.
+A 5-frame sample dataset is bundled at `data/sample/sample.h5` for testing and demonstration without needing your own data. The Colab notebook uses it by default; no configuration required for a first run.
 
 ---
 
