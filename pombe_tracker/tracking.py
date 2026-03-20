@@ -12,7 +12,7 @@ Subsequent     :  X0 → X00 / X01,  X1 → X10 / X11,  etc.
 
 Tracking cost  (Hungarian assignment)
 ──────────────────────────────────────
-  cost = w_dist   × (Δcentre / MAX_TRACKING_DISTANCE)
+  cost = w_dist   × (Δcenter / MAX_TRACKING_DISTANCE)
        + w_area   × |ΔArea|  / max(area1, area2)
        + w_curv   × ‖fingerprint_diff‖
 
@@ -43,14 +43,19 @@ base name for an unmatched current cell, _match_ghost_tracks() checks
 whether any lost track is compatible by centroid proximity, area, and
 curvature fingerprint.  If a match is found, the track is resumed under
 its original name.
+
+Lineage pole information
+────────────────────────
+Each division event recorded in lineage_log now includes the parent's last
+known new_pole and old_pole coordinates.  The pipeline uses these to
+spatially determine the correct new / old poles for each daughter immediately
+after division, before any scar-based inference runs.
 """
 import numpy as np
 from scipy.optimize import linear_sum_assignment
 
-MATCH_THRESHOLD = 1.5   # reject assignments above this normalised cost
+MATCH_THRESHOLD = 1.5
 
-# An accepted match is flagged as a likely division if the current cell's
-# area is smaller than this fraction of the previous cell's area.
 DIVISION_SUSPICION_RATIO = 0.75
 
 
@@ -59,10 +64,9 @@ class CellTracker:
     def __init__(self, config):
         self.cfg            = config
         self._name_counter  = 0
-        self.active_tracks  = {}   # seg_label → state_dict
-        self.lineage_log    = []   # list of division events
+        self.active_tracks  = {}
+        self.lineage_log    = []
         self._current_frame = 0
-        # Ghost track buffer: list of {'state': state_dict, 'lost_frame': int}
         self._lost_tracks   = []
 
     # ── Name generation ──────────────────────────────────────────────────────
@@ -132,17 +136,10 @@ class CellTracker:
 
         row_ind, col_ind = linear_sum_assignment(cost_matrix)
 
-        # ── Collect accepted matches, but flag suspicious ones ───────────────
-        #
-        # A match is "suspicious" when the current cell is substantially
-        # smaller than the previous one.  This is the signal that Hungarian
-        # matched a parent to one of its daughters.  We tentatively accept
-        # the match but keep a list of suspicious pairs for the division
-        # re-check below.
         new_tracks      = {}
         assigned_prev   = set()
         assigned_curr   = set()
-        suspicious      = []   # list of (prev_row, curr_col) indices
+        suspicious      = []
 
         for r, c in zip(row_ind, col_ind):
             if cost_matrix[r, c] >= MATCH_THRESHOLD:
@@ -160,22 +157,16 @@ class CellTracker:
                 assigned_curr.add(c)
 
         # ── Division re-check for suspicious matches ─────────────────────────
-        #
-        # For each suspicious match, see whether a second unmatched current
-        # cell can account for the "missing" area.  If yes → this is a
-        # division; if no → the match was legitimate (e.g. the cell just
-        # shrank) and we accept it normally.
         unmatched_curr_so_far = {curr_labels[c] for c in range(n_c)
                                  if c not in assigned_curr}
 
         for r, c in suspicious:
             pl = prev_labels[r]
             cl = curr_labels[c]
-            parent    = self.active_tracks[pl]
-            p_area    = parent['area']
+            parent     = self.active_tracks[pl]
+            p_area     = parent['area']
             p_centroid = np.array(parent['centroid'])
 
-            # Candidate second daughters: unmatched, nearby, large enough
             partner_candidates = [
                 lbl for lbl in unmatched_curr_so_far
                 if lbl != cl
@@ -185,7 +176,7 @@ class CellTracker:
                 and curr_by_lbl[lbl].get('area', 0) / max(p_area, 1) >= self.cfg.DIVISION_AREA_RATIO
             ]
 
-            d1_area  = curr_by_lbl[cl].get('area', 0)
+            d1_area       = curr_by_lbl[cl].get('area', 0)
             found_partner = None
             best_score    = float('inf')
             for partner in partner_candidates:
@@ -196,7 +187,6 @@ class CellTracker:
                     found_partner = partner
 
             if found_partner is not None:
-                # Re-route as a division: do NOT accept the greedy match
                 self._record_division(
                     pl, [cl, found_partner], parent, curr_by_lbl,
                     new_tracks, assigned_curr)
@@ -204,18 +194,15 @@ class CellTracker:
                 unmatched_curr_so_far.discard(cl)
                 unmatched_curr_so_far.discard(found_partner)
             else:
-                # Legitimate match — accept it
                 name = parent['name']
                 new_tracks[cl] = self._make_state(curr_by_lbl[cl], name)
                 assigned_prev.add(r)
                 assigned_curr.add(c)
                 unmatched_curr_so_far.discard(cl)
 
-        # Rebuild unmatched lists from final state
         unmatched_prev = [prev_labels[r] for r in range(n_p) if r not in assigned_prev]
         unmatched_curr = list(unmatched_curr_so_far)
 
-        # ── Standard division detection for fully unmatched previous cells ───
         self._handle_divisions(unmatched_prev, unmatched_curr,
                                curr_by_lbl, new_tracks, assigned_curr)
 
@@ -227,7 +214,7 @@ class CellTracker:
                 'lost_frame': self._current_frame,
             })
 
-        # ── Ghost track matching for remaining unmatched current cells ────────
+        # ── Ghost track matching ──────────────────────────────────────────────
         ghost_frames = getattr(self.cfg, 'GHOST_FRAMES', 3)
         self._lost_tracks = [
             lt for lt in self._lost_tracks
@@ -238,7 +225,6 @@ class CellTracker:
                            if cl not in new_tracks and cl not in assigned_curr]
         self._match_ghost_tracks(still_unmatched, curr_by_lbl, new_tracks)
 
-        # ── Any remaining unmatched current cells are genuinely new ──────────
         for cl in curr_labels:
             if cl not in new_tracks:
                 new_tracks[cl] = self._make_state(curr_by_lbl[cl], self._next_base_name())
@@ -249,18 +235,6 @@ class CellTracker:
     # ── Ghost track matching ─────────────────────────────────────────────────
 
     def _match_ghost_tracks(self, unmatched_curr_labels, curr_by_lbl, new_tracks):
-        """
-        For each unmatched current cell, check whether any recently lost
-        track is a plausible match.  If found, resume the original name
-        rather than minting a new one.
-
-        Matching criteria (all must pass):
-          1. Centroid within MAX_TRACKING_DISTANCE
-          2. Area ratio within [DIVISION_AREA_RATIO * 2, 1 / (DIVISION_AREA_RATIO * 2)]
-             (i.e. not wildly different in size)
-          3. Curvature fingerprint distance < GHOST_FINGERPRINT_THRESHOLD
-             (default 1.0; set in config or falls back to this value)
-        """
         if not unmatched_curr_labels or not self._lost_tracks:
             return
 
@@ -270,42 +244,43 @@ class CellTracker:
 
         for cl in unmatched_curr_labels:
             curr     = curr_by_lbl[cl]
-            c_centre = np.array(curr.get('centroid', (0, 0)))
+            c_center = np.array(curr.get('centroid', (0, 0)))
             c_area   = curr.get('area', 0)
             c_fp     = curr.get('debug_info', {}).get('curvature_fingerprint')
 
-            best_cost  = float('inf')
-            best_idx   = None
+            best_cost = float('inf')
+            best_idx  = None
 
             for gi, lt in enumerate(self._lost_tracks):
                 if gi in used_ghost_indices:
                     continue
                 state    = lt['state']
-                g_centre = np.array(state['centroid'])
+                g_center = np.array(state['centroid'])
                 g_area   = state['area']
                 g_fp     = state.get('fingerprint')
 
-                dist = float(np.linalg.norm(c_centre - g_centre))
+                dist = float(np.linalg.norm(c_center - g_center))
                 if dist >= cfg.MAX_TRACKING_DISTANCE:
                     continue
 
                 area_ratio = c_area / max(g_area, 1)
-                if area_ratio < cfg.DIVISION_AREA_RATIO * 2 or area_ratio > 1.0 / (cfg.DIVISION_AREA_RATIO * 2):
+                if (area_ratio < cfg.DIVISION_AREA_RATIO * 2
+                        or area_ratio > 1.0 / (cfg.DIVISION_AREA_RATIO * 2)):
                     continue
 
                 dist_cost = dist / (cfg.MAX_TRACKING_DISTANCE + 1e-9)
                 area_cost = abs(c_area - g_area) / (max(c_area, g_area) + 1e-9)
 
                 if c_fp is not None and g_fp is not None:
-                    fp_dist   = float(np.linalg.norm(c_fp - g_fp))
+                    fp_dist = float(np.linalg.norm(c_fp - g_fp))
                     if fp_dist > fp_threshold:
                         continue
                     curv_cost = fp_dist
                 else:
                     curv_cost = 0.0
 
-                cost = (cfg.COST_WEIGHT_DISTANCE   * dist_cost
-                        + cfg.COST_WEIGHT_AREA     * area_cost
+                cost = (cfg.COST_WEIGHT_DISTANCE    * dist_cost
+                        + cfg.COST_WEIGHT_AREA      * area_cost
                         + cfg.COST_WEIGHT_CURVATURE * curv_cost)
 
                 if cost < best_cost:
@@ -320,7 +295,6 @@ class CellTracker:
                       f"(lost {self._current_frame - self._lost_tracks[best_idx]['lost_frame']} "
                       f"frame(s) ago)")
 
-        # Remove consumed ghost tracks
         self._lost_tracks = [lt for i, lt in enumerate(self._lost_tracks)
                              if i not in used_ghost_indices]
 
@@ -330,8 +304,11 @@ class CellTracker:
                          curr_by_lbl, new_tracks, assigned_curr):
         """
         Assign daughter names to two current cells that together constitute
-        a division of *parent*.  The daughter whose centroid is closer to the
-        parent's old pole gets the '1' suffix; the other gets '0'.
+        a division of *parent*.
+
+        The parent's new_pole and old_pole are stored in the lineage_log entry
+        so the pipeline can use them to determine the correct pole assignment
+        for each daughter immediately after division.
         """
         d0_lbl, d1_lbl = self._assign_daughter_order(
             daughter_labels, parent, curr_by_lbl)
@@ -341,10 +318,21 @@ class CellTracker:
         new_tracks[d1_lbl] = self._make_state(curr_by_lbl[d1_lbl], d1_name)
         assigned_curr.update([d0_lbl, d1_lbl])
 
+        # Store parent pole coordinates so the pipeline can spatially resolve
+        # the new / old poles of each daughter without re-running detection.
+        parent_old_pole = parent.get('old_pole')
+        parent_new_pole = parent.get('new_pole')
+        if parent_old_pole is not None:
+            parent_old_pole = np.array(parent_old_pole)
+        if parent_new_pole is not None:
+            parent_new_pole = np.array(parent_new_pole)
+
         self.lineage_log.append({
-            'frame':     self._current_frame,
-            'parent':    parent['name'],
-            'daughters': [d0_name, d1_name],
+            'frame':           self._current_frame,
+            'parent':          parent['name'],
+            'daughters':       [d0_name, d1_name],
+            'parent_old_pole': parent_old_pole,
+            'parent_new_pole': parent_new_pole,
         })
         print(f"  Division detected: {parent['name']} → {d0_name}, {d1_name}")
 
@@ -364,11 +352,10 @@ class CellTracker:
             op  = np.array(old_pole)
             ca  = np.array(curr_by_lbl[la].get('centroid', (0, 0)))
             cb  = np.array(curr_by_lbl[lb].get('centroid', (0, 0)))
-            # Closer to old pole → '1' (old-end daughter)
             if np.linalg.norm(ca - op) < np.linalg.norm(cb - op):
-                return lb, la   # la is old-end → la gets '1', lb gets '0'
+                return lb, la
             else:
-                return la, lb   # lb is old-end → lb gets '1', la gets '0'
+                return la, lb
         return la, lb
 
     # ── Private ──────────────────────────────────────────────────────────────
@@ -425,10 +412,6 @@ class CellTracker:
             used_curr.update(best)
 
     def _best_division_pair(self, candidates, parent, curr_by_lbl, parent_area):
-        """
-        Among all pairs of candidates, return the pair whose combined area
-        is closest to parent_area.
-        """
         best_score = float('inf')
         best_pair  = None
 

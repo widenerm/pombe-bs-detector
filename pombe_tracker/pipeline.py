@@ -3,13 +3,16 @@ pipeline.py  –  CellProcessor, frame-level helpers, run_pipeline.
 
 Changes vs. previous version
 ──────────────────────────────
-• filter_valid_cells now accepts a config object and enforces aspect-ratio
-  and circularity thresholds to reject debris / noise before tracking.
-• process_cell makes a single detect() call (the detector always does a
-  full-cell search internally; hemisphere preference is passed as a hint).
-• All Config access goes through the passed config object (no singleton leaks).
-• determine_new_pole_from_neighbors always receives config.
-• debug_info contains no ghost keys.
+• filter_valid_cells enforces aspect-ratio and circularity thresholds.
+• process_cell makes a single detect() call (full-cell, pole hint as hint).
+• determine_poles_strategy now accepts lineage_new_pole / lineage_old_pole
+  keyword arguments for freshly divided daughters.
+• After each frame's tracking pass, _apply_lineage_poles() corrects the pole
+  assignment for any daughters produced by a division in that frame, then
+  re-selects the best scar candidate using the corrected pole hint.
+• Chain cells (both poles touching credible neighbors) are detected in
+  determine_new_pole_from_neighbors and handled by skipping directly to
+  scar-based or morphology assignment.
 """
 import numpy as np
 from skimage.measure import find_contours, regionprops
@@ -73,13 +76,14 @@ class CellProcessor:
         new_pole_idx, neighbor_conf = determine_new_pole_from_neighbors(
             neighbors, endpoints, self.cfg)
 
+        # Only use the neighbor hint for detection when confidence is unambiguous.
+        # Chain cells (conf == 'chain') and low-confidence cases get no hint here;
+        # the pole will be resolved by scar or lineage after detection.
         tentative_new_pole = None
         if new_pole_idx is not None and neighbor_conf in ('high', 'medium'):
             tentative_new_pole = endpoints[new_pole_idx]
 
         # ── Step 2 : birth scar detection (single full-cell pass) ────────────
-        # The detector always searches the full contour; new_pole_point is used
-        # only as a hemisphere preference for candidate selection.
         scar_pair, debug_info = self.detector.detect(
             contour, new_pole_point=tentative_new_pole)
 
@@ -118,7 +122,7 @@ class CellProcessor:
             'neighbors':      neighbors,
             'length':         cell_length,
             'width_centroid': width_centroid,
-            'seg_quality':    seg_quality,   # 'ok' | 'border_clip' | 'septum_fragment'
+            'seg_quality':    seg_quality,
             'seg_reason':     seg_reason,
         }
 
@@ -150,22 +154,174 @@ class CellProcessor:
         return result
 
 
+# ── Lineage-based pole correction ─────────────────────────────────────────────
+
+def _apply_lineage_poles(results, tracker, frame_idx):
+    """
+    For any daughters produced by a division in *frame_idx*, correct their
+    new / old pole assignment using the parent's stored pole coordinates, then
+    re-select the best scar candidate using the corrected pole as the hint.
+
+    Called in run_pipeline immediately after tracker.update() assigns names.
+
+    Convention (matches naming scheme):
+      X0  – new-end daughter: inherited parent's new-end as its OLD pole;
+             its NEW pole is the division site.
+      X1  – old-end daughter: inherited parent's old-end as its OLD pole;
+             its NEW pole is the division site.
+
+    The division site for each daughter is estimated as the endpoint closest
+    to the sibling's centroid.  If parent pole coordinates are available, they
+    are used to identify which endpoint of each daughter is the inherited old
+    pole (the one closest to the corresponding parent pole).
+    """
+    name_to_result = {r.get('cell_name'): r for r in results
+                      if r.get('cell_name') is not None}
+
+    for ev in tracker.lineage_log:
+        if ev['frame'] != frame_idx:
+            continue
+
+        d0_name, d1_name = ev['daughters']   # d0 = new-end, d1 = old-end
+        d0 = name_to_result.get(d0_name)
+        d1 = name_to_result.get(d1_name)
+
+        if d0 is None or d1 is None:
+            continue
+
+        d0_centroid = np.array(d0['centroid'])
+        d1_centroid = np.array(d1['centroid'])
+
+        # ── Determine the new poles (division site) for each daughter ─────────
+        # New pole = the endpoint of the daughter closest to the sibling.
+        d0_dbg = d0['debug_info']
+        d1_dbg = d1['debug_info']
+        d0_ep1 = d0_dbg.get('new_pole_point')
+        d0_ep2 = d0_dbg.get('old_pole_point')
+        d1_ep1 = d1_dbg.get('new_pole_point')
+        d1_ep2 = d1_dbg.get('old_pole_point')
+
+        # Fall back to using the currently assigned poles if the endpoints are
+        # stored there; we need two distinct points per daughter.
+        if d0_ep1 is None or d0_ep2 is None or d1_ep1 is None or d1_ep2 is None:
+            continue
+
+        d0_ep1 = np.array(d0_ep1)
+        d0_ep2 = np.array(d0_ep2)
+        d1_ep1 = np.array(d1_ep1)
+        d1_ep2 = np.array(d1_ep2)
+
+        parent_new_pole = ev.get('parent_new_pole')
+        parent_old_pole = ev.get('parent_old_pole')
+
+        if parent_new_pole is not None and parent_old_pole is not None:
+            # Use parent pole coordinates to identify inherited old poles.
+            # d0 inherited the parent's new-end as its old pole.
+            # d1 inherited the parent's old-end as its old pole.
+            p_new = np.array(parent_new_pole)
+            p_old = np.array(parent_old_pole)
+
+            # d0 old pole = whichever endpoint is closest to parent's new pole
+            if np.linalg.norm(d0_ep1 - p_new) < np.linalg.norm(d0_ep2 - p_new):
+                d0_new_pole, d0_old_pole = d0_ep2, d0_ep1
+            else:
+                d0_new_pole, d0_old_pole = d0_ep1, d0_ep2
+
+            # d1 old pole = whichever endpoint is closest to parent's old pole
+            if np.linalg.norm(d1_ep1 - p_old) < np.linalg.norm(d1_ep2 - p_old):
+                d1_new_pole, d1_old_pole = d1_ep2, d1_ep1
+            else:
+                d1_new_pole, d1_old_pole = d1_ep1, d1_ep2
+        else:
+            # No parent pole info — use sibling proximity only.
+            # New pole = endpoint closest to sibling centroid.
+            if np.linalg.norm(d0_ep1 - d1_centroid) < np.linalg.norm(d0_ep2 - d1_centroid):
+                d0_new_pole, d0_old_pole = d0_ep1, d0_ep2
+            else:
+                d0_new_pole, d0_old_pole = d0_ep2, d0_ep1
+
+            if np.linalg.norm(d1_ep1 - d0_centroid) < np.linalg.norm(d1_ep2 - d0_centroid):
+                d1_new_pole, d1_old_pole = d1_ep1, d1_ep2
+            else:
+                d1_new_pole, d1_old_pole = d1_ep2, d1_ep1
+
+        # ── Apply corrected poles to both daughters ───────────────────────────
+        for result, new_pole, old_pole in [
+            (d0, d0_new_pole, d0_old_pole),
+            (d1, d1_new_pole, d1_old_pole),
+        ]:
+            dbg = result['debug_info']
+            dbg['new_pole_point']  = new_pole
+            dbg['old_pole_point']  = old_pole
+            dbg['pole_method']     = 'lineage'
+            dbg['pole_confidence'] = 'high'
+
+            # Re-select scar candidate using corrected pole hint
+            _reselect_scar(result, new_pole)
+
+        print(f"  Lineage poles applied: {d0_name} / {d1_name}")
+
+
+def _reselect_scar(result, new_pole_point):
+    """
+    Re-select the best scar candidate from debug_info['scar_candidates']
+    using a (possibly corrected) new-pole hint.
+
+    Picks the candidate whose midpoint is closest to new_pole_point,
+    then recomputes all derived measurements.
+    """
+    cands = result['debug_info'].get('scar_candidates', [])
+    if not cands:
+        return
+
+    np_arr = np.array(new_pole_point)
+
+    def midpoint_dist(c):
+        mp = (np.array(c['points'][0]) + np.array(c['points'][1])) / 2.0
+        return float(np.linalg.norm(mp - np_arr))
+
+    best = min(cands, key=midpoint_dist)
+
+    pt1    = np.array(best['points'][0])
+    pt2    = np.array(best['points'][1])
+    new_mp = (pt1 + pt2) / 2.0
+
+    # Snap to original contour
+    orig = np.array(result['contour'])
+    def closest(target):
+        return orig[np.argmin(np.linalg.norm(orig - target, axis=1))]
+
+    scar_pair = (closest(pt1), closest(pt2))
+    scar_mp   = (np.array(scar_pair[0]) + np.array(scar_pair[1])) / 2.0
+
+    new_pole = np.array(result['debug_info']['new_pole_point'])
+    old_pole = np.array(result['debug_info']['old_pole_point'])
+    new_len, old_len = measure_pole_lengths(scar_mp, new_pole, old_pole)
+
+    result['scar_detected']  = True
+    result['scar_points']    = scar_pair
+    result['scar_midpoint']  = scar_mp
+    result['width_scar']     = float(np.linalg.norm(np.array(scar_pair[0]) - np.array(scar_pair[1])))
+    result['new_end_length'] = new_len
+    result['old_end_length'] = old_len
+
+    dbg = result['debug_info']
+    dbg['match_type']     = best['match_type']
+    dbg['recent_scar']    = scar_mp
+    dbg['new_end_length'] = new_len
+    dbg['old_end_length'] = old_len
+
+
 # ── Frame-level helpers ───────────────────────────────────────────────────────
 
 def check_segmentation_quality(contour, kappa, frame_shape, config):
     """
     Detect Cellpose segmentation artifacts before any analysis is run.
 
-    Two failure modes are caught:
-
-    1. BORDER CLIP  – the contour actually touches the image boundary.
-    2. SEPTUM FRAGMENT – extremely high curvature spike, well above anything
-       seen on a healthy contour.
-
     Returns
     -------
     quality : 'ok' | 'border_clip' | 'septum_fragment'
-    reason  : human-readable string for the researcher
+    reason  : human-readable string
     """
     h, w = frame_shape[:2]
 
@@ -189,15 +345,7 @@ def filter_valid_cells(regions, frame_shape, config):
     Remove cells that are too small, touch the image border, have wrong
     aspect ratio (too round → debris), or are too circular (not rod-shaped).
 
-    Parameters
-    ----------
-    regions     : list of regionprops objects
-    frame_shape : (H, W[, ...]) shape of the frame
-    config      : Config instance
-
-    Returns
-    -------
-    dict  label → region  for all cells that pass all filters
+    Returns dict  label → region  for all cells that pass all filters.
     """
     h, w     = frame_shape[:2]
     min_area = config.MIN_CELL_AREA
@@ -206,29 +354,23 @@ def filter_valid_cells(regions, frame_shape, config):
     valid    = {}
 
     for region in regions:
-        # ── Area ──────────────────────────────────────────────────────────────
         if region.area < min_area:
             continue
 
-        # ── Bounding-box border contact ───────────────────────────────────────
         r0, c0, r1, c1 = region.bbox
         if r0 == 0 or c0 == 0 or r1 == h or c1 == w:
             continue
 
-        # ── Aspect ratio (rejects round blobs) ────────────────────────────────
         minor = region.minor_axis_length
         if minor < 1e-3:
             continue
-        ar = region.major_axis_length / minor
-        if ar < min_ar:
+        if region.major_axis_length / minor < min_ar:
             continue
 
-        # ── Circularity  (4π × area / perimeter²; circle = 1.0, rod ≈ 0.4–0.7)
         perim = region.perimeter
         if perim < 1e-3:
             continue
-        circularity = (4.0 * np.pi * region.area) / (perim ** 2)
-        if circularity > max_circ:
+        if (4.0 * np.pi * region.area) / (perim ** 2) > max_circ:
             continue
 
         valid[region.label] = region
@@ -317,6 +459,10 @@ def run_pipeline(frames, config, tracker=None):
         name_map = tracker.update(results, frame_idx=frame_idx)
         for r in results:
             r['cell_name'] = name_map.get(r['label'], '?')
+
+        # After naming, apply lineage-based pole correction for any daughters
+        # produced by a division in this frame, then re-select their scars.
+        _apply_lineage_poles(results, tracker, frame_idx)
 
         detected = sum(1 for r in results if r['scar_detected'])
         print(f"  {len(results)} cells  |  {detected} scars detected")

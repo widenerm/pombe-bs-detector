@@ -5,35 +5,45 @@ Strategy
 ────────
 The full cell contour is always searched.  If a new-pole hint is provided,
 the candidate whose midpoint is geometrically closest to the new pole is
-selected; otherwise the highest-prominence candidate wins.
+selected from the combined strict + asymmetric pool — no type preference is
+applied when a spatial hint is available.  When no hint exists, strict pairs
+are preferred and the highest-scoring candidate wins.
 
 Two geometric constraints suppress false positives at the poles:
 
   1. WIDTH   The scar vector must span ≥ MIN_SCAR_WIDTH_RATIO × average
-             mid-cell width (not max width — max can be inflated by the scar
-             itself).  Average width is computed from seven evenly-spaced
-             cross-sections between normalised positions 0.2 and 0.8.
+             mid-cell width (seven cross-sections at 20–80 % of cell length).
+             Average width is more stable than max width, which can be
+             inflated by the scar bulge itself.
 
   2. ANGLE   The scar vector must be ⊥ to the long axis (within
-             MAX_ANGLE_DEVIATION°).  At the poles the curvature peaks are
-             separated along the axis, not across it, so their connecting
-             vector is nearly parallel → rejected.
+             MAX_ANGLE_DEVIATION°).
 
-Scoring uses local prominence rather than raw peak height.
-Prominence = peak curvature − mean curvature in a ±PROMINENCE_WINDOW index
-window around the peak (computed on the periodic contour).  This rewards
-peaks that stand out sharply from a flat surrounding baseline — the
-signature of a genuine birth-scar ridge — and discards broad, gently-curved
-sections that happen to have a slightly elevated absolute curvature.
+Scoring
+───────
+score = prominence_sum × (1 + perp_score)
 
-All valid candidates are stored in debug_info['scar_candidates'] so
-postprocessing.py can retroactively enforce a cross-frame consensus position
-without re-running the detector.
+  prominence_sum : sum of local prominences for both peak endpoints.
+                   Prominence = peak κ − mean(κ in ±PROMINENCE_WINDOW ring),
+                   which rewards sharp localised bumps over broad flat regions.
+
+  perp_score     : 1 − |dot(scar_unit, axis)|, ranging from 0 (parallel) to
+                   1 (perfectly perpendicular).  Among candidates in the same
+                   region this selects the most geometrically accurate scar
+                   location.
+
+Asymmetric partner selection
+────────────────────────────
+For each strong curvature peak, partner candidates on the opposite side are
+now ranked by perpendicularity (not raw κ), so the selected pair is as close
+to orthogonal to the cell axis as possible.
+
+All valid candidates are stored in debug_info['scar_candidates'] for the
+postprocessing consensus pass.
 """
 import numpy as np
 from .geometry import compute_smoothed_curvature, compute_pca_axis
 
-# Contour indices on each side of a peak used for the local baseline.
 PROMINENCE_WINDOW = 25
 
 
@@ -64,18 +74,16 @@ class BirthScarDetector:
         center, axis = compute_pca_axis(smooth_pts)
         normal_vec   = np.array([-axis[1], axis[0]])
 
-        rel       = smooth_pts - center
-        long_proj = rel @ axis
-        rng       = long_proj.max() - long_proj.min()
-        long_norm = (long_proj - long_proj.min()) / (rng + 1e-10)
+        rel        = smooth_pts - center
+        long_proj  = rel @ axis
+        rng        = long_proj.max() - long_proj.min()
+        long_norm  = (long_proj - long_proj.min()) / (rng + 1e-10)
         transverse = rel @ normal_vec
 
         max_thickness = np.percentile(transverse, 98) - np.percentile(transverse, 2)
 
         # ── Average mid-cell width ────────────────────────────────────────────
-        # Sample seven cross-sections between 20 % and 80 % of cell length.
-        # Excludes tapered poles; robust to the scar bulge inflating the max.
-        sample_norms = np.linspace(0.2, 0.8, 7)
+        sample_norms  = np.linspace(0.2, 0.8, 7)
         sample_widths = []
         for sn in sample_norms:
             mask = np.abs(long_norm - sn) < 0.05
@@ -93,7 +101,6 @@ class BirthScarDetector:
             'long_norm':     long_norm,
             'avg_width':     avg_width,
             'max_thickness': max_thickness,
-            # display_mask is always full-cell for visualization
             'display_mask':  np.ones(len(smooth_pts), dtype=bool),
         }
 
@@ -105,7 +112,6 @@ class BirthScarDetector:
             debug_info['scar_candidates'] = []
             return None, debug_info
 
-        # ── Collect ALL valid candidates over the full cell ───────────────────
         strict_cands = self._collect_strict_candidates(
             peaks, smooth_pts, kappa, center, axis, normal_vec, min_scar_width, long_norm)
         asym_cands   = self._collect_asymmetric_candidates(
@@ -118,13 +124,8 @@ class BirthScarDetector:
 
         all_cands = strict_cands + asym_cands
 
-        # Store every valid candidate for consensus postprocessing
         debug_info['scar_candidates'] = [
-            {
-                'points':     c['points'],
-                'score':      c['score'],
-                'match_type': c['match_type'],
-            }
+            {'points': c['points'], 'score': c['score'], 'match_type': c['match_type']}
             for c in all_cands
         ]
 
@@ -132,9 +133,8 @@ class BirthScarDetector:
             debug_info['error'] = 'no_valid_pairs'
             return None, debug_info
 
-        # ── Select best candidate ─────────────────────────────────────────────
         best = self._select_best_candidate(
-            strict_cands, asym_cands, center, axis, new_pole_point)
+            strict_cands, asym_cands, new_pole_point)
 
         debug_info.update(
             match_type = best['match_type'],
@@ -155,13 +155,10 @@ class BirthScarDetector:
 
     def _peak_prominence(self, kappa, peak_idx):
         """
-        Local prominence of a curvature peak.
+        Local prominence = kappa[peak] − mean(kappa in ±PROMINENCE_WINDOW ring).
 
-        Prominence = kappa[peak] − mean(kappa in a ±PROMINENCE_WINDOW ring
-        neighbourhood, excluding the peak itself).
-
-        Rewards peaks that rise sharply above a flat baseline (birth-scar
-        ridge) over broad regions with uniformly elevated curvature.
+        Rewards sharp localised bumps (birth-scar ridges) over broad flat
+        regions that happen to have a slightly elevated absolute curvature.
         """
         n       = len(kappa)
         indices = [(peak_idx + d) % n
@@ -170,17 +167,34 @@ class BirthScarDetector:
         baseline = float(np.mean(kappa[indices]))
         return max(0.0, float(kappa[peak_idx]) - baseline)
 
-    def _score(self, i1, i2, kappa, long_norm=None):
+    def _perp_score(self, pt1, pt2, axis):
         """
-        Pair quality = sum of individual peak prominences.
-        long_norm is accepted for API compatibility but not used.
+        Perpendicularity of the scar vector relative to the cell long axis.
+        Returns 1.0 for perfectly perpendicular, 0.0 for parallel.
         """
-        return self._peak_prominence(kappa, i1) + self._peak_prominence(kappa, i2)
+        scar_vec = np.array(pt2) - np.array(pt1)
+        norm     = float(np.linalg.norm(scar_vec))
+        if norm < 1e-6:
+            return 0.0
+        return 1.0 - float(np.abs(np.dot(scar_vec / norm, axis)))
+
+    def _score(self, i1, i2, kappa, smooth_pts, axis, long_norm=None):
+        """
+        Combined score = prominence_sum × (1 + perp_score).
+
+        The perp bonus rewards the pair that is most perpendicular to the
+        cell long axis, providing fine-grained location accuracy on top of
+        the coarse prominence-based region selection.
+        long_norm is accepted for API compatibility but not used directly.
+        """
+        prom = self._peak_prominence(kappa, i1) + self._peak_prominence(kappa, i2)
+        perp = self._perp_score(smooth_pts[i1], smooth_pts[i2], axis)
+        return prom * (1.0 + perp)
 
     def _is_valid_scar_vector(self, pt1, pt2, center, axis, normal_vec, min_width):
         """
         Return (is_valid, scar_width) for a candidate scar pt1 → pt2.
-        Checks: opposite sides of cell, minimum width vs average, perpendicularity.
+        Checks: opposite sides, minimum width vs average, perpendicularity.
         """
         side1 = np.dot(pt1 - center, normal_vec)
         side2 = np.dot(pt2 - center, normal_vec)
@@ -214,7 +228,7 @@ class BirthScarDetector:
                     candidates.append(dict(
                         indices = (p1, p2),
                         points  = (pt1, pt2),
-                        score   = self._score(p1, p2, kappa, long_norm),
+                        score   = self._score(p1, p2, kappa, smooth_pts, axis, long_norm),
                     ))
         return candidates
 
@@ -222,8 +236,11 @@ class BirthScarDetector:
                                         normal_vec, long_norm, min_width):
         """
         Asymmetric candidates: one strong curvature peak paired with the
-        highest-curvature point on the opposite side at the same longitudinal
+        most-perpendicular point on the opposite side at the same longitudinal
         position (within ±5 % of normalized cell length).
+
+        Partner selection uses perpendicularity (not raw κ) so that the
+        selected pair is as geometrically accurate as possible.
         """
         n           = len(smooth_pts)
         all_indices = np.arange(n)
@@ -242,7 +259,11 @@ class BirthScarDetector:
             if not partners:
                 continue
 
-            best_weak = max(partners, key=lambda idx: kappa[idx])
+            # Pick partner that makes the most perpendicular scar vector
+            def perp_for_partner(idx):
+                return self._perp_score(pt_strong, smooth_pts[idx], axis)
+
+            best_weak = max(partners, key=perp_for_partner)
             pt_weak   = smooth_pts[best_weak]
             valid, _  = self._is_valid_scar_vector(
                 pt_strong, pt_weak, center, axis, normal_vec, min_width)
@@ -250,33 +271,30 @@ class BirthScarDetector:
                 candidates.append(dict(
                     indices = (p_strong, best_weak),
                     points  = (pt_strong, pt_weak),
-                    score   = self._score(p_strong, best_weak, kappa, long_norm),
+                    score   = self._score(p_strong, best_weak, kappa, smooth_pts, axis, long_norm),
                 ))
         return candidates
 
-    def _select_best_candidate(self, strict_cands, asym_cands, center, axis,
-                                new_pole_point):
+    def _select_best_candidate(self, strict_cands, asym_cands, new_pole_point):
         """
         Select the best candidate.
 
-        When a new-pole hint is available, pick the candidate whose midpoint
-        is geometrically closest to the new pole — directly implementing
-        "if multiple candidates, pick the one nearest the new end."
-        Strict pairs are still tried before asymmetric ones so that a
-        weak-endpoint fallback is only used when no peak-pair exists.
+        When a new-pole hint is available, ALL candidates (strict + asymmetric)
+        are merged into one pool and ranked by midpoint distance to the new pole.
+        Strict-first preference is NOT applied when a spatial hint exists — a
+        nearby asymmetric candidate beats a distant strict one.
 
-        When no hint is available, fall back to highest-prominence score.
+        When no hint is available, strict pairs are preferred and the highest-
+        scoring (prominence × perpendicularity) candidate wins.
         """
         def midpoint(c):
             return (np.array(c['points'][0]) + np.array(c['points'][1])) / 2.0
 
         if new_pole_point is not None:
-            np_arr = np.array(new_pole_point)
-            if strict_cands:
-                return min(strict_cands,
-                           key=lambda c: float(np.linalg.norm(midpoint(c) - np_arr)))
-            if asym_cands:
-                return min(asym_cands,
+            np_arr    = np.array(new_pole_point)
+            all_cands = strict_cands + asym_cands
+            if all_cands:
+                return min(all_cands,
                            key=lambda c: float(np.linalg.norm(midpoint(c) - np_arr)))
         else:
             if strict_cands:
