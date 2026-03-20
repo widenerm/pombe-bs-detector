@@ -42,6 +42,10 @@ Thumbs.db
 .idea/
 *.swp
 
+# Allow the bundled sample dataset
+!data/sample/*.h5
+!data/sample/*.hdf5
+
 # Allow documentation figures
 !docs/**/*.png
 !docs/**/*.pdf
