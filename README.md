@@ -124,9 +124,9 @@ export_csv(results, 'measurements.csv')
 ```
 pombe-bs-detector/
 ├── data/
+│   └── README.md          ← dataset description and format notes
 │   └── sample/
-│       ├── sample.h5          ← bundled 10-frame test dataset
-│       └── README.md          ← dataset description and format notes
+│       ├── sample.h5          ← bundled 5-frame test dataset 
 ├── docs/
 │   └── figs/                  example figures
 ├── notebooks/
