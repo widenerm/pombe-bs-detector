@@ -5,7 +5,7 @@ Automated detection of birth scars, old/new pole identity, cell lineage tracking
 
 <img src="docs/figs/key_example.png" width="300" alt="Detected birth scar with new pole (green), old pole (magenta), and compartment lengths">
 
-*Birth scar detection output. Yellow line: birth scar. Green marker: new pole. Magenta marker: old pole. Dashed lines: new-end and old-end compartment lengths.*
+*Birth scar detection output. Yellow line: newest birth scar. Green marker: new pole. Magenta marker: old pole. Dashed lines: new-end and old-end compartment lengths.*
 
 ---
 
