@@ -588,12 +588,12 @@ def plot_pipeline_overview(frame, result, config=None, poster=True):
         local_c[:, 1] -= c0
 
         n_panels = 6
-        fw = 5 * n_panels if poster else 4 * n_panels
+        fw = 6 * n_panels if poster else 5 * n_panels
         fh = 5.5 if poster else 4.5
         fig = plt.figure(figsize=(fw, fh))
         gs  = GridSpec(1, n_panels, figure=fig,
-                       wspace=0.08, left=0.02, right=0.98,
-                       top=0.82, bottom=0.05)
+                       wspace=0.32, left=0.02, right=0.98,
+                       top=0.82, bottom=0.08)
 
         vmin = np.percentile(crop, 1)
         vmax = np.percentile(crop, 99)
@@ -681,10 +681,13 @@ def plot_pipeline_overview(frame, result, config=None, poster=True):
                      ms=6 if poster else 4, zorder=4,
                      label='Curvature peaks')
 
-        cb = plt.colorbar(sc, ax=ax4, fraction=0.046, pad=0.03,
-                          shrink=0.85)
-        cb.set_label('κ', fontsize=label_fs)
-        cb.ax.tick_params(labelsize=label_fs - 2)
+        # Inset colorbar: lives inside the axes so it never bleeds into panel 5
+        cax = ax4.inset_axes([0.72, 0.05, 0.06, 0.55])
+        cb  = plt.colorbar(sc, cax=cax)
+        cb.set_label('κ', fontsize=label_fs - 1)
+        cb.ax.tick_params(labelsize=label_fs - 3)
+        cb.ax.yaxis.set_label_position('left')
+        cb.ax.yaxis.tick_left()
         ax4.set_title(panel_titles[3], fontsize=title_fs, fontweight='bold', pad=8)
         ax4.axis('off')
 
@@ -717,11 +720,16 @@ def plot_pipeline_overview(frame, result, config=None, poster=True):
                      label='Selected scar pair', zorder=5)
 
         ax5.set_xlabel('Contour position', fontsize=label_fs)
-        ax5.set_ylabel('Curvature  κ', fontsize=label_fs)
-        ax5.tick_params(labelsize=label_fs - 1)
+        ax5.set_ylabel('Curvature  κ', fontsize=label_fs, labelpad=4)
+        ax5.tick_params(labelsize=label_fs - 1, pad=3)
+        ax5.yaxis.set_tick_params(pad=2)
         ax5.grid(True, alpha=0.2)
         ax5.legend(fontsize=label_fs - 1, framealpha=0.85)
         ax5.set_title(panel_titles[4], fontsize=title_fs, fontweight='bold', pad=8)
+        # Pull the left edge of this axes in slightly so tick labels
+        # don't overlap with the heatmap panel to its left
+        pos5 = ax5.get_position()
+        ax5.set_position([pos5.x0 + 0.01, pos5.y0, pos5.width, pos5.height])
 
         # ── Panel 6: final detection result ───────────────────────────────────
         ax6 = fig.add_subplot(gs[5])
