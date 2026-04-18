@@ -592,7 +592,7 @@ def plot_pipeline_overview(frame, result, config=None, poster=True):
         fh = 5.5 if poster else 4.5
         fig = plt.figure(figsize=(fw, fh))
         gs  = GridSpec(1, n_panels, figure=fig,
-                       wspace=0.32, left=0.02, right=0.98,
+                       wspace=0.15, left=0.02, right=0.98,
                        top=0.82, bottom=0.08)
 
         vmin = np.percentile(crop, 1)
@@ -682,7 +682,7 @@ def plot_pipeline_overview(frame, result, config=None, poster=True):
                      label='Curvature peaks')
 
         # Inset colorbar: lives inside the axes so it never bleeds into panel 5
-        cax = ax4.inset_axes([0.72, 0.05, 0.06, 0.55])
+        cax = ax4.inset_axes([0.02, 0.05, 0.06, 0.55])
         cb  = plt.colorbar(sc, cax=cax)
         cb.set_label('κ', fontsize=label_fs - 1)
         cb.ax.tick_params(labelsize=label_fs - 3)
