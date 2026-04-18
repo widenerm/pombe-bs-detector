@@ -668,29 +668,25 @@ def plot_pipeline_overview(frame, result, config=None, poster=True):
         # ── Panel 4: curvature heatmap ─────────────────────────────────────────
         ax4 = fig.add_subplot(gs[3])
         ax4.imshow(crop, cmap='gray', vmin=vmin, vmax=vmax)
-
+ 
         kappa = dbg['kappa']
         vlim  = np.percentile(np.abs(kappa), 98) if len(kappa) else 0.1
         sc    = ax4.scatter(lsp[:, 1], lsp[:, 0], c=kappa,
                             cmap='RdBu_r', s=14 if poster else 8,
                             vmin=-vlim, vmax=vlim, zorder=3)
-
+ 
         if 'peaks' in dbg and len(dbg['peaks']) > 0:
             pk = dbg['peaks']
             ax4.plot(lsp[pk, 1], lsp[pk, 0], 'ko',
                      ms=6 if poster else 4, zorder=4,
                      label='Curvature peaks')
-
-        # Inset colorbar: lives inside the axes so it never bleeds into panel 5
-        cax = ax4.inset_axes([0.02, 0.05, 0.06, 0.55])
-        cb  = plt.colorbar(sc, cax=cax)
-        cb.set_label('κ', fontsize=label_fs - 1)
-        cb.ax.tick_params(labelsize=label_fs - 3)
-        cb.ax.yaxis.set_label_position('left')
-        cb.ax.yaxis.tick_left()
+ 
+        cb = plt.colorbar(sc, ax=ax4, fraction=0.046, pad=0.04,
+                          location='left')
+        cb.set_label('κ', fontsize=label_fs)
+        cb.ax.tick_params(labelsize=label_fs - 2)
         ax4.set_title(panel_titles[3], fontsize=title_fs, fontweight='bold', pad=8)
         ax4.axis('off')
-
         # ── Panel 5: curvature profile ────────────────────────────────────────
         ax5 = fig.add_subplot(gs[4])
         idx_arr = np.arange(len(kappa))
