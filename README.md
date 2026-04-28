@@ -168,16 +168,6 @@ pombe-bs-detector/
 
 All parameters are documented in [`pombe_tracker/config.py`](pombe_tracker/config.py).
 
----
-
-## Citation
-
-If you use BS-Detector in your research, please cite:
-
-> [Your Name et al., *Journal*, Year. BS-Detector: Automated birth scar detection and lineage tracking in *S. pombe*.]
-
----
-
 ## License
 
 MIT
