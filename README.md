@@ -1,6 +1,8 @@
 # BS-Detector
 ### Birth Scar Detector for *Schizosaccharomyces pombe*
 
+[![tests](https://github.com/widenerm/pombe-bs-detector/actions/workflows/tests.yml/badge.svg)](https://github.com/widenerm/pombe-bs-detector/actions/workflows/tests.yml)
+
 Automated detection of birth scars, old/new pole identity, cell lineage tracking, and morphometric measurements in fission yeast time-lapse brightfield microscopy.
 
 <img src="docs/figs/key_example.png" width="300" alt="Detected birth scar with new pole (green), old pole (magenta), and compartment lengths">
@@ -141,8 +143,15 @@ pombe-bs-detector/
 │   ├── pipeline.py        CellProcessor, lineage pole correction, run_pipeline
 │   ├── visualization.py   all plotting functions
 │   ├── postprocessing.py  consensus-based temporal scar stabilization
-│   └── io_utils.py        HDF5 loading, CSV export
+│   ├── io_utils.py        HDF5 loading, CSV export
+│   ├── ground_truth.py    GT schema/loaders; septin-fluorescence labels
+│   └── evaluation.py      accuracy metrics + objective (numpy/scipy only)
+├── scripts/
+│   └── evaluate.py        CLI: score a detector run against ground truth
+├── tests/                 synthetic-data unit tests (no Cellpose needed)
+├── docs/EVALUATION.md     evaluation & ground-truth reference
 ├── requirements.txt
+├── requirements-dev.txt
 ├── .gitignore
 └── README.md
 ```
@@ -167,6 +176,34 @@ pombe-bs-detector/
 | `SCAR_INSTABILITY_FRACTION` | 0.30 | Fraction of corrected/interpolated frames before `scar_stable = False` |
 
 All parameters are documented in [`pombe_tracker/config.py`](pombe_tracker/config.py).
+
+## Evaluation & ground truth
+
+BS-Detector includes a lightweight accuracy harness (`numpy` + `scipy` only) for
+measuring performance against ground truth and comparing runs objectively:
+
+```python
+from pombe_tracker.evaluation import export_eval_json, evaluate
+from pombe_tracker.ground_truth import write_template
+
+write_template('to_annotate.csv', all_results)   # hand to a lab mate to label
+export_eval_json(all_results, 'detector.json')    # serialize the run
+report = evaluate('detector.json', 'ground_truth.csv')
+print(report)
+```
+
+It reports scar detection P/R/F1, scar localization error, pole-assignment
+accuracy, length agreement (Bland–Altman vs. manual measurements), and a single
+`objective` scalar in `[0, 1]` suitable for hyperparameter optimization. Ground
+truth can come from manual annotation, existing manual length measurements, or —
+once paired brightfield + septin fluorescence is available — automatically from
+the septin channel (`septin_scar_position`). See
+[`docs/EVALUATION.md`](docs/EVALUATION.md) for the schema and full reference.
+
+```bash
+pip install -r requirements-dev.txt
+pytest tests/ -q          # synthetic-data tests; no Cellpose required
+```
 
 ## License
 
