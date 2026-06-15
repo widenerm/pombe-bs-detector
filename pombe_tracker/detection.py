@@ -44,7 +44,11 @@ postprocessing consensus pass.
 import numpy as np
 from .geometry import compute_smoothed_curvature, compute_pca_axis
 
-PROMINENCE_WINDOW = 25
+# Fallback: 25 / 300 ≈ 8.3 % of the default N_CONTOUR_POINTS.
+# The live value is computed as a fraction of the actual contour length so the
+# physical size of the ring window doesn't silently change when N_CONTOUR_POINTS
+# is tweaked.  Config.PROMINENCE_WINDOW_FRAC overrides this default.
+_PROMINENCE_WINDOW_DEFAULT_FRAC = 25 / 300
 
 
 class BirthScarDetector:
@@ -155,14 +159,18 @@ class BirthScarDetector:
 
     def _peak_prominence(self, kappa, peak_idx):
         """
-        Local prominence = kappa[peak] − mean(kappa in ±PROMINENCE_WINDOW ring).
+        Local prominence = kappa[peak] − mean(kappa in ±window ring).
 
+        The window is a fixed fraction of the contour length (default ≈ 8 %),
+        so it covers the same physical arc regardless of N_CONTOUR_POINTS.
         Rewards sharp localised bumps (birth-scar ridges) over broad flat
         regions that happen to have a slightly elevated absolute curvature.
         """
-        n       = len(kappa)
+        n      = len(kappa)
+        frac   = getattr(self.cfg, 'PROMINENCE_WINDOW_FRAC', _PROMINENCE_WINDOW_DEFAULT_FRAC)
+        window = max(1, int(round(n * frac)))
         indices = [(peak_idx + d) % n
-                   for d in range(-PROMINENCE_WINDOW, PROMINENCE_WINDOW + 1)
+                   for d in range(-window, window + 1)
                    if d != 0]
         baseline = float(np.mean(kappa[indices]))
         return max(0.0, float(kappa[peak_idx]) - baseline)

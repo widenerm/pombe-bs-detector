@@ -29,7 +29,16 @@ def compute_smoothed_curvature(contour, smooth_factor, n_points=300):
     denom = (dx**2 + dy**2)**1.5
     kappa = np.where(denom > 1e-10, (dx * ddy - dy * ddx) / denom, 0.0)
 
-    if np.mean(kappa) < 0:
+    # Enforce "convex = positive κ" using the raw contour's winding direction.
+    # mean(kappa) < 0 fails for septum fragments, whose extreme concavity spike
+    # can push the mean negative even when most of the contour is convex.
+    # Shoelace (signed area of the raw contour) is robust to extreme local κ.
+    # skimage find_contours returns contours with enclosed area on the LEFT of
+    # the direction of travel in image coords (y-down) → CW winding →
+    # shoelace < 0.  The curvature formula above gives positive κ at convex
+    # points for CW traversal, so the sign is correct when shoelace < 0.
+    raw_signed_area = float(np.sum(x[:-1] * y[1:] - x[1:] * y[:-1]))
+    if raw_signed_area > 0:
         kappa = -kappa
 
     smooth_pts = np.vstack([y_s, x_s]).T
@@ -104,7 +113,17 @@ def compute_curvature_fingerprint(kappa, n_bins=20):
     """
     Normalized histogram of curvature values.
     Used as a soft cell identity signal in the Hungarian tracker.
+
+    The histogram is computed over the cell's own curvature range (±99th
+    percentile of |κ|) so it captures the *shape* of the distribution rather
+    than absolute curvature magnitude.  S. pombe cells at typical microscope
+    magnifications have |κ| << 1.0, so a fixed range of ±1.0 (the previous
+    default) would collapse all signal into a handful of central bins.
     """
-    hist, _ = np.histogram(kappa, bins=n_bins, range=(-1.0, 1.0))
+    kappa_scale = float(np.percentile(np.abs(kappa), 99))
+    if kappa_scale < 1e-9:
+        return np.zeros(n_bins)
+    hist, _ = np.histogram(kappa, bins=n_bins,
+                           range=(-kappa_scale, kappa_scale))
     norm    = np.linalg.norm(hist)
     return hist.astype(float) / (norm + 1e-8)

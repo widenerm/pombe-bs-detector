@@ -384,9 +384,12 @@ def _interpolate_frames(results, suspect_indices):
 
         r['scar_midpoint'] = new_mp
         r['scar_detected'] = True
-        # Degenerate pair so visualization never hits a KeyError on scar_points
+        # Degenerate pair so visualization never hits a KeyError on scar_points.
+        # width_scar is None (not 0.0) to prevent downstream analysts from
+        # confusing an interpolated row with a real measurement; rely on
+        # scar_source == 'interpolated' as the authoritative flag.
         r['scar_points']   = (new_mp, new_mp)
-        r['width_scar']    = 0.0   # explicitly zero — not a real measurement
+        r['width_scar']    = None
 
         if np_pt is not None and op_pt is not None:
             from .geometry import measure_pole_lengths

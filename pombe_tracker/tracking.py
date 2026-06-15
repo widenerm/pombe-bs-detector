@@ -54,9 +54,10 @@ after division, before any scar-based inference runs.
 import numpy as np
 from scipy.optimize import linear_sum_assignment
 
-MATCH_THRESHOLD = 1.5
-
-DIVISION_SUSPICION_RATIO = 0.75
+# These remain here for backward-compat imports, but the live values are read
+# from Config so that hyperparameter sweeps can reach them.
+MATCH_THRESHOLD          = 1.5   # fallback if not in Config
+DIVISION_SUSPICION_RATIO = 0.75  # fallback if not in Config
 
 
 class CellTracker:
@@ -99,11 +100,14 @@ class CellTracker:
         a1, a2    = prev['area'], curr['area']
         area_cost = abs(a1 - a2) / (max(a1, a2) + 1e-9)
 
-        f1, f2    = prev.get('fingerprint'), curr.get('fingerprint')
+        # prev is a track-state dict (key 'fingerprint');
+        # curr is a raw result dict (fingerprint lives in debug_info).
+        f1 = prev.get('fingerprint')
+        f2 = curr.get('debug_info', {}).get('curvature_fingerprint')
         curv_cost = float(np.linalg.norm(f1 - f2)) if (f1 is not None and f2 is not None) else 0.0
 
-        return (cfg.COST_WEIGHT_DISTANCE   * dist_cost
-                + cfg.COST_WEIGHT_AREA     * area_cost
+        return (cfg.COST_WEIGHT_DISTANCE    * dist_cost
+                + cfg.COST_WEIGHT_AREA      * area_cost
                 + cfg.COST_WEIGHT_CURVATURE * curv_cost)
 
     # ── Public ───────────────────────────────────────────────────────────────
@@ -141,14 +145,17 @@ class CellTracker:
         assigned_curr   = set()
         suspicious      = []
 
+        match_threshold      = getattr(self.cfg, 'MATCH_THRESHOLD',          MATCH_THRESHOLD)
+        div_suspicion_ratio  = getattr(self.cfg, 'DIVISION_SUSPICION_RATIO', DIVISION_SUSPICION_RATIO)
+
         for r, c in zip(row_ind, col_ind):
-            if cost_matrix[r, c] >= MATCH_THRESHOLD:
+            if cost_matrix[r, c] >= match_threshold:
                 continue
             pl  = prev_labels[r]
             cl  = curr_labels[c]
             prev_area = self.active_tracks[pl]['area']
             curr_area = curr_by_lbl[cl].get('area', 0)
-            if prev_area > 0 and curr_area / prev_area < DIVISION_SUSPICION_RATIO:
+            if prev_area > 0 and curr_area / prev_area < div_suspicion_ratio:
                 suspicious.append((r, c))
             else:
                 name = self.active_tracks[pl]['name']
@@ -240,6 +247,7 @@ class CellTracker:
 
         cfg               = self.cfg
         fp_threshold      = getattr(cfg, 'GHOST_FINGERPRINT_THRESHOLD', 1.0)
+        match_threshold   = getattr(cfg, 'MATCH_THRESHOLD', MATCH_THRESHOLD)
         used_ghost_indices = set()
 
         for cl in unmatched_curr_labels:
@@ -287,7 +295,7 @@ class CellTracker:
                     best_cost = cost
                     best_idx  = gi
 
-            if best_idx is not None and best_cost < MATCH_THRESHOLD:
+            if best_idx is not None and best_cost < match_threshold:
                 resumed_state = self._lost_tracks[best_idx]['state']
                 new_tracks[cl] = self._make_state(curr, resumed_state['name'])
                 used_ghost_indices.add(best_idx)
