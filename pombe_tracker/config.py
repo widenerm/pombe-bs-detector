@@ -69,6 +69,21 @@ class Config:
     COST_WEIGHT_CURVATURE = 0.3
     DIVISION_AREA_RATIO   = 0.35
 
+    # Maximum Hungarian assignment cost before a match is rejected.
+    # Lower → stricter (fewer cross-frame ID switches, more cell-lost events).
+    MATCH_THRESHOLD = 1.5
+
+    # If a matched cell's area drops below this fraction of the previous cell's
+    # area, the match is treated as a possible division rather than tracking.
+    DIVISION_SUSPICION_RATIO = 0.75
+
+    # ── BIRTH SCAR PROMINENCE WINDOW ──────────────────────────────────────
+    # The local-prominence baseline ring spans ±PROMINENCE_WINDOW_FRAC of
+    # the resampled contour length (N_CONTOUR_POINTS).  Default ≈ 8 %,
+    # equivalent to the old hard-coded 25-index window at N_CONTOUR_POINTS=300.
+    # Increase to make the baseline broader (less sensitive to nearby peaks).
+    PROMINENCE_WINDOW_FRAC = 25 / 300   # ≈ 0.083
+
     # ── GHOST TRACK MATCHING ──────────────────────────────────────────────
     # When Cellpose produces a bad segmentation for a frame or two, the
     # original cell track is temporarily lost.  Before minting a new base
