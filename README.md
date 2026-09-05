@@ -18,11 +18,17 @@ BS-Detector finds these scars automatically by:
 1. **Filtering** segmentation masks by area, aspect ratio, and circularity to reject debris before any tracking occurs
 2. **Segmenting** cells with [Cellpose](https://github.com/MouseLand/cellpose)
 3. **Computing** a smoothed curvature profile along each cell's contour
-4. **Finding** curvature peak pairs that satisfy two geometric constraints:
+4. **Finding** birth-scar candidates by summing local curvature excess in a
+   longitudinal window on both sides of the PCA axis. This allows a scar to
+   be prominent on only one side, while excluding the rounded pole caps:
    - The pair must be on **opposite sides** of the cell
-   - The vector connecting them must be **perpendicular** to the long axis (±`MAX_ANGLE_DEVIATION`°)
+   - Candidate windows in the first/last `SCAR_CAP_EXCLUSION` fraction of the
+     cell are rejected
+   - The connecting vector receives a soft perpendicularity weight, allowing
+     slightly diagonal scars
    - The pair must span **≥ `MIN_SCAR_WIDTH_RATIO`** of the cell's **average mid-cell width** (sampled at seven cross-sections between 20–80% of cell length, which is more stable than the maximum width)
-5. **Scoring** candidates by **local prominence** (peak curvature minus the mean curvature in a ±25-index ring window) multiplied by a **perpendicularity bonus**, rewarding sharp localised ridges over broad flat regions and selecting the most geometrically accurate scar location among candidates in the same region
+5. **Scoring** candidates by the sum of positive local curvature excess in the
+   window multiplied by a soft perpendicularity weight
 6. **Identifying** new vs. old poles via, in priority order: lineage inheritance at division, birth scar geometry, unambiguous neighbor proximity, or pole morphology as a fallback. Chain cells (both poles touching credible neighbors) are detected explicitly and fall through to scar-based assignment rather than producing a false positive
 7. **Tracking** cells across frames with a Hungarian algorithm using center displacement, area change, and a curvature fingerprint. Ghost-track matching resumes lost tracks through bad-segmentation frames rather than minting new lineage names
 8. **Assigning lineage names**: `A → A0 / A1 → A00 / A01 / A10 / A11 → …` where `0` always denotes the new-end daughter and `1` the old-end daughter. Daughter pole assignments are corrected immediately at division using the parent's stored pole coordinates
@@ -117,6 +123,16 @@ results, report     = stabilize_scars(results, cfg)
 export_csv(results, 'measurements.csv')
 ```
 
+### Validation and hyperparameter tuning
+
+Use [`notebooks/BS_Detector_Validation_Tuning.ipynb`](notebooks/BS_Detector_Validation_Tuning.ipynb)
+to validate detector changes against manually collected ground truth. The
+notebook caches Cellpose labels once, then sweeps curvature-window, pole-cap,
+width, angle, and endpoint-offset parameters without rerunning segmentation.
+See [`validation/GROUND_TRUTH_PROTOCOL.md`](validation/GROUND_TRUTH_PROTOCOL.md)
+and [`validation/ground_truth_template.csv`](validation/ground_truth_template.csv)
+for the measurement format.
+
 ---
 
 ## Repository structure
@@ -155,7 +171,10 @@ pombe-bs-detector/
 |---|---|---|
 | `SMOOTH_FACTOR` | 40.0 | B-spline smoothing; increase to reduce noise |
 | `MIN_SCAR_WIDTH_RATIO` | 0.80 | Minimum scar width as a fraction of average mid-cell width; increase to be stricter |
-| `MAX_ANGLE_DEVIATION` | 20.0° | Max deviation from perpendicular; decrease to be stricter |
+| `SCAR_CURVATURE_WINDOW` | 0.08 | Longitudinal scoring-window width as a fraction of cell length |
+| `SCAR_CAP_EXCLUSION` | 0.12 | Fraction at each pole excluded from scar candidate windows |
+| `SCAR_MAX_LONGITUDINAL_OFFSET` | 0.08 | Maximum longitudinal offset between selected endpoints |
+| `MAX_ANGLE_DEVIATION` | 30.0° | Retained for legacy pair validation; windowed scoring uses a soft angle weight |
 | `ASPECT_RATIO_MIN` | 1.5 | Minimum major/minor axis ratio; increase to reject shorter debris |
 | `MAX_CIRCULARITY` | 0.85 | Maximum 4π·area/perimeter²; decrease to be stricter about rod shape |
 | `POLE_PROXIMITY_THRESHOLD` | 100 px | Max tip-to-tip distance to call two cells neighbors |

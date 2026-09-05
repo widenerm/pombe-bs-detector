@@ -50,13 +50,17 @@ class Config:
     # stored per frame and used by the temporal stabilization pass to enforce
     # a cross-frame consensus without re-running the detector.
     #
-    # Two geometric constraints suppress false positives at the poles:
-    #   1. WIDTH   Scar must span >= MIN_SCAR_WIDTH_RATIO x max cell width.
-    #   2. ANGLE   Scar vector must be ⊥ to the long axis within
-    #              MAX_ANGLE_DEVIATION degrees.
+    # Windowed curvature is evaluated at normalized longitudinal positions
+    # rather than requiring two equally strong curvature peaks.  The first
+    # and last fractions of the PCA axis are cap regions; excluding them is
+    # important because ordinary pole rounding is often the strongest
+    # curvature on an otherwise scar-free cell.
 
     MIN_SCAR_WIDTH_RATIO = 0.80   # 0.0–1.0;  increase to be more strict
-    MAX_ANGLE_DEVIATION  = 20.0   # degrees;  try 15–25
+    MAX_ANGLE_DEVIATION  = 30.0   # soft score penalty; try 20–35
+    SCAR_CURVATURE_WINDOW = 0.08  # longitudinal window, as fraction of cell length
+    SCAR_CAP_EXCLUSION = 0.12     # never score windows centred in these cap regions
+    SCAR_MAX_LONGITUDINAL_OFFSET = 0.08  # endpoint offset allowed within a window
 
     # ── NEIGHBOR / POLE DETECTION ─────────────────────────────────────────
     POLE_PROXIMITY_THRESHOLD      = 100.0

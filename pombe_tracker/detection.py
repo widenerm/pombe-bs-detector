@@ -3,40 +3,33 @@ detection.py  –  BirthScarDetector
 
 Strategy
 ────────
-The full cell contour is always searched.  If a new-pole hint is provided,
-the candidate whose midpoint is geometrically closest to the new pole is
-selected from the combined strict + asymmetric pool — no type preference is
-applied when a spatial hint is available.  When no hint exists, strict pairs
-are preferred and the highest-scoring candidate wins.
+The full cell contour is always searched.  Curvature is accumulated in a
+longitudinal window on both sides of the PCA axis, so a scar does not need to
+produce two independent local maxima.  The first and last cap regions are
+excluded because normal pole rounding otherwise dominates scar-free cells.
 
-Two geometric constraints suppress false positives at the poles:
+Geometric constraints suppress false positives at the poles:
 
   1. WIDTH   The scar vector must span ≥ MIN_SCAR_WIDTH_RATIO × average
              mid-cell width (seven cross-sections at 20–80 % of cell length).
              Average width is more stable than max width, which can be
              inflated by the scar bulge itself.
 
-  2. ANGLE   The scar vector must be ⊥ to the long axis (within
-             MAX_ANGLE_DEVIATION°).
+  2. CAPS    Windows centred in the first/last SCAR_CAP_EXCLUSION fraction
+             of the long axis are never considered.
+  3. ANGLE   The scar vector receives a soft perpendicularity weight, allowing
+             genuinely diagonal scars without making pole candidates compete.
 
 Scoring
 ───────
-score = prominence_sum × (1 + perp_score)
+score = windowed_prominence_sum × angle_weight
 
-  prominence_sum : sum of local prominences for both peak endpoints.
-                   Prominence = peak κ − mean(κ in ±PROMINENCE_WINDOW ring),
-                   which rewards sharp localised bumps over broad flat regions.
+  windowed_prominence_sum : positive curvature above a local baseline,
+                            accumulated over a longitudinal window on both
+                            sides of the cell.
 
-  perp_score     : 1 − |dot(scar_unit, axis)|, ranging from 0 (parallel) to
-                   1 (perfectly perpendicular).  Among candidates in the same
-                   region this selects the most geometrically accurate scar
-                   location.
-
-Asymmetric partner selection
-────────────────────────────
-For each strong curvature peak, partner candidates on the opposite side are
-now ranked by perpendicularity (not raw κ), so the selected pair is as close
-to orthogonal to the cell axis as possible.
+  angle_weight   : square-rooted perpendicularity score.  Cap exclusion is
+                   applied before scoring, not as a soft penalty.
 
 All valid candidates are stored in debug_info['scar_candidates'] for the
 postprocessing consensus pass.
@@ -112,17 +105,10 @@ class BirthScarDetector:
             debug_info['scar_candidates'] = []
             return None, debug_info
 
-        strict_cands = self._collect_strict_candidates(
-            peaks, smooth_pts, kappa, center, axis, normal_vec, min_scar_width, long_norm)
-        asym_cands   = self._collect_asymmetric_candidates(
-            peaks, smooth_pts, kappa, center, axis, normal_vec, long_norm, min_scar_width)
-
-        for c in strict_cands:
-            c['match_type'] = 'strict'
-        for c in asym_cands:
-            c['match_type'] = 'fallback'
-
-        all_cands = strict_cands + asym_cands
+        all_cands = self._collect_windowed_candidates(
+            smooth_pts, kappa, center, axis, normal_vec, min_scar_width, long_norm)
+        for c in all_cands:
+            c['match_type'] = 'windowed'
 
         debug_info['scar_candidates'] = [
             {'points': c['points'], 'score': c['score'], 'match_type': c['match_type']}
@@ -133,8 +119,7 @@ class BirthScarDetector:
             debug_info['error'] = 'no_valid_pairs'
             return None, debug_info
 
-        best = self._select_best_candidate(
-            strict_cands, asym_cands, new_pole_point)
+        best = self._select_best_candidate(all_cands, new_pole_point)
 
         debug_info.update(
             match_type = best['match_type'],
@@ -178,6 +163,18 @@ class BirthScarDetector:
             return 0.0
         return 1.0 - float(np.abs(np.dot(scar_vec / norm, axis)))
 
+    def _local_curvature_excess(self, kappa):
+        """Return positive curvature above a circular local median baseline."""
+        n = len(kappa)
+        excess = np.zeros(n, dtype=float)
+        for idx in range(n):
+            offsets = [(idx + d) % n for d in range(-PROMINENCE_WINDOW,
+                                                       PROMINENCE_WINDOW + 1)
+                       if d != 0]
+            baseline = float(np.median(kappa[offsets]))
+            excess[idx] = max(0.0, float(kappa[idx]) - baseline)
+        return excess
+
     def _score(self, i1, i2, kappa, smooth_pts, axis, long_norm=None):
         """
         Combined score = prominence_sum × (1 + perp_score).
@@ -191,7 +188,84 @@ class BirthScarDetector:
         perp = self._perp_score(smooth_pts[i1], smooth_pts[i2], axis)
         return prom * (1.0 + perp)
 
-    def _is_valid_scar_vector(self, pt1, pt2, center, axis, normal_vec, min_width):
+    def _collect_windowed_candidates(self, smooth_pts, kappa, center, axis,
+                                     normal_vec, min_width, long_norm):
+        """Collect candidates by integrating curvature in longitudinal windows.
+
+        Unlike peak pairing, each side contributes independently.  This makes
+        a strong feature on only one side sufficient, while the cap exclusion
+        prevents ordinary pole curvature from winning on scar-free cells.
+        """
+        n = len(smooth_pts)
+        side = np.sign((smooth_pts - center) @ normal_vec)
+        excess = self._local_curvature_excess(kappa)
+        window = float(getattr(self.cfg, 'SCAR_CURVATURE_WINDOW', 0.08))
+        half_window = window / 2.0
+        cap = float(getattr(self.cfg, 'SCAR_CAP_EXCLUSION', 0.12))
+        max_offset = float(getattr(self.cfg, 'SCAR_MAX_LONGITUDINAL_OFFSET', 0.08))
+        candidates = []
+
+        # Use a modest number of overlapping windows.  This gives the
+        # stabilizer several nearby alternatives without emitting one
+        # candidate for every contour sample.
+        centers = np.linspace(cap, 1.0 - cap, max(12, n // 12))
+        for target in centers:
+            eligible = ((long_norm >= cap) & (long_norm <= 1.0 - cap))
+            near = eligible & (np.abs(long_norm - target) <= half_window)
+            if not near.any():
+                continue
+
+            side_scores = []
+            side_indices = []
+            for sign in (-1.0, 1.0):
+                members = np.flatnonzero(near & (side == sign))
+                if len(members) == 0:
+                    side_scores.append(0.0)
+                    side_indices.append(None)
+                    continue
+                # Mean avoids a sampling-density bias; summing the two side
+                # means retains the intended "either side can be strong"
+                # behavior while keeping scores comparable across windows.
+                side_scores.append(float(np.mean(excess[members])))
+                side_indices.append(int(members[np.argmax(excess[members])]))
+
+            if side_indices[0] is None or side_indices[1] is None:
+                continue
+            p1, p2 = side_indices
+            if abs(long_norm[p1] - long_norm[p2]) > max_offset:
+                continue
+            valid, width = self._is_valid_scar_vector(
+                smooth_pts[p1], smooth_pts[p2], center, axis, normal_vec,
+                min_width, enforce_angle=False)
+            if not valid:
+                continue
+
+            scar_vec = smooth_pts[p2] - smooth_pts[p1]
+            angle_deg = np.degrees(np.arccos(np.clip(
+                np.abs(np.dot(scar_vec / np.linalg.norm(scar_vec), axis)),
+                0.0, 1.0)))
+            angle_deviation = abs(90.0 - angle_deg)
+            angle_scale = float(getattr(self.cfg, 'MAX_ANGLE_DEVIATION', 30.0))
+            angle_weight = np.exp(-0.5 * (angle_deviation / angle_scale) ** 2)
+            score = (side_scores[0] + side_scores[1]) * angle_weight
+            # A geometrically valid cross-section is not automatically a
+            # scar.  In particular, a smooth scar-free rod should not yield
+            # an arbitrary zero-score candidate after cap suppression.
+            if score <= 1e-10:
+                continue
+            candidates.append(dict(
+                indices=(p1, p2),
+                points=(smooth_pts[p1], smooth_pts[p2]),
+                score=float(score),
+                window_center=float(target),
+                window_curvature=float(side_scores[0] + side_scores[1]),
+                angle_weight=float(angle_weight),
+                width=float(width),
+            ))
+        return candidates
+
+    def _is_valid_scar_vector(self, pt1, pt2, center, axis, normal_vec,
+                              min_width, enforce_angle=True):
         """
         Return (is_valid, scar_width) for a candidate scar pt1 → pt2.
         Checks: opposite sides, minimum width vs average, perpendicularity.
@@ -209,7 +283,7 @@ class BirthScarDetector:
         scar_unit = scar_vec / width
         angle_deg = np.degrees(
             np.arccos(np.clip(np.abs(np.dot(scar_unit, axis)), 0.0, 1.0)))
-        if abs(90.0 - angle_deg) >= self.cfg.MAX_ANGLE_DEVIATION:
+        if enforce_angle and abs(90.0 - angle_deg) >= self.cfg.MAX_ANGLE_DEVIATION:
             return False, width
 
         return True, width
@@ -275,32 +349,24 @@ class BirthScarDetector:
                 ))
         return candidates
 
-    def _select_best_candidate(self, strict_cands, asym_cands, new_pole_point):
+    def _select_best_candidate(self, candidates, new_pole_point):
         """
         Select the best candidate.
 
-        When a new-pole hint is available, ALL candidates (strict + asymmetric)
-        are merged into one pool and ranked by midpoint distance to the new pole.
-        Strict-first preference is NOT applied when a spatial hint exists — a
-        nearby asymmetric candidate beats a distant strict one.
-
-        When no hint is available, strict pairs are preferred and the highest-
-        scoring (prominence × perpendicularity) candidate wins.
+        With a new-pole hint, spatial proximity remains authoritative. Without
+        one, the highest windowed score wins.
         """
         def midpoint(c):
             return (np.array(c['points'][0]) + np.array(c['points'][1])) / 2.0
 
         if new_pole_point is not None:
             np_arr    = np.array(new_pole_point)
-            all_cands = strict_cands + asym_cands
-            if all_cands:
-                return min(all_cands,
+            if candidates:
+                return min(candidates,
                            key=lambda c: float(np.linalg.norm(midpoint(c) - np_arr)))
         else:
-            if strict_cands:
-                return max(strict_cands, key=lambda x: x['score'])
-            if asym_cands:
-                return max(asym_cands, key=lambda x: x['score'])
+            if candidates:
+                return max(candidates, key=lambda x: x['score'])
 
         raise RuntimeError('_select_best_candidate called with no candidates')
 

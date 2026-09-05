@@ -1,0 +1,2 @@
+video_id,raw_frame_file,image_file,frame,cell_name,scorer_initials,gt_area_px2,gt_scar_mid_x_px,gt_scar_mid_y_px,gt_poleA_length_px,gt_poleB_length_px,gt_new_pole_guess,notes
+experiment_03202025_wt_ymd494__xy1,experiment_03202025_wt_ymd494__xy1_frame0003_raw.tif,experiment_03202025_wt_ymd494__xy1_frame0003_blinded.png,3,A01,EXAMPLE,842.0,110.5,88.2,14.3,29.7,A,delete this row before submitting
