@@ -84,8 +84,6 @@ class BirthScarDetector:
                 t = transverse[mask]
                 sample_widths.append(float(t.max() - t.min()))
         avg_width      = float(np.mean(sample_widths)) if sample_widths else max_thickness
-        min_scar_width = self.cfg.MIN_SCAR_WIDTH_RATIO * avg_width
-
         debug_info = {
             'smooth_pts':    smooth_pts,
             'kappa':         kappa,
@@ -105,12 +103,18 @@ class BirthScarDetector:
         debug_info['peaks'] = peaks
 
         all_cands = self._collect_windowed_candidates(
-            smooth_pts, kappa, center, axis, normal_vec, min_scar_width, long_norm)
+            smooth_pts, kappa, center, axis, normal_vec, avg_width, long_norm)
         for c in all_cands:
             c['match_type'] = 'windowed'
 
         debug_info['scar_candidates'] = [
-            {'points': c['points'], 'score': c['score'], 'match_type': c['match_type']}
+            {'points': c['points'], 'score': c['score'], 'match_type': c['match_type'],
+             'window_center': c.get('window_center'),
+             'window_curvature': c.get('window_curvature'),
+             'angle_weight': c.get('angle_weight'),
+             'width': c.get('width'),
+             'width_weight': c.get('width_weight'),
+             'recency_weight': c.get('recency_weight')}
             for c in all_cands
         ]
 
@@ -188,7 +192,7 @@ class BirthScarDetector:
         return prom * (1.0 + perp)
 
     def _collect_windowed_candidates(self, smooth_pts, kappa, center, axis,
-                                     normal_vec, min_width, long_norm):
+                                     normal_vec, reference_width, long_norm):
         """Collect candidates by integrating curvature in longitudinal windows.
 
         Unlike peak pairing, each side contributes independently.  This makes
@@ -202,6 +206,9 @@ class BirthScarDetector:
         half_window = window / 2.0
         cap = float(getattr(self.cfg, 'SCAR_CAP_EXCLUSION', 0.12))
         max_offset = float(getattr(self.cfg, 'SCAR_MAX_LONGITUDINAL_OFFSET', 0.08))
+        recency_target = float(getattr(self.cfg, 'SCAR_RECENCY_TARGET', 0.22))
+        recency_spread = float(getattr(self.cfg, 'SCAR_RECENCY_SPREAD', 0.16))
+        width_floor = float(getattr(self.cfg, 'SCAR_WIDTH_SOFT_FLOOR', 0.35))
         candidates = []
 
         # Use a modest number of overlapping windows.  This gives the
@@ -235,7 +242,7 @@ class BirthScarDetector:
                 continue
             valid, width = self._is_valid_scar_vector(
                 smooth_pts[p1], smooth_pts[p2], center, axis, normal_vec,
-                min_width, enforce_angle=False)
+                0.0, enforce_angle=False)
             if not valid:
                 continue
 
@@ -246,7 +253,17 @@ class BirthScarDetector:
             angle_deviation = abs(90.0 - angle_deg)
             angle_scale = float(getattr(self.cfg, 'MAX_ANGLE_DEVIATION', 30.0))
             angle_weight = np.exp(-0.5 * (angle_deviation / angle_scale) ** 2)
-            score = (side_scores[0] + side_scores[1]) * angle_weight
+            scar_u = float((long_norm[p1] + long_norm[p2]) / 2.0)
+            pole_distance = min(scar_u, 1.0 - scar_u)
+            recency_weight = np.exp(-0.5 *
+                                    ((pole_distance - recency_target) /
+                                     max(recency_spread, 1e-6)) ** 2)
+            width_ratio = width / max(float(reference_width), 1e-6)
+            # Width is informative, but tapered near-pole scars must not be
+            # rejected merely because they are narrower than mid-cell width.
+            width_weight = width_floor + (1.0 - width_floor) * min(width_ratio, 1.0)
+            score = ((side_scores[0] + side_scores[1]) * angle_weight *
+                     recency_weight * width_weight)
             # A geometrically valid cross-section is not automatically a
             # scar.  In particular, a smooth scar-free rod should not yield
             # an arbitrary zero-score candidate after cap suppression.
@@ -260,6 +277,8 @@ class BirthScarDetector:
                 window_curvature=float(side_scores[0] + side_scores[1]),
                 angle_weight=float(angle_weight),
                 width=float(width),
+                width_weight=float(width_weight),
+                recency_weight=float(recency_weight),
             ))
         return candidates
 

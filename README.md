@@ -185,6 +185,9 @@ pombe-bs-detector/
 | `SCAR_CURVATURE_WINDOW` | 0.08 | Longitudinal scoring-window width as a fraction of cell length |
 | `SCAR_CAP_EXCLUSION` | 0.12 | Fraction at each pole excluded from scar candidate windows |
 | `SCAR_MAX_LONGITUDINAL_OFFSET` | 0.08 | Maximum longitudinal offset between selected endpoints |
+| `SCAR_RECENCY_TARGET` | 0.22 | Preferred distance from the nearest pole for a recent scar |
+| `SCAR_RECENCY_SPREAD` | 0.16 | Softness of the near-pole preference |
+| `SCAR_WIDTH_SOFT_FLOOR` | 0.35 | Minimum relative weight for a narrow but valid scar |
 | `MAX_ANGLE_DEVIATION` | 30.0° | Retained for legacy pair validation; windowed scoring uses a soft angle weight |
 | `ASPECT_RATIO_MIN` | 1.5 | Minimum major/minor axis ratio; increase to reject shorter debris |
 | `MAX_CIRCULARITY` | 0.85 | Maximum 4π·area/perimeter²; decrease to be stricter about rod shape |

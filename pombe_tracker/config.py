@@ -56,11 +56,16 @@ class Config:
     # important because ordinary pole rounding is often the strongest
     # curvature on an otherwise scar-free cell.
 
-    MIN_SCAR_WIDTH_RATIO = 0.80   # 0.0–1.0;  increase to be more strict
+    MIN_SCAR_WIDTH_RATIO = 0.80   # legacy hard gate; windowed scoring uses soft width
     MAX_ANGLE_DEVIATION  = 30.0   # soft score penalty; try 20–35
     SCAR_CURVATURE_WINDOW = 0.08  # longitudinal window, as fraction of cell length
     SCAR_CAP_EXCLUSION = 0.12     # never score windows centred in these cap regions
     SCAR_MAX_LONGITUDINAL_OFFSET = 0.08  # endpoint offset allowed within a window
+    # Prefer a recent scar near (but not inside) a pole without forcing it to
+    # one exact location. This soft prior is used without a pole hint.
+    SCAR_RECENCY_TARGET = 0.22    # distance from nearest pole, normalized [0, 0.5]
+    SCAR_RECENCY_SPREAD = 0.16    # softness of the near-pole preference
+    SCAR_WIDTH_SOFT_FLOOR = 0.35  # width ratio at which the soft score is 0.5
 
     # ── NEIGHBOR / POLE DETECTION ─────────────────────────────────────────
     POLE_PROXIMITY_THRESHOLD      = 100.0
