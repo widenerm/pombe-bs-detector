@@ -97,13 +97,12 @@ class BirthScarDetector:
             'display_mask':  np.ones(len(smooth_pts), dtype=bool),
         }
 
+        # Keep local maxima for the curvature-profile visualization, but do
+        # not use their existence as a gate.  The detector now scores
+        # windowed curvature excess, so a broad or faint scar may be useful
+        # even when it does not contain a sharp local maximum.
         peaks = self._find_peaks(kappa)
         debug_info['peaks'] = peaks
-
-        if len(peaks) == 0:
-            debug_info['error']           = 'no_peaks'
-            debug_info['scar_candidates'] = []
-            return None, debug_info
 
         all_cands = self._collect_windowed_candidates(
             smooth_pts, kappa, center, axis, normal_vec, min_scar_width, long_norm)
@@ -116,7 +115,7 @@ class BirthScarDetector:
         ]
 
         if not all_cands:
-            debug_info['error'] = 'no_valid_pairs'
+            debug_info['error'] = 'no_valid_windowed_candidates'
             return None, debug_info
 
         best = self._select_best_candidate(all_cands, new_pole_point)

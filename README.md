@@ -36,7 +36,7 @@ BS-Detector finds these scars automatically by:
 
 ### Curvature analysis
 
-Signed curvature is computed along a smoothed B-spline contour. Birth scars appear as paired curvature peaks on opposite sides of the cell. The curvature heatmap and profile are available for every cell to aid manual inspection and parameter tuning.
+Signed curvature is computed along a smoothed B-spline contour. Birth scars are scored by windowed curvature excess on opposite sides of the cell; sharp paired peaks are useful diagnostics but are not required. The curvature heatmap and profile are available for every cell to aid manual inspection and parameter tuning.
 
 <img src="docs/figs/heatmap.png" width="300" alt="Curvature heatmap overlaid on cell contour">
 
