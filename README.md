@@ -133,6 +133,17 @@ See [`validation/GROUND_TRUTH_PROTOCOL.md`](validation/GROUND_TRUTH_PROTOCOL.md)
 and [`validation/ground_truth_template.csv`](validation/ground_truth_template.csv)
 for the measurement format.
 
+Sparse TIFF packages can be converted for the notebook with:
+
+```bash
+python scripts/convert_validation_tifs_to_h5.py \
+    validation/package_for_carmen \
+    --output validation/h5_for_drive/carmen_package_1
+```
+
+The converter accepts either a package directory or ZIP file and preserves
+the original movie frame numbers in each H5's `frame_numbers` dataset.
+
 ---
 
 ## Repository structure
