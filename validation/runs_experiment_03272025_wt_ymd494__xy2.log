@@ -1,0 +1,3184 @@
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+/Users/xwidener/Documents/pombe-bs-detector/pombe_tracker/pipeline.py:364: FutureWarning: `RegionProperties.minor_axis_length` is deprecated starting in version 0.26 and will be removed in version 2.0. Use `RegionProperties.axis_minor_length` instead. 
+  minor = region.minor_axis_length
+/Users/xwidener/Documents/pombe-bs-detector/pombe_tracker/pipeline.py:367: FutureWarning: `RegionProperties.major_axis_length` is deprecated starting in version 0.26 and will be removed in version 2.0. Use `RegionProperties.axis_major_length` instead. 
+  if region.major_axis_length / minor < min_ar:
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+Loaded: (241, 2304, 2304)  (frames × height × width)
+Cellpose GPU: True
+
+[Frame 1/241]
+  3 cells  |  3 scars detected
+  A: ✓  new=13.0px  old=128.1px  ratio=0.10  [neighbor_proximity]
+  B: ✓  new=18.7px  old=132.1px  ratio=0.14  [neighbor_proximity]
+  C: ✓  new=44.3px  old=209.2px  ratio=0.21  [scar_based]
+
+[Frame 2/241]
+  3 cells  |  3 scars detected
+  A: ✓  new=14.5px  old=127.0px  ratio=0.11  [neighbor_proximity]
+  B: ✓  new=18.2px  old=132.1px  ratio=0.14  [neighbor_proximity]
+  C: ✓  new=27.9px  old=226.5px  ratio=0.12  [scar_based]
+
+[Frame 3/241]
+  3 cells  |  3 scars detected
+  A: ✓  new=16.0px  old=128.6px  ratio=0.12  [neighbor_proximity]
+  B: ✓  new=15.9px  old=135.6px  ratio=0.12  [neighbor_proximity]
+  C: ✓  new=27.1px  old=227.3px  ratio=0.12  [scar_based]
+
+[Frame 4/241]
+  3 cells  |  3 scars detected
+  A: ✓  new=14.1px  old=131.6px  ratio=0.11  [neighbor_proximity]
+  B: ✓  new=17.0px  old=136.5px  ratio=0.12  [neighbor_proximity]
+  C: ✓  new=123.1px  old=131.2px  ratio=0.94  [scar_based]
+
+[Frame 5/241]
+  3 cells  |  3 scars detected
+  A: ✓  new=12.6px  old=134.1px  ratio=0.09  [neighbor_proximity]
+  B: ✓  new=18.4px  old=136.7px  ratio=0.13  [neighbor_proximity]
+  C: ✓  new=122.6px  old=131.5px  ratio=0.93  [scar_based]
+
+[Frame 6/241]
+  3 cells  |  3 scars detected
+  A: ✓  new=14.2px  old=132.9px  ratio=0.11  [neighbor_proximity]
+  B: ✓  new=18.6px  old=135.4px  ratio=0.14  [neighbor_proximity]
+  C: ✓  new=28.3px  old=226.6px  ratio=0.12  [scar_based]
+
+[Frame 7/241]
+  3 cells  |  3 scars detected
+  A: ✓  new=11.3px  old=135.6px  ratio=0.08  [neighbor_proximity]
+  B: ✓  new=18.0px  old=138.5px  ratio=0.13  [neighbor_proximity]
+  C: ✓  new=30.5px  old=222.8px  ratio=0.14  [scar_based]
+
+[Frame 8/241]
+  3 cells  |  3 scars detected
+  A: ✓  new=18.9px  old=129.2px  ratio=0.15  [neighbor_proximity]
+  B: ✓  new=18.1px  old=138.0px  ratio=0.13  [neighbor_proximity]
+  C: ✓  new=38.5px  old=215.7px  ratio=0.18  [scar_based]
+
+[Frame 9/241]
+  3 cells  |  3 scars detected
+  A: ✓  new=15.6px  old=135.4px  ratio=0.12  [neighbor_proximity]
+  B: ✓  new=17.3px  old=141.3px  ratio=0.12  [neighbor_proximity]
+  C: ✓  new=30.6px  old=225.9px  ratio=0.14  [scar_based]
+
+[Frame 10/241]
+  3 cells  |  3 scars detected
+  A: ✓  new=14.8px  old=136.1px  ratio=0.11  [neighbor_proximity]
+  B: ✓  new=14.4px  old=142.3px  ratio=0.10  [neighbor_proximity]
+  C: ✓  new=126.8px  old=128.3px  ratio=0.99  [scar_based]
+
+[Frame 11/241]
+  3 cells  |  3 scars detected
+  A: ✓  new=11.7px  old=142.3px  ratio=0.08  [neighbor_proximity]
+  B: ✓  new=45.0px  old=113.9px  ratio=0.40  [neighbor_proximity]
+  C: ✓  new=26.4px  old=231.1px  ratio=0.11  [scar_based]
+
+[Frame 12/241]
+  3 cells  |  3 scars detected
+  A: ✓  new=19.7px  old=135.6px  ratio=0.15  [neighbor_proximity]
+  B: ✓  new=19.3px  old=140.5px  ratio=0.14  [neighbor_proximity]
+  C: ✓  new=27.3px  old=230.0px  ratio=0.12  [scar_based]
+
+[Frame 13/241]
+  3 cells  |  3 scars detected
+  A: ✓  new=13.9px  old=141.9px  ratio=0.10  [neighbor_proximity]
+  B: ✓  new=16.8px  old=147.1px  ratio=0.11  [neighbor_proximity]
+  C: ✓  new=19.9px  old=251.1px  ratio=0.08  [scar_based]
+
+[Frame 14/241]
+  Division detected: C → C0, C1
+  Lineage poles applied: C0 / C1
+  4 cells  |  4 scars detected
+  A: ✓  new=13.8px  old=143.9px  ratio=0.10  [neighbor_proximity]
+  B: ✓  new=19.8px  old=144.2px  ratio=0.14  [neighbor_proximity]
+  C0: ✓  new=25.2px  old=137.2px  ratio=0.18  [lineage]
+  C1: ✓  new=24.5px  old=130.9px  ratio=0.19  [lineage]
+
+[Frame 15/241]
+  4 cells  |  4 scars detected
+  A: ✓  new=16.1px  old=143.6px  ratio=0.11  [neighbor_proximity]
+  B: ✓  new=17.4px  old=147.1px  ratio=0.12  [neighbor_proximity]
+  C0: ✓  new=23.7px  old=137.7px  ratio=0.17  [neighbor_proximity]
+  C1: ✓  new=18.2px  old=134.2px  ratio=0.14  [neighbor_proximity]
+
+[Frame 16/241]
+  4 cells  |  4 scars detected
+  A: ✓  new=14.2px  old=146.2px  ratio=0.10  [neighbor_proximity]
+  B: ✓  new=16.1px  old=152.5px  ratio=0.11  [neighbor_proximity]
+  C0: ✓  new=22.5px  old=135.7px  ratio=0.17  [neighbor_proximity]
+  C1: ✓  new=21.0px  old=131.0px  ratio=0.16  [neighbor_proximity]
+
+[Frame 17/241]
+  4 cells  |  4 scars detected
+  A: ✓  new=16.9px  old=144.8px  ratio=0.12  [neighbor_proximity]
+  B: ✓  new=17.8px  old=156.5px  ratio=0.11  [neighbor_proximity]
+  C0: ✓  new=13.8px  old=136.9px  ratio=0.10  [neighbor_proximity]
+  C1: ✓  new=22.3px  old=128.7px  ratio=0.17  [neighbor_proximity]
+
+[Frame 18/241]
+  4 cells  |  4 scars detected
+  A: ✓  new=13.4px  old=149.5px  ratio=0.09  [neighbor_proximity]
+  B: ✓  new=15.1px  old=153.1px  ratio=0.10  [neighbor_proximity]
+  C0: ✓  new=20.5px  old=134.8px  ratio=0.15  [neighbor_proximity]
+  C1: ✓  new=21.1px  old=132.7px  ratio=0.16  [neighbor_proximity]
+
+[Frame 19/241]
+  4 cells  |  4 scars detected
+  A: ✓  new=15.5px  old=148.3px  ratio=0.10  [neighbor_proximity]
+  B: ✓  new=13.9px  old=156.5px  ratio=0.09  [neighbor_proximity]
+  C0: ✓  new=10.1px  old=139.7px  ratio=0.07  [neighbor_proximity]
+  C1: ✓  new=14.5px  old=137.9px  ratio=0.11  [neighbor_proximity]
+
+[Frame 20/241]
+  4 cells  |  4 scars detected
+  A: ✓  new=20.6px  old=145.1px  ratio=0.14  [neighbor_proximity]
+  B: ✓  new=17.4px  old=155.8px  ratio=0.11  [neighbor_proximity]
+  C0: ✓  new=7.3px  old=142.0px  ratio=0.05  [neighbor_proximity]
+  C1: ✓  new=21.0px  old=130.6px  ratio=0.16  [neighbor_proximity]
+
+[Frame 21/241]
+  4 cells  |  4 scars detected
+  A: ✓  new=14.8px  old=151.9px  ratio=0.10  [neighbor_proximity]
+  B: ✓  new=21.6px  old=148.7px  ratio=0.14  [neighbor_proximity]
+  C0: ✓  new=10.1px  old=140.2px  ratio=0.07  [neighbor_proximity]
+  C1: ✓  new=64.8px  old=85.6px  ratio=0.76  [neighbor_proximity]
+
+[Frame 22/241]
+  4 cells  |  4 scars detected
+  A: ✓  new=15.6px  old=153.1px  ratio=0.10  [neighbor_proximity]
+  B: ✓  new=16.5px  old=156.5px  ratio=0.11  [neighbor_proximity]
+  C0: ✓  new=11.6px  old=139.5px  ratio=0.08  [neighbor_proximity]
+  C1: ✓  new=24.0px  old=137.0px  ratio=0.18  [neighbor_proximity]
+
+[Frame 23/241]
+  4 cells  |  4 scars detected
+  A: ✓  new=15.1px  old=155.0px  ratio=0.10  [neighbor_proximity]
+  B: ✓  new=18.0px  old=156.1px  ratio=0.12  [neighbor_proximity]
+  C0: ✓  new=15.2px  old=140.2px  ratio=0.11  [neighbor_proximity]
+  C1: ✓  new=17.1px  old=140.4px  ratio=0.12  [neighbor_proximity]
+
+[Frame 24/241]
+  4 cells  |  4 scars detected
+  A: ✓  new=23.9px  old=150.3px  ratio=0.16  [neighbor_proximity]
+  B: ✓  new=31.0px  old=145.5px  ratio=0.21  [neighbor_proximity]
+  C0: ✓  new=12.3px  old=144.7px  ratio=0.08  [neighbor_proximity]
+  C1: ✓  new=15.8px  old=140.0px  ratio=0.11  [neighbor_proximity]
+
+[Frame 25/241]
+  4 cells  |  4 scars detected
+  A: ✓  new=23.1px  old=153.3px  ratio=0.15  [neighbor_proximity]
+  B: ✓  new=38.7px  old=140.1px  ratio=0.28  [neighbor_proximity]
+  C0: ✓  new=17.6px  old=139.7px  ratio=0.13  [neighbor_proximity]
+  C1: ✓  new=14.5px  old=143.2px  ratio=0.10  [neighbor_proximity]
+
+[Frame 26/241]
+  4 cells  |  4 scars detected
+  A: ✓  new=17.1px  old=156.9px  ratio=0.11  [neighbor_proximity]
+  B: ✓  new=37.1px  old=138.3px  ratio=0.27  [neighbor_proximity]
+  C0: ✓  new=12.4px  old=144.6px  ratio=0.09  [neighbor_proximity]
+  C1: ✓  new=18.0px  old=141.5px  ratio=0.13  [neighbor_proximity]
+
+[Frame 27/241]
+  4 cells  |  4 scars detected
+  A: ✓  new=17.5px  old=159.8px  ratio=0.11  [neighbor_proximity]
+  B: ✓  new=15.8px  old=161.3px  ratio=0.10  [neighbor_proximity]
+  C0: ✓  new=15.9px  old=142.2px  ratio=0.11  [neighbor_proximity]
+  C1: ✓  new=23.0px  old=143.8px  ratio=0.16  [neighbor_proximity]
+
+[Frame 28/241]
+  4 cells  |  4 scars detected
+  A: ✓  new=34.8px  old=143.4px  ratio=0.24  [neighbor_proximity]
+  B: ✓  new=15.4px  old=165.2px  ratio=0.09  [neighbor_proximity]
+  C0: ✓  new=13.5px  old=144.5px  ratio=0.09  [neighbor_proximity]
+  C1: ✓  new=15.8px  old=143.7px  ratio=0.11  [neighbor_proximity]
+
+[Frame 29/241]
+  4 cells  |  4 scars detected
+  A: ✓  new=16.4px  old=162.3px  ratio=0.10  [neighbor_proximity]channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+
+  B: ✓  new=37.3px  old=143.0px  ratio=0.26  [neighbor_proximity]
+  C0: ✓  new=10.0px  old=149.0px  ratio=0.07  [neighbor_proximity]
+  C1: ✓  new=18.0px  old=144.7px  ratio=0.12  [neighbor_proximity]
+
+[Frame 30/241]
+  4 cells  |  4 scars detected
+  A: ✓  new=18.3px  old=163.2px  ratio=0.11  [neighbor_proximity]
+  B: ✓  new=27.4px  old=156.7px  ratio=0.17  [neighbor_proximity]
+  C0: ✓  new=9.3px  old=150.7px  ratio=0.06  [neighbor_proximity]
+  C1: ✓  new=15.5px  old=148.4px  ratio=0.10  [neighbor_proximity]
+
+[Frame 31/241]
+  4 cells  |  4 scars detected
+  A: ✓  new=19.5px  old=162.7px  ratio=0.12  [neighbor_proximity]
+  B: ✓  new=24.0px  old=158.5px  ratio=0.15  [neighbor_proximity]
+  C0: ✓  new=16.2px  old=146.9px  ratio=0.11  [neighbor_proximity]
+  C1: ✓  new=16.5px  old=148.4px  ratio=0.11  [neighbor_proximity]
+
+[Frame 32/241]
+  4 cells  |  4 scars detected
+  A: ✓  new=19.9px  old=165.6px  ratio=0.12  [neighbor_proximity]
+  B: ✓  new=21.4px  old=165.5px  ratio=0.13  [neighbor_proximity]
+  C0: ✓  new=12.8px  old=154.5px  ratio=0.08  [neighbor_proximity]
+  C1: ✓  new=16.1px  old=149.8px  ratio=0.11  [neighbor_proximity]
+
+[Frame 33/241]
+  4 cells  |  4 scars detected
+  A: ✓  new=19.8px  old=164.9px  ratio=0.12  [neighbor_proximity]
+  B: ✓  new=40.4px  old=146.2px  ratio=0.28  [neighbor_proximity]
+  C0: ✓  new=15.8px  old=150.8px  ratio=0.10  [neighbor_proximity]
+  C1: ✓  new=18.3px  old=148.3px  ratio=0.12  [neighbor_proximity]
+
+[Frame 34/241]
+  4 cells  |  4 scars detected
+  A: ✓  new=19.4px  old=167.3px  ratio=0.12  [neighbor_proximity]
+  B: ✓  new=41.9px  old=144.7px  ratio=0.29  [neighbor_proximity]
+  C0: ✓  new=16.1px  old=148.9px  ratio=0.11  [neighbor_proximity]
+  C1: ✓  new=105.4px  old=60.6px  ratio=1.74  [neighbor_proximity]
+
+[Frame 35/241]
+  4 cells  |  4 scars detected
+  A: ✓  new=18.3px  old=168.2px  ratio=0.11  [neighbor_proximity]
+  B: ✓  new=33.0px  old=154.2px  ratio=0.21  [neighbor_proximity]
+  C0: ✓  new=12.5px  old=153.3px  ratio=0.08  [neighbor_proximity]
+  C1: ✓  new=19.8px  old=149.9px  ratio=0.13  [neighbor_proximity]
+
+[Frame 36/241]
+  4 cells  |  4 scars detected
+  A: ✓  new=34.3px  old=152.1px  ratio=0.23  [neighbor_proximity]
+  B: ✓  new=40.6px  old=147.5px  ratio=0.28  [neighbor_proximity]
+  C0: ✓  new=23.3px  old=150.0px  ratio=0.16  [neighbor_proximity]
+  C1: ✓  new=15.8px  old=155.6px  ratio=0.10  [neighbor_proximity]
+
+[Frame 37/241]
+  4 cells  |  4 scars detected
+  A: ✓  new=19.8px  old=170.1px  ratio=0.12  [neighbor_proximity]
+  B: ✓  new=37.1px  old=151.4px  ratio=0.25  [neighbor_proximity]
+  C0: ✓  new=14.5px  old=155.5px  ratio=0.09  [neighbor_proximity]
+  C1: ✓  new=17.8px  old=155.9px  ratio=0.11  [neighbor_proximity]
+
+[Frame 38/241]
+  4 cells  |  4 scars detected
+  A: ✓  new=18.7px  old=171.7px  ratio=0.11  [neighbor_proximity]
+  B: ✓  new=34.0px  old=156.2px  ratio=0.22  [neighbor_proximity]
+  C0: ✓  new=12.8px  old=158.6px  ratio=0.08  [neighbor_proximity]
+  C1: ✓  new=16.8px  old=156.3px  ratio=0.11  [neighbor_proximity]
+
+[Frame 39/241]
+  4 cells  |  4 scars detected
+  A: ✓  new=22.2px  old=168.5px  ratio=0.13  [neighbor_proximity]
+  B: ✓  new=16.1px  old=177.7px  ratio=0.09  [neighbor_proximity]
+  C0: ✓  new=12.9px  old=160.8px  ratio=0.08  [neighbor_proximity]
+  C1: ✓  new=19.8px  old=155.0px  ratio=0.13  [neighbor_proximity]
+
+[Frame 40/241]
+  4 cells  |  4 scars detected
+  A: ✓  new=36.1px  old=156.9px  ratio=0.23  [neighbor_proximity]
+  B: ✓  new=48.3px  old=144.2px  ratio=0.33  [neighbor_proximity]
+  C0: ✓  new=13.3px  old=160.6px  ratio=0.08  [neighbor_proximity]
+  C1: ✓  new=15.4px  old=159.4px  ratio=0.10  [neighbor_proximity]
+
+[Frame 41/241]
+  4 cells  |  4 scars detected
+  A: ✓  new=37.6px  old=156.9px  ratio=0.24  [neighbor_proximity]
+  B: ✓  new=43.4px  old=152.0px  ratio=0.29  [neighbor_proximity]
+  C0: ✓  new=17.7px  old=158.1px  ratio=0.11  [neighbor_proximity]
+  C1: ✓  new=32.9px  old=143.2px  ratio=0.23  [neighbor_proximity]
+
+[Frame 42/241]
+  4 cells  |  4 scars detected
+  A: ✓  new=38.2px  old=157.8px  ratio=0.24  [neighbor_proximity]
+  B: ✓  new=47.1px  old=149.1px  ratio=0.32  [neighbor_proximity]
+  C0: ✓  new=11.5px  old=165.7px  ratio=0.07  [neighbor_proximity]
+  C1: ✓  new=33.4px  old=145.2px  ratio=0.23  [neighbor_proximity]
+
+[Frame 43/241]
+  4 cells  |  4 scars detected
+  A: ✓  new=36.5px  old=160.5px  ratio=0.23  [neighbor_proximity]
+  B: ✓  new=28.7px  old=167.7px  ratio=0.17  [neighbor_proximity]
+  C0: ✓  new=22.6px  old=155.4px  ratio=0.15  [neighbor_proximity]
+  C1: ✓  new=17.5px  old=163.5px  ratio=0.11  [neighbor_proximity]
+
+[Frame 44/241]
+  4 cells  |  4 scars detected
+  A: ✓  new=36.1px  old=163.2px  ratio=0.22  [neighbor_proximity]
+  B: ✓  new=38.8px  old=161.4px  ratio=0.24  [neighbor_proximity]
+  C0: ✓  new=18.5px  old=162.0px  ratio=0.11  [neighbor_proximity]
+  C1: ✓  new=16.5px  old=164.1px  ratio=0.10  [neighbor_proximity]
+
+[Frame 45/241]
+  4 cells  |  4 scars detected
+  A: ✓  new=43.3px  old=156.4px  ratio=0.28  [neighbor_proximity]
+  B: ✓  new=43.0px  old=156.1px  ratio=0.28  [neighbor_proximity]
+  C0: ✓  new=13.8px  old=169.5px  ratio=0.08  [neighbor_proximity]
+  C1: ✓  new=26.8px  old=160.1px  ratio=0.17  [neighbor_proximity]
+
+[Frame 46/241]
+  4 cells  |  4 scars detected
+  A: ✓  new=24.8px  old=176.8px  ratio=0.14  [neighbor_proximity]
+  B: ✓  new=45.8px  old=155.5px  ratio=0.29  [neighbor_proximity]
+  C0: ✓  new=15.1px  old=168.0px  ratio=0.09  [neighbor_proximity]
+  C1: ✓  new=25.6px  old=161.2px  ratio=0.16  [neighbor_proximity]
+
+[Frame 47/241]
+  4 cells  |  4 scars detected
+  A: ✓  new=19.1px  old=185.1px  ratio=0.10  [neighbor_proximity]
+  B: ✓  new=40.4px  old=163.6px  ratio=0.25  [neighbor_proximity]
+  C0: ✓  new=21.5px  old=162.8px  ratio=0.13  [neighbor_proximity]
+  C1: ✓  new=18.4px  old=167.4px  ratio=0.11  [neighbor_proximity]
+
+[Frame 48/241]
+  4 cells  |  4 scars detected
+  A: ✓  new=42.5px  old=163.7px  ratio=0.26  [neighbor_proximity]
+  B: ✓  new=46.5px  old=156.6px  ratio=0.30  [neighbor_proximity]
+  C0: ✓  new=12.1px  old=171.1px  ratio=0.07  [neighbor_proximity]
+  C1: ✓  new=38.8px  old=149.8px  ratio=0.26  [neighbor_proximity]
+
+[Frame 49/241]
+  4 cells  |  4 scars detected
+  A: ✓  new=43.2px  old=164.8px  ratio=0.26  [neighbor_proximity]
+  B: ✓  new=19.6px  old=185.3px  ratio=0.11  [neighbor_proximity]
+  C0: ✓  new=16.5px  old=169.5px  ratio=0.10  [neighbor_proximity]
+  C1: ✓  new=37.3px  old=152.0px  ratio=0.25  [neighbor_proximity]
+
+[Frame 50/241]
+  4 cells  |  4 scars detected
+  A: ✓  new=43.9px  old=165.5px  ratio=0.27  [neighbor_proximity]
+  B: ✓  new=55.0px  old=149.1px  ratio=0.37  [neighbor_proximity]
+  C0: ✓  new=13.2px  old=173.0px  ratio=0.08  [neighbor_proximity]
+  C1: ✓  new=25.0px  old=167.3px  ratio=0.15  [neighbor_proximity]
+
+[Frame 51/241]
+  4 cells  |  4 scars detected
+  A: ✓  new=21.6px  old=189.2px  ratio=0.11  [neighbor_proximity]
+  B: ✓  new=42.2px  old=163.8px  ratio=0.26  [neighbor_proximity]
+  C0: ✓  new=21.1px  old=167.1px  ratio=0.13  [neighbor_proximity]
+  C1: ✓  new=19.5px  old=173.6px  ratio=0.11  [neighbor_proximity]
+
+[Frame 52/241]
+  4 cells  |  4 scars detected
+  A: ✓  new=22.4px  old=190.8px  ratio=0.12  [neighbor_proximity]
+  B: ✓  new=49.3px  old=156.5px  ratio=0.32  [neighbor_proximity]
+  C0: ✓  new=28.6px  old=160.7px  ratio=0.18  [neighbor_proximity]
+  C1: ✓  new=26.8px  old=169.7px  ratio=0.16  [neighbor_proximity]
+
+[Frame 53/241]
+  4 cells  |  4 scars detected
+  A: ✓  new=47.6px  old=166.5px  ratio=0.29  [neighbor_proximity]
+  B: ✓  new=41.9px  old=163.3px  ratio=0.26  [neighbor_proximity]
+  C0: ✓  new=17.8px  old=176.3px  ratio=0.10  [neighbor_proximity]
+  C1: ✓  new=18.7px  old=177.9px  ratio=0.10  [neighbor_proximity]
+
+[Frame 54/241]
+  4 cells  |  4 scars detected
+  A: ✓  new=22.7px  old=193.8px  ratio=0.12  [neighbor_proximity]
+  B: ✓  new=46.0px  old=156.1px  ratio=0.29  [neighbor_proximity]
+  C0: ✓  new=16.1px  old=177.6px  ratio=0.09  [neighbor_proximity]
+  C1: ✓  new=29.4px  old=168.9px  ratio=0.17  [neighbor_proximity]channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+
+
+[Frame 55/241]
+  4 cells  |  4 scars detected
+  A: ✓  new=23.0px  old=196.3px  ratio=0.12  [neighbor_proximity]
+  B: ✓  new=47.5px  old=157.8px  ratio=0.30  [neighbor_proximity]
+  C0: ✓  new=20.3px  old=175.3px  ratio=0.12  [neighbor_proximity]
+  C1: ✓  new=41.0px  old=159.4px  ratio=0.26  [neighbor_proximity]
+
+[Frame 56/241]
+  4 cells  |  4 scars detected
+  A: ✓  new=21.9px  old=199.1px  ratio=0.11  [neighbor_proximity]
+  B: ✓  new=48.8px  old=156.9px  ratio=0.31  [neighbor_proximity]
+  C0: ✓  new=22.4px  old=177.9px  ratio=0.13  [neighbor_proximity]
+  C1: ✓  new=30.9px  old=170.9px  ratio=0.18  [neighbor_proximity]
+
+[Frame 57/241]
+  4 cells  |  4 scars detected
+  A: ✓  new=49.4px  old=173.1px  ratio=0.29  [neighbor_proximity]
+  B: ✓  new=46.3px  old=159.5px  ratio=0.29  [neighbor_proximity]
+  C0: ✓  new=25.5px  old=172.5px  ratio=0.15  [neighbor_proximity]
+  C1: ✓  new=20.8px  old=183.9px  ratio=0.11  [neighbor_proximity]
+
+[Frame 58/241]
+  4 cells  |  4 scars detected
+  A: ✓  new=22.3px  old=200.4px  ratio=0.11  [neighbor_proximity]
+  B: ✓  new=46.4px  old=156.6px  ratio=0.30  [neighbor_proximity]
+  C0: ✓  new=19.5px  old=182.8px  ratio=0.11  [neighbor_proximity]
+  C1: ✓  new=39.4px  old=169.5px  ratio=0.23  [neighbor_proximity]
+
+[Frame 59/241]
+  4 cells  |  4 scars detected
+  A: ✓  new=46.2px  old=176.6px  ratio=0.26  [neighbor_proximity]
+  B: ✓  new=54.2px  old=147.2px  ratio=0.37  [neighbor_proximity]
+  C0: ✓  new=14.9px  old=185.5px  ratio=0.08  [neighbor_proximity]
+  C1: ✓  new=28.6px  old=179.9px  ratio=0.16  [neighbor_proximity]
+
+[Frame 60/241]
+  4 cells  |  4 scars detected
+  A: ✓  new=22.5px  old=200.8px  ratio=0.11  [neighbor_proximity]
+  B: ✓  new=46.9px  old=159.0px  ratio=0.29  [neighbor_proximity]
+  C0: ✓  new=23.8px  old=184.0px  ratio=0.13  [neighbor_proximity]
+  C1: ✓  new=29.8px  old=180.3px  ratio=0.17  [neighbor_proximity]
+
+[Frame 61/241]
+  4 cells  |  4 scars detected
+  A: ✓  new=24.2px  old=199.8px  ratio=0.12  [neighbor_proximity]
+  B: ✓  new=45.7px  old=157.2px  ratio=0.29  [neighbor_proximity]
+  C0: ✓  new=22.2px  old=183.5px  ratio=0.12  [neighbor_proximity]
+  C1: ✓  new=35.0px  old=181.1px  ratio=0.19  [neighbor_proximity]
+
+[Frame 62/241]
+  4 cells  |  4 scars detected
+  A: ✓  new=24.8px  old=200.4px  ratio=0.12  [neighbor_proximity]
+  B: ✓  new=45.1px  old=159.1px  ratio=0.28  [neighbor_proximity]
+  C0: ✓  new=20.9px  old=184.4px  ratio=0.11  [neighbor_proximity]
+  C1: ✓  new=25.8px  old=190.4px  ratio=0.14  [neighbor_proximity]
+
+[Frame 63/241]
+  4 cells  |  4 scars detected
+  A: ✓  new=57.4px  old=167.1px  ratio=0.34  [neighbor_proximity]
+  B: ✓  new=43.1px  old=162.2px  ratio=0.27  [neighbor_proximity]
+  C0: ✓  new=19.6px  old=186.1px  ratio=0.11  [neighbor_proximity]
+  C1: ✓  new=40.9px  old=174.5px  ratio=0.23  [neighbor_proximity]
+
+[Frame 64/241]
+  4 cells  |  4 scars detected
+  A: ✓  new=23.0px  old=203.4px  ratio=0.11  [neighbor_proximity]
+  B: ✓  new=43.4px  old=164.5px  ratio=0.26  [neighbor_proximity]
+  C0: ✓  new=17.8px  old=190.2px  ratio=0.09  [neighbor_proximity]
+  C1: ✓  new=26.3px  old=190.1px  ratio=0.14  [neighbor_proximity]
+
+[Frame 65/241]
+  4 cells  |  4 scars detected
+  A: ✓  new=43.8px  old=181.5px  ratio=0.24  [neighbor_proximity]
+  B: ✓  new=53.8px  old=150.6px  ratio=0.36  [neighbor_proximity]
+  C0: ✓  new=18.9px  old=190.0px  ratio=0.10  [neighbor_proximity]
+  C1: ✓  new=28.4px  old=186.8px  ratio=0.15  [neighbor_proximity]
+
+[Frame 66/241]
+  4 cells  |  4 scars detected
+  A: ✓  new=22.9px  old=202.6px  ratio=0.11  [neighbor_proximity]
+  B: ✓  new=58.6px  old=148.2px  ratio=0.40  [neighbor_proximity]
+  C0: ✓  new=24.6px  old=190.6px  ratio=0.13  [neighbor_proximity]
+  C1: ✓  new=50.8px  old=166.4px  ratio=0.31  [neighbor_proximity]
+
+[Frame 67/241]
+  4 cells  |  4 scars detected
+  A: ✓  new=61.2px  old=164.3px  ratio=0.37  [neighbor_proximity]
+  B: ✓  new=18.5px  old=189.2px  ratio=0.10  [neighbor_proximity]
+  C0: ✓  new=15.8px  old=195.2px  ratio=0.08  [neighbor_proximity]
+  C1: ✓  new=29.7px  old=186.7px  ratio=0.16  [neighbor_proximity]
+
+[Frame 68/241]
+  4 cells  |  4 scars detected
+  A: ✓  new=22.7px  old=202.5px  ratio=0.11  [neighbor_proximity]
+  B: ✓  new=56.6px  old=150.7px  ratio=0.38  [neighbor_proximity]
+  C0: ✓  new=18.3px  old=197.8px  ratio=0.09  [neighbor_proximity]
+  C1: ✓  new=49.1px  old=168.0px  ratio=0.29  [neighbor_proximity]
+
+[Frame 69/241]
+  4 cells  |  4 scars detected
+  A: ✓  new=24.0px  old=200.7px  ratio=0.12  [neighbor_proximity]
+  B: ✓  new=45.6px  old=162.2px  ratio=0.28  [neighbor_proximity]
+  C0: ✓  new=17.9px  old=199.5px  ratio=0.09  [neighbor_proximity]
+  C1: ✓  new=30.9px  old=186.6px  ratio=0.17  [neighbor_proximity]
+
+[Frame 70/241]
+  4 cells  |  4 scars detected
+  A: ✓  new=58.1px  old=168.3px  ratio=0.35  [scar_based]
+  B: ✓  new=28.8px  old=116.7px  ratio=0.25  [scar_based]
+  C0: ✓  new=24.9px  old=193.9px  ratio=0.13  [neighbor_proximity]
+  C1: ✓  new=31.2px  old=187.1px  ratio=0.17  [neighbor_proximity]
+
+[Frame 71/241]
+  4 cells  |  4 scars detected
+  A: ✓  new=19.1px  old=206.5px  ratio=0.09  [scar_based]
+  B: ✓  new=26.1px  old=104.5px  ratio=0.25  [scar_based]
+  C0: ✓  new=23.9px  old=198.6px  ratio=0.12  [neighbor_proximity]
+  C1: ✓  new=22.6px  old=195.0px  ratio=0.12  [neighbor_proximity]
+
+[Frame 72/241]
+  4 cells  |  4 scars detected
+  A: ✓  new=20.5px  old=205.5px  ratio=0.10  [scar_based]
+  B: ✓  new=21.2px  old=109.5px  ratio=0.19  [scar_based]
+  C0: ✓  new=22.5px  old=194.9px  ratio=0.12  [neighbor_proximity]
+  C1: ✓  new=30.4px  old=186.6px  ratio=0.16  [neighbor_proximity]
+
+[Frame 73/241]
+  4 cells  |  4 scars detected
+  A: ✓  new=23.7px  old=202.6px  ratio=0.12  [scar_based]
+  B: ✓  new=16.7px  old=109.8px  ratio=0.15  [scar_based]
+  C0: ✓  new=19.1px  old=194.4px  ratio=0.10  [neighbor_proximity]
+  C1: ✓  new=26.7px  old=190.1px  ratio=0.14  [neighbor_proximity]
+
+[Frame 74/241]
+  5 cells  |  5 scars detected
+  A: ✓  new=46.8px  old=179.4px  ratio=0.26  [neighbor_proximity]
+  B: ✓  new=14.3px  old=110.4px  ratio=0.13  [neighbor_proximity]
+  D: ✓  new=57.8px  old=58.5px  ratio=0.99  [scar_based]
+  C0: ✓  new=17.9px  old=200.1px  ratio=0.09  [neighbor_proximity]
+  C1: ✓  new=31.4px  old=184.1px  ratio=0.17  [neighbor_proximity]
+
+[Frame 75/241]
+  4 cells  |  4 scars detected
+  A: ✓  new=54.0px  old=173.1px  ratio=0.31  [scar_based]
+  B: ✓  new=22.6px  old=116.8px  ratio=0.19  [scar_based]
+  C0: ✓  new=28.5px  old=188.6px  ratio=0.15  [neighbor_proximity]
+  C1: ✓  new=30.7px  old=184.9px  ratio=0.17  [neighbor_proximity]
+
+[Frame 76/241]
+  4 cells  |  4 scars detected
+  A: ✓  new=59.6px  old=167.9px  ratio=0.35  [scar_based]
+  B: ✓  new=13.6px  old=115.3px  ratio=0.12  [scar_based]
+  C0: ✓  new=19.9px  old=201.4px  ratio=0.10  [neighbor_proximity]
+  C1: ✓  new=28.2px  old=187.9px  ratio=0.15  [neighbor_proximity]
+
+[Frame 77/241]
+  5 cells  |  5 scars detected
+  A: ✓  new=23.7px  old=204.0px  ratio=0.12  [neighbor_proximity]
+  B: ✓  new=13.7px  old=114.9px  ratio=0.12  [neighbor_proximity]
+  E: ✓  new=58.7px  old=59.3px  ratio=0.99  [scar_based]
+  C0: ✓  new=20.1px  old=199.3px  ratio=0.10  [neighbor_proximity]
+  C1: ✓  new=38.8px  old=176.8px  ratio=0.22  [neighbor_proximity]
+
+[Frame 78/241]
+  5 cells  |  5 scars detected
+  A: ✓  new=23.0px  old=205.7px  ratio=0.11  [neighbor_proximity]
+  B: ✓  new=14.4px  old=116.5px  ratio=0.12  [neighbor_proximity]
+  E: ✓  new=59.3px  old=61.0px  ratio=0.97  [scar_based]
+  C0: ✓  new=21.2px  old=193.1px  ratio=0.11  [neighbor_proximity]
+  C1: ✓  new=27.5px  old=189.5px  ratio=0.15  [neighbor_proximity]
+
+[Frame 79/241]
+  5 cells  |  5 scars detected
+  A: ✓  new=24.0px  old=204.5px  ratio=0.12  [neighbor_proximity]
+  B: ✓  new=15.8px  old=116.7px  ratio=0.14  [neighbor_proximity]
+  E: ✓  new=43.7px  old=77.5px  ratio=0.56  [scar_based]
+  C0: ✓  new=20.7px  old=194.7px  ratio=0.11  [neighbor_proximity]
+  C1: ✓  new=46.8px  old=167.4px  ratio=0.28  [neighbor_proximity]
+
+[Frame 80/241]
+  5 cells  |  5 scars detectedchannels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+
+  A: ✓  new=25.5px  old=205.5px  ratio=0.12  [neighbor_proximity]
+  B: ✓  new=16.0px  old=119.3px  ratio=0.13  [neighbor_proximity]
+  E: ✓  new=52.3px  old=72.2px  ratio=0.72  [scar_based]
+  C0: ✓  new=32.8px  old=182.5px  ratio=0.18  [neighbor_proximity]
+  C1: ✓  new=32.9px  old=182.6px  ratio=0.18  [neighbor_proximity]
+
+[Frame 81/241]
+  Division detected: A → A0, A1
+  Lineage poles applied: A0 / A1
+  6 cells  |  6 scars detected
+  A1: ✓  new=14.0px  old=125.8px  ratio=0.11  [lineage]
+  A0: ✓  new=20.5px  old=116.0px  ratio=0.18  [lineage]
+  B: ✓  new=15.0px  old=119.0px  ratio=0.13  [neighbor_proximity]
+  E: ✓  new=51.9px  old=70.8px  ratio=0.73  [scar_based]
+  C0: ✓  new=19.8px  old=198.1px  ratio=0.10  [neighbor_proximity]
+  C1: ✓  new=28.9px  old=188.3px  ratio=0.15  [neighbor_proximity]
+
+[Frame 82/241]
+  7 cells  |  7 scars detected
+  A1: ✓  new=10.3px  old=124.0px  ratio=0.08  [neighbor_proximity]
+  A0: ✓  new=21.4px  old=100.8px  ratio=0.21  [scar_based]
+  B: ✓  new=16.7px  old=119.8px  ratio=0.14  [neighbor_proximity]
+  E: ✓  new=57.6px  old=66.0px  ratio=0.87  [scar_based]
+  C0: ✓  new=19.9px  old=197.9px  ratio=0.10  [neighbor_proximity]
+  C1: ✓  new=23.8px  old=194.3px  ratio=0.12  [neighbor_proximity]
+  F: ✓  new=13.2px  old=20.1px  ratio=0.65  [scar_based]
+
+[Frame 83/241]
+  6 cells  |  6 scars detected
+  A1: ✓  new=10.8px  old=124.2px  ratio=0.09  [neighbor_proximity]
+  A0: ✓  new=59.5px  old=65.2px  ratio=0.91  [scar_based]
+  B: ✓  new=14.4px  old=120.6px  ratio=0.12  [neighbor_proximity]
+  E: ✓  new=59.8px  old=63.1px  ratio=0.95  [scar_based]
+  C0: ✓  new=20.1px  old=195.7px  ratio=0.10  [neighbor_proximity]
+  C1: ✓  new=51.5px  old=167.0px  ratio=0.31  [neighbor_proximity]
+
+[Frame 84/241]
+  6 cells  |  6 scars detected
+  A1: ✓  new=12.8px  old=125.5px  ratio=0.10  [neighbor_proximity]
+  A0: ✓  new=55.5px  old=72.7px  ratio=0.76  [scar_based]
+  B: ✓  new=14.9px  old=121.1px  ratio=0.12  [neighbor_proximity]
+  E: ✓  new=62.2px  old=64.5px  ratio=0.96  [scar_based]
+  C0: ✓  new=25.0px  old=194.2px  ratio=0.13  [neighbor_proximity]
+  C1: ✓  new=30.2px  old=189.4px  ratio=0.16  [neighbor_proximity]
+
+[Frame 85/241]
+  Division detected: C1 → C10, C11
+  Lineage poles applied: C10 / C11
+  7 cells  |  7 scars detected
+  A1: ✓  new=14.4px  old=126.0px  ratio=0.11  [neighbor_proximity]
+  A0: ✓  new=59.4px  old=70.8px  ratio=0.84  [scar_based]
+  B: ✓  new=16.8px  old=121.8px  ratio=0.14  [neighbor_proximity]
+  E: ✓  new=62.2px  old=66.6px  ratio=0.93  [scar_based]
+  C0: ✓  new=10.4px  old=201.8px  ratio=0.05  [neighbor_proximity]
+  C10: ✓  new=31.3px  old=105.3px  ratio=0.30  [lineage]
+  C11: ✓  new=32.0px  old=106.9px  ratio=0.30  [lineage]
+
+[Frame 86/241]
+  6 cells  |  6 scars detected
+  A1: ✓  new=9.7px  old=127.8px  ratio=0.08  [neighbor_proximity]
+  A0: ✓  new=50.7px  old=80.3px  ratio=0.63  [scar_based]
+  B: ✓  new=16.3px  old=124.7px  ratio=0.13  [neighbor_proximity]
+  E: ✓  new=63.8px  old=67.7px  ratio=0.94  [scar_based]
+  C10: ✓  new=22.8px  old=109.1px  ratio=0.21  [neighbor_proximity]
+  C11: ✓  new=19.7px  old=115.2px  ratio=0.17  [neighbor_proximity]
+
+[Frame 87/241]
+  7 cells  |  7 scars detected
+  A1: ✓  new=17.2px  old=126.9px  ratio=0.14  [neighbor_proximity]
+  A0: ✓  new=65.4px  old=66.5px  ratio=0.98  [scar_based]
+  B: ✓  new=17.4px  old=125.8px  ratio=0.14  [neighbor_proximity]
+  E: ✓  new=65.8px  old=70.2px  ratio=0.94  [scar_based]
+  G: ✓  new=14.9px  old=133.4px  ratio=0.11  [neighbor_proximity]
+  C10: ✓  new=20.5px  old=111.0px  ratio=0.18  [scar_based]
+  C11: ✓  new=15.7px  old=119.0px  ratio=0.13  [neighbor_proximity]
+
+[Frame 88/241]
+  7 cells  |  7 scars detected
+  A1: ✓  new=10.1px  old=129.0px  ratio=0.08  [neighbor_proximity]
+  A0: ✓  new=66.7px  old=67.7px  ratio=0.98  [scar_based]
+  B: ✓  new=17.8px  old=125.6px  ratio=0.14  [neighbor_proximity]
+  E: ✓  new=62.6px  old=73.4px  ratio=0.85  [scar_based]
+  G: ✓  new=16.1px  old=200.3px  ratio=0.08  [neighbor_proximity]
+  C10: ✓  new=26.1px  old=113.4px  ratio=0.23  [scar_based]
+  C11: ✓  new=14.9px  old=117.4px  ratio=0.13  [neighbor_proximity]
+
+[Frame 89/241]
+  7 cells  |  7 scars detected
+  A1: ✓  new=11.2px  old=129.4px  ratio=0.09  [neighbor_proximity]
+  A0: ✓  new=57.3px  old=78.1px  ratio=0.73  [scar_based]
+  B: ✓  new=16.6px  old=126.6px  ratio=0.13  [neighbor_proximity]
+  E: ✓  new=64.4px  old=67.1px  ratio=0.96  [scar_based]
+  G: ✓  new=36.4px  old=180.9px  ratio=0.20  [neighbor_proximity]
+  C10: ✓  new=23.0px  old=98.8px  ratio=0.23  [scar_based]
+  C11: ✓  new=22.3px  old=115.4px  ratio=0.19  [neighbor_proximity]
+
+[Frame 90/241]
+  6 cells  |  6 scars detected
+  A1: ✓  new=12.6px  old=128.7px  ratio=0.10  [neighbor_proximity]
+  A0: ✓  new=14.0px  old=124.6px  ratio=0.11  [scar_based]
+  B: ✓  new=16.0px  old=125.8px  ratio=0.13  [neighbor_proximity]
+  E: ✓  new=65.1px  old=66.9px  ratio=0.97  [scar_based]
+  C10: ✓  new=17.0px  old=110.6px  ratio=0.15  [neighbor_proximity]
+  C11: ✓  new=18.1px  old=115.9px  ratio=0.16  [neighbor_proximity]
+
+[Frame 91/241]
+  7 cells  |  7 scars detected
+  A1: ✓  new=12.4px  old=130.5px  ratio=0.10  [neighbor_proximity]
+  A0: ✓  new=62.4px  old=76.2px  ratio=0.82  [scar_based]
+  B: ✓  new=16.1px  old=129.0px  ratio=0.12  [neighbor_proximity]
+  E: ✓  new=56.3px  old=77.0px  ratio=0.73  [scar_based]
+  H: ✓  new=25.5px  old=193.7px  ratio=0.13  [neighbor_proximity]
+  C10: ✓  new=21.8px  old=111.0px  ratio=0.20  [scar_based]
+  C11: ✓  new=13.4px  old=119.3px  ratio=0.11  [neighbor_proximity]
+
+[Frame 92/241]
+  7 cells  |  7 scars detected
+  A1: ✓  new=11.9px  old=132.1px  ratio=0.09  [neighbor_proximity]
+  A0: ✓  new=59.2px  old=79.8px  ratio=0.74  [scar_based]
+  B: ✓  new=17.3px  old=130.1px  ratio=0.13  [neighbor_proximity]
+  E: ✓  new=15.9px  old=119.5px  ratio=0.13  [scar_based]
+  H: ✓  new=28.8px  old=196.8px  ratio=0.15  [neighbor_proximity]
+  C10: ✓  new=19.5px  old=109.6px  ratio=0.18  [scar_based]
+  C11: ✓  new=19.5px  old=115.4px  ratio=0.17  [neighbor_proximity]
+
+[Frame 93/241]
+  Division detected: H → H0, H1
+  Lineage poles applied: H0 / H1
+  8 cells  |  8 scars detected
+  A1: ✓  new=13.9px  old=134.2px  ratio=0.10  [neighbor_proximity]
+  A0: ✓  new=15.3px  old=127.1px  ratio=0.12  [scar_based]
+  B: ✓  new=17.7px  old=132.1px  ratio=0.13  [neighbor_proximity]
+  E: ✓  new=67.3px  old=67.8px  ratio=0.99  [scar_based]
+  H1: ✓  new=15.6px  old=121.4px  ratio=0.13  [lineage]
+  H0: ✓  new=29.3px  old=106.0px  ratio=0.28  [lineage]
+  C10: ✓  new=19.2px  old=113.1px  ratio=0.17  [scar_based]
+  C11: ✓  new=17.3px  old=119.8px  ratio=0.14  [neighbor_proximity]
+
+[Frame 94/241]
+  8 cells  |  8 scars detected
+  A1: ✓  new=11.8px  old=134.9px  ratio=0.09  [neighbor_proximity]
+  A0: ✓  new=16.0px  old=128.6px  ratio=0.12  [scar_based]
+  B: ✓  new=16.1px  old=132.8px  ratio=0.12  [neighbor_proximity]
+  E: ✓  new=61.8px  old=75.6px  ratio=0.82  [scar_based]
+  H1: ✓  new=19.1px  old=119.9px  ratio=0.16  [neighbor_proximity]
+  H0: ✓  new=24.1px  old=106.8px  ratio=0.23  [scar_based]
+  C10: ✓  new=20.6px  old=110.1px  ratio=0.19  [scar_based]
+  C11: ✓  new=13.1px  old=120.1px  ratio=0.11  [neighbor_proximity]
+
+[Frame 95/241]
+  8 cells  |  8 scars detected
+  A1: ✓  new=17.4px  old=134.2px  ratio=0.13  [neighbor_proximity]
+  A0: ✓  new=65.4px  old=77.5px  ratio=0.84  [scar_based]
+  B: ✓  new=17.4px  old=132.7px  ratio=0.13  [neighbor_proximity]
+  E: ✓  new=56.2px  old=81.0px  ratio=0.69  [scar_based]
+  H1: ✓  new=15.5px  old=121.6px  ratio=0.13  [neighbor_proximity]
+  H0: ✓  new=14.1px  old=107.5px  ratio=0.13  [scar_based]
+  C10: ✓  new=16.3px  old=111.9px  ratio=0.15  [scar_based]
+  C11: ✓  new=15.9px  old=120.6px  ratio=0.13  [neighbor_proximity]
+
+[Frame 96/241]
+  8 cells  |  8 scars detected
+  A1: ✓  new=13.3px  old=136.1px  ratio=0.10  [neighbor_proximity]
+  A0: ✓  new=16.3px  old=130.0px  ratio=0.13  [scar_based]
+  B: ✓  new=20.8px  old=127.4px  ratio=0.16  [neighbor_proximity]
+  E: ✓  new=61.8px  old=75.9px  ratio=0.81  [scar_based]channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+
+  H1: ✓  new=15.8px  old=121.1px  ratio=0.13  [neighbor_proximity]
+  H0: ✓  new=21.9px  old=108.9px  ratio=0.20  [scar_based]
+  C10: ✓  new=19.6px  old=110.6px  ratio=0.18  [scar_based]
+  C11: ✓  new=15.8px  old=122.9px  ratio=0.13  [neighbor_proximity]
+
+[Frame 97/241]
+  8 cells  |  8 scars detected
+  A1: ✓  new=15.5px  old=137.5px  ratio=0.11  [neighbor_proximity]
+  A0: ✓  new=16.4px  old=131.0px  ratio=0.13  [scar_based]
+  B: ✓  new=14.9px  old=137.7px  ratio=0.11  [neighbor_proximity]
+  E: ✓  new=63.6px  old=76.6px  ratio=0.83  [scar_based]
+  H1: ✓  new=18.1px  old=123.2px  ratio=0.15  [neighbor_proximity]
+  H0: ✓  new=17.0px  old=103.6px  ratio=0.16  [scar_based]
+  C10: ✓  new=18.9px  old=110.6px  ratio=0.17  [scar_based]
+  C11: ✓  new=18.1px  old=123.4px  ratio=0.15  [neighbor_proximity]
+
+[Frame 98/241]
+  8 cells  |  8 scars detected
+  A1: ✓  new=12.8px  old=138.3px  ratio=0.09  [neighbor_proximity]
+  A0: ✓  new=22.1px  old=126.5px  ratio=0.17  [scar_based]
+  B: ✓  new=13.6px  old=139.3px  ratio=0.10  [neighbor_proximity]
+  E: ✓  new=69.5px  old=72.1px  ratio=0.96  [scar_based]
+  H1: ✓  new=14.0px  old=124.9px  ratio=0.11  [neighbor_proximity]
+  H0: ✓  new=34.9px  old=87.0px  ratio=0.40  [scar_based]
+  C10: ✓  new=20.0px  old=111.2px  ratio=0.18  [scar_based]
+  C11: ✓  new=20.1px  old=120.8px  ratio=0.17  [neighbor_proximity]
+
+[Frame 99/241]
+  8 cells  |  8 scars detected
+  A1: ✓  new=17.8px  old=134.4px  ratio=0.13  [neighbor_proximity]
+  A0: ✓  new=16.0px  old=134.5px  ratio=0.12  [scar_based]
+  B: ✓  new=15.8px  old=135.9px  ratio=0.12  [neighbor_proximity]
+  E: ✓  new=60.3px  old=81.7px  ratio=0.74  [scar_based]
+  H1: ✓  new=14.2px  old=123.9px  ratio=0.11  [neighbor_proximity]
+  H0: ✓  new=18.1px  old=106.4px  ratio=0.17  [scar_based]
+  C10: ✓  new=19.8px  old=112.7px  ratio=0.18  [scar_based]
+  C11: ✓  new=20.8px  old=124.7px  ratio=0.17  [neighbor_proximity]
+
+[Frame 100/241]
+  8 cells  |  8 scars detected
+  A1: ✓  new=16.9px  old=135.3px  ratio=0.12  [neighbor_proximity]
+  A0: ✓  new=13.7px  old=137.6px  ratio=0.10  [neighbor_proximity]
+  E: ✓  new=18.9px  old=136.1px  ratio=0.14  [scar_based]
+  B: ✓  new=18.9px  old=136.9px  ratio=0.14  [neighbor_proximity]
+  H1: ✓  new=27.5px  old=108.2px  ratio=0.25  [neighbor_proximity]
+  H0: ✓  new=14.5px  old=111.3px  ratio=0.13  [scar_based]
+  C10: ✓  new=19.4px  old=113.0px  ratio=0.17  [scar_based]
+  C11: ✓  new=19.6px  old=125.9px  ratio=0.16  [neighbor_proximity]
+
+[Frame 101/241]
+  8 cells  |  8 scars detected
+  A1: ✓  new=19.2px  old=135.7px  ratio=0.14  [neighbor_proximity]
+  A0: ✓  new=12.7px  old=136.6px  ratio=0.09  [neighbor_proximity]
+  E: ✓  new=58.6px  old=93.2px  ratio=0.63  [scar_based]
+  B: ✓  new=15.9px  old=142.0px  ratio=0.11  [neighbor_proximity]
+  H1: ✓  new=6.0px  old=128.1px  ratio=0.05  [neighbor_proximity]
+  H0: ✓  new=18.4px  old=110.8px  ratio=0.17  [scar_based]
+  C10: ✓  new=18.8px  old=114.3px  ratio=0.16  [scar_based]
+  C11: ✓  new=21.1px  old=125.4px  ratio=0.17  [neighbor_proximity]
+
+[Frame 102/241]
+  8 cells  |  8 scars detected
+  A1: ✓  new=18.5px  old=136.5px  ratio=0.14  [neighbor_proximity]
+  A0: ✓  new=16.2px  old=137.9px  ratio=0.12  [neighbor_proximity]
+  E: ✓  new=17.0px  old=136.9px  ratio=0.12  [scar_based]
+  B: ✓  new=14.9px  old=144.1px  ratio=0.10  [neighbor_proximity]
+  H1: ✓  new=4.8px  old=131.7px  ratio=0.04  [neighbor_proximity]
+  H0: ✓  new=17.0px  old=111.8px  ratio=0.15  [scar_based]
+  C10: ✓  new=19.8px  old=113.1px  ratio=0.17  [scar_based]
+  C11: ✓  new=19.8px  old=126.5px  ratio=0.16  [neighbor_proximity]
+
+[Frame 103/241]
+  8 cells  |  8 scars detected
+  A1: ✓  new=19.9px  old=140.4px  ratio=0.14  [neighbor_proximity]
+  A0: ✓  new=15.3px  old=136.0px  ratio=0.11  [neighbor_proximity]
+  E: ✓  new=65.5px  old=88.7px  ratio=0.74  [scar_based]
+  B: ✓  new=16.9px  old=143.5px  ratio=0.12  [neighbor_proximity]
+  H1: ✓  new=9.6px  old=130.3px  ratio=0.07  [neighbor_proximity]
+  H0: ✓  new=44.5px  old=82.0px  ratio=0.54  [scar_based]
+  C10: ✓  new=19.7px  old=113.5px  ratio=0.17  [scar_based]
+  C11: ✓  new=17.6px  old=126.4px  ratio=0.14  [neighbor_proximity]
+
+[Frame 104/241]
+  8 cells  |  8 scars detected
+  A1: ✓  new=21.8px  old=137.1px  ratio=0.16  [neighbor_proximity]
+  A0: ✓  new=16.1px  old=137.0px  ratio=0.12  [neighbor_proximity]
+  E: ✓  new=70.5px  old=84.6px  ratio=0.83  [scar_based]
+  B: ✓  new=19.8px  old=142.2px  ratio=0.14  [neighbor_proximity]
+  H1: ✓  new=20.8px  old=129.1px  ratio=0.16  [neighbor_proximity]
+  H0: ✓  new=42.6px  old=85.0px  ratio=0.50  [scar_based]
+  C10: ✓  new=19.2px  old=114.5px  ratio=0.17  [scar_based]
+  C11: ✓  new=20.2px  old=128.4px  ratio=0.16  [neighbor_proximity]
+
+[Frame 105/241]
+  8 cells  |  8 scars detected
+  A1: ✓  new=14.5px  old=145.3px  ratio=0.10  [neighbor_proximity]
+  A0: ✓  new=14.4px  old=141.3px  ratio=0.10  [neighbor_proximity]
+  E: ✓  new=20.9px  old=135.3px  ratio=0.15  [scar_based]
+  B: ✓  new=16.8px  old=145.9px  ratio=0.12  [neighbor_proximity]
+  H1: ✓  new=8.3px  old=133.2px  ratio=0.06  [neighbor_proximity]
+  H0: ✓  new=15.4px  old=113.8px  ratio=0.13  [scar_based]
+  C10: ✓  new=17.1px  old=118.4px  ratio=0.14  [scar_based]
+  C11: ✓  new=15.2px  old=129.7px  ratio=0.12  [neighbor_proximity]
+
+[Frame 106/241]
+  8 cells  |  8 scars detected
+  A1: ✓  new=12.8px  old=146.7px  ratio=0.09  [neighbor_proximity]
+  A0: ✓  new=22.1px  old=133.3px  ratio=0.17  [neighbor_proximity]
+  E: ✓  new=71.8px  old=85.4px  ratio=0.84  [scar_based]
+  B: ✓  new=19.4px  old=145.0px  ratio=0.13  [neighbor_proximity]
+  H1: ✓  new=14.1px  old=131.6px  ratio=0.11  [neighbor_proximity]
+  H0: ✓  new=17.7px  old=113.6px  ratio=0.16  [scar_based]
+  C10: ✓  new=19.2px  old=116.4px  ratio=0.17  [scar_based]
+  C11: ✓  new=76.0px  old=66.4px  ratio=1.15  [neighbor_proximity]
+
+[Frame 107/241]
+  8 cells  |  8 scars detected
+  A1: ✓  new=15.3px  old=146.4px  ratio=0.10  [neighbor_proximity]
+  A0: ✓  new=19.5px  old=137.0px  ratio=0.14  [neighbor_proximity]
+  E: ✓  new=22.0px  old=136.8px  ratio=0.16  [scar_based]
+  B: ✓  new=18.1px  old=149.0px  ratio=0.12  [neighbor_proximity]
+  H1: ✓  new=19.3px  old=135.9px  ratio=0.14  [neighbor_proximity]
+  H0: ✓  new=52.0px  old=77.2px  ratio=0.67  [scar_based]
+  C10: ✓  new=20.0px  old=116.4px  ratio=0.17  [scar_based]
+  C11: ✓  new=15.0px  old=132.5px  ratio=0.11  [neighbor_proximity]
+
+[Frame 108/241]
+  8 cells  |  8 scars detected
+  A1: ✓  new=15.3px  old=145.8px  ratio=0.10  [neighbor_proximity]
+  E: ✓  new=21.7px  old=138.3px  ratio=0.16  [scar_based]
+  A0: ✓  new=15.7px  old=141.6px  ratio=0.11  [neighbor_proximity]
+  B: ✓  new=19.5px  old=147.7px  ratio=0.13  [neighbor_proximity]
+  H1: ✓  new=11.0px  old=139.7px  ratio=0.08  [neighbor_proximity]
+  H0: ✓  new=18.6px  old=114.9px  ratio=0.16  [scar_based]
+  C10: ✓  new=20.9px  old=118.7px  ratio=0.18  [scar_based]
+  C11: ✓  new=16.6px  old=133.6px  ratio=0.12  [neighbor_proximity]
+
+[Frame 109/241]
+  8 cells  |  8 scars detected
+  A1: ✓  new=19.6px  old=144.2px  ratio=0.14  [neighbor_proximity]
+  E: ✓  new=24.4px  old=137.8px  ratio=0.18  [scar_based]
+  A0: ✓  new=14.6px  old=143.6px  ratio=0.10  [neighbor_proximity]
+  B: ✓  new=17.9px  old=149.7px  ratio=0.12  [neighbor_proximity]
+  H1: ✓  new=6.6px  old=139.2px  ratio=0.05  [neighbor_proximity]
+  H0: ✓  new=19.5px  old=116.5px  ratio=0.17  [scar_based]
+  C10: ✓  new=20.5px  old=117.2px  ratio=0.17  [scar_based]
+  C11: ✓  new=18.9px  old=131.7px  ratio=0.14  [neighbor_proximity]
+
+[Frame 110/241]
+  8 cells  |  8 scars detected
+  A1: ✓  new=20.2px  old=144.1px  ratio=0.14  [neighbor_proximity]
+  E: ✓  new=19.5px  old=143.4px  ratio=0.14  [scar_based]
+  A0: ✓  new=16.2px  old=143.4px  ratio=0.11  [neighbor_proximity]
+  B: ✓  new=18.7px  old=150.0px  ratio=0.12  [neighbor_proximity]
+  H1: ✓  new=6.7px  old=140.1px  ratio=0.05  [neighbor_proximity]
+  H0: ✓  new=22.1px  old=120.0px  ratio=0.18  [scar_based]
+  C10: ✓  new=17.8px  old=119.6px  ratio=0.15  [scar_based]channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+
+  C11: ✓  new=17.7px  old=132.7px  ratio=0.13  [neighbor_proximity]
+
+[Frame 111/241]
+  8 cells  |  8 scars detected
+  A1: ✓  new=15.0px  old=148.9px  ratio=0.10  [neighbor_proximity]
+  E: ✓  new=18.2px  old=145.7px  ratio=0.12  [scar_based]
+  A0: ✓  new=16.6px  old=146.3px  ratio=0.11  [neighbor_proximity]
+  B: ✓  new=16.5px  old=154.2px  ratio=0.11  [neighbor_proximity]
+  H1: ✓  new=11.8px  old=138.8px  ratio=0.08  [neighbor_proximity]
+  H0: ✓  new=22.3px  old=117.9px  ratio=0.19  [scar_based]
+  C10: ✓  new=52.7px  old=85.9px  ratio=0.61  [scar_based]
+  C11: ✓  new=19.7px  old=133.0px  ratio=0.15  [neighbor_proximity]
+
+[Frame 112/241]
+  8 cells  |  8 scars detected
+  A1: ✓  new=15.2px  old=149.8px  ratio=0.10  [neighbor_proximity]
+  E: ✓  new=23.4px  old=143.0px  ratio=0.16  [scar_based]
+  A0: ✓  new=15.9px  old=149.7px  ratio=0.11  [neighbor_proximity]
+  B: ✓  new=22.6px  old=150.2px  ratio=0.15  [neighbor_proximity]
+  H1: ✓  new=16.3px  old=138.7px  ratio=0.12  [neighbor_proximity]
+  H0: ✓  new=43.0px  old=95.3px  ratio=0.45  [scar_based]
+  C10: ✓  new=19.4px  old=123.5px  ratio=0.16  [scar_based]
+  C11: ✓  new=15.2px  old=136.4px  ratio=0.11  [neighbor_proximity]
+
+[Frame 113/241]
+  8 cells  |  8 scars detected
+  A1: ✓  new=15.4px  old=151.2px  ratio=0.10  [neighbor_proximity]
+  E: ✓  new=15.6px  old=152.2px  ratio=0.10  [scar_based]
+  A0: ✓  new=16.5px  old=148.6px  ratio=0.11  [neighbor_proximity]
+  B: ✓  new=18.9px  old=154.7px  ratio=0.12  [neighbor_proximity]
+  H1: ✓  new=13.5px  old=143.6px  ratio=0.09  [neighbor_proximity]
+  H0: ✓  new=53.1px  old=84.9px  ratio=0.63  [scar_based]
+  C10: ✓  new=23.2px  old=126.9px  ratio=0.18  [scar_based]
+  C11: ✓  new=18.7px  old=135.4px  ratio=0.14  [neighbor_proximity]
+
+[Frame 114/241]
+  8 cells  |  8 scars detected
+  A1: ✓  new=14.9px  old=153.0px  ratio=0.10  [neighbor_proximity]
+  E: ✓  new=20.2px  old=148.3px  ratio=0.14  [scar_based]
+  A0: ✓  new=15.4px  old=151.4px  ratio=0.10  [neighbor_proximity]
+  B: ✓  new=19.6px  old=155.4px  ratio=0.13  [neighbor_proximity]
+  H1: ✓  new=19.8px  old=140.6px  ratio=0.14  [neighbor_proximity]
+  H0: ✓  new=11.3px  old=127.9px  ratio=0.09  [neighbor_proximity]
+  C10: ✓  new=25.5px  old=125.4px  ratio=0.20  [neighbor_proximity]
+  C11: ✓  new=17.0px  old=138.0px  ratio=0.12  [neighbor_proximity]
+
+[Frame 115/241]
+  8 cells  |  8 scars detected
+  A1: ✓  new=14.6px  old=153.5px  ratio=0.10  [neighbor_proximity]
+  E: ✓  new=21.2px  old=148.2px  ratio=0.14  [scar_based]
+  A0: ✓  new=19.0px  old=149.1px  ratio=0.13  [neighbor_proximity]
+  B: ✓  new=45.1px  old=131.1px  ratio=0.34  [neighbor_proximity]
+  H1: ✓  new=12.0px  old=146.3px  ratio=0.08  [neighbor_proximity]
+  H0: ✓  new=14.5px  old=129.0px  ratio=0.11  [scar_based]
+  C10: ✓  new=22.8px  old=128.8px  ratio=0.18  [scar_based]
+  C11: ✓  new=16.6px  old=138.8px  ratio=0.12  [neighbor_proximity]
+
+[Frame 116/241]
+  8 cells  |  8 scars detected
+  A1: ✓  new=15.0px  old=155.0px  ratio=0.10  [neighbor_proximity]
+  E: ✓  new=19.8px  old=150.8px  ratio=0.13  [scar_based]
+  A0: ✓  new=14.0px  old=154.1px  ratio=0.09  [neighbor_proximity]
+  B: ✓  new=20.2px  old=157.6px  ratio=0.13  [neighbor_proximity]
+  H1: ✓  new=11.9px  old=145.5px  ratio=0.08  [neighbor_proximity]
+  H0: ✓  new=83.1px  old=58.7px  ratio=1.42  [neighbor_proximity]
+  C10: ✓  new=15.5px  old=138.4px  ratio=0.11  [neighbor_proximity]
+  C11: ✓  new=17.3px  old=140.0px  ratio=0.12  [neighbor_proximity]
+
+[Frame 117/241]
+  8 cells  |  8 scars detected
+  A1: ✓  new=16.8px  old=156.3px  ratio=0.11  [neighbor_proximity]
+  E: ✓  new=23.7px  old=149.2px  ratio=0.16  [scar_based]
+  A0: ✓  new=15.3px  old=152.5px  ratio=0.10  [neighbor_proximity]
+  B: ✓  new=19.8px  old=159.0px  ratio=0.12  [neighbor_proximity]
+  H1: ✓  new=13.4px  old=146.1px  ratio=0.09  [neighbor_proximity]
+  H0: ✓  new=13.3px  old=130.0px  ratio=0.10  [neighbor_proximity]
+  C10: ✓  new=18.6px  old=135.8px  ratio=0.14  [neighbor_proximity]
+  C11: ✓  new=18.8px  old=138.0px  ratio=0.14  [neighbor_proximity]
+
+[Frame 118/241]
+  8 cells  |  8 scars detected
+  A1: ✓  new=15.8px  old=157.3px  ratio=0.10  [neighbor_proximity]
+  E: ✓  new=17.0px  old=157.8px  ratio=0.11  [scar_based]
+  A0: ✓  new=73.8px  old=95.1px  ratio=0.78  [neighbor_proximity]
+  B: ✓  new=18.5px  old=162.6px  ratio=0.11  [neighbor_proximity]
+  H1: ✓  new=10.0px  old=147.7px  ratio=0.07  [neighbor_proximity]
+  H0: ✓  new=74.1px  old=69.3px  ratio=1.07  [neighbor_proximity]
+  C10: ✓  new=15.4px  old=140.5px  ratio=0.11  [neighbor_proximity]
+  C11: ✓  new=17.0px  old=142.0px  ratio=0.12  [neighbor_proximity]
+
+[Frame 119/241]
+  8 cells  |  8 scars detected
+  A1: ✓  new=19.3px  old=155.9px  ratio=0.12  [neighbor_proximity]
+  E: ✓  new=18.2px  old=158.8px  ratio=0.11  [scar_based]
+  A0: ✓  new=17.0px  old=156.6px  ratio=0.11  [neighbor_proximity]
+  B: ✓  new=21.0px  old=160.3px  ratio=0.13  [neighbor_proximity]
+  H1: ✓  new=11.3px  old=148.4px  ratio=0.08  [neighbor_proximity]
+  H0: ✓  new=14.6px  old=130.0px  ratio=0.11  [neighbor_proximity]
+  C10: ✓  new=17.8px  old=137.4px  ratio=0.13  [neighbor_proximity]
+  C11: ✓  new=18.2px  old=140.8px  ratio=0.13  [neighbor_proximity]
+
+[Frame 120/241]
+  8 cells  |  8 scars detected
+  A1: ✓  new=15.9px  old=160.1px  ratio=0.10  [neighbor_proximity]
+  E: ✓  new=25.1px  old=152.1px  ratio=0.17  [scar_based]
+  A0: ✓  new=82.6px  old=88.8px  ratio=0.93  [neighbor_proximity]
+  B: ✓  new=20.6px  old=162.2px  ratio=0.13  [neighbor_proximity]
+  H1: ✓  new=21.5px  old=147.4px  ratio=0.15  [neighbor_proximity]
+  H0: ✓  new=72.8px  old=72.5px  ratio=1.00  [neighbor_proximity]
+  C10: ✓  new=17.8px  old=140.2px  ratio=0.13  [neighbor_proximity]
+  C11: ✓  new=21.1px  old=143.0px  ratio=0.15  [neighbor_proximity]
+
+[Frame 121/241]
+  8 cells  |  8 scars detected
+  A1: ✓  new=15.2px  old=160.4px  ratio=0.09  [neighbor_proximity]
+  E: ✓  new=23.4px  old=154.4px  ratio=0.15  [scar_based]
+  A0: ✓  new=84.3px  old=91.9px  ratio=0.92  [neighbor_proximity]
+  B: ✓  new=19.5px  old=166.6px  ratio=0.12  [neighbor_proximity]
+  H1: ✓  new=14.7px  old=152.1px  ratio=0.10  [neighbor_proximity]
+  H0: ✓  new=88.7px  old=57.4px  ratio=1.55  [neighbor_proximity]
+  C10: ✓  new=19.5px  old=139.0px  ratio=0.14  [neighbor_proximity]
+  C11: ✓  new=16.9px  old=147.6px  ratio=0.11  [neighbor_proximity]
+
+[Frame 122/241]
+  8 cells  |  8 scars detected
+  A1: ✓  new=14.0px  old=164.3px  ratio=0.09  [neighbor_proximity]
+  E: ✓  new=25.8px  old=155.1px  ratio=0.17  [scar_based]
+  A0: ✓  new=50.7px  old=130.0px  ratio=0.39  [neighbor_proximity]
+  B: ✓  new=42.1px  old=144.6px  ratio=0.29  [neighbor_proximity]
+  H1: ✓  new=13.9px  old=151.6px  ratio=0.09  [neighbor_proximity]
+  H0: ✓  new=74.7px  old=71.8px  ratio=1.04  [neighbor_proximity]
+  C10: ✓  new=18.9px  old=142.0px  ratio=0.13  [neighbor_proximity]
+  C11: ✓  new=21.6px  old=142.9px  ratio=0.15  [neighbor_proximity]
+
+[Frame 123/241]
+  8 cells  |  8 scars detected
+  A1: ✓  new=28.5px  old=149.4px  ratio=0.19  [neighbor_proximity]
+  E: ✓  new=22.7px  old=158.6px  ratio=0.14  [scar_based]
+  A0: ✓  new=41.5px  old=141.3px  ratio=0.29  [neighbor_proximity]
+  B: ✓  new=21.0px  old=167.8px  ratio=0.13  [neighbor_proximity]
+  H1: ✓  new=24.0px  old=151.5px  ratio=0.16  [neighbor_proximity]
+  H0: ✓  new=74.5px  old=74.7px  ratio=1.00  [neighbor_proximity]
+  C10: ✓  new=19.2px  old=141.4px  ratio=0.14  [neighbor_proximity]
+  C11: ✓  new=14.9px  old=149.7px  ratio=0.10  [neighbor_proximity]
+
+[Frame 124/241]
+  8 cells  |  8 scars detected
+  A1: ✓  new=22.9px  old=157.3px  ratio=0.15  [neighbor_proximity]
+  E: ✓  new=26.2px  old=156.8px  ratio=0.17  [scar_based]
+  A0: ✓  new=52.6px  old=126.0px  ratio=0.42  [neighbor_proximity]
+  B: ✓  new=19.0px  old=170.0px  ratio=0.11  [neighbor_proximity]
+  H1: ✓  new=28.0px  old=140.1px  ratio=0.20  [neighbor_proximity]
+  H0: ✓  new=73.0px  old=76.9px  ratio=0.95  [neighbor_proximity]
+  C10: ✓  new=17.8px  old=144.4px  ratio=0.12  [neighbor_proximity]channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+
+  C11: ✓  new=18.5px  old=145.3px  ratio=0.13  [neighbor_proximity]
+
+[Frame 125/241]
+  8 cells  |  8 scars detected
+  A1: ✓  new=15.2px  old=163.6px  ratio=0.09  [neighbor_proximity]
+  E: ✓  new=21.7px  old=162.2px  ratio=0.13  [scar_based]
+  A0: ✓  new=23.7px  old=163.8px  ratio=0.14  [neighbor_proximity]
+  B: ✓  new=19.1px  old=171.7px  ratio=0.11  [neighbor_proximity]
+  H1: ✓  new=28.1px  old=142.9px  ratio=0.20  [neighbor_proximity]
+  H0: ✓  new=69.4px  old=80.4px  ratio=0.86  [neighbor_proximity]
+  C10: ✓  new=18.4px  old=144.1px  ratio=0.13  [neighbor_proximity]
+  C11: ✓  new=15.6px  old=150.6px  ratio=0.10  [neighbor_proximity]
+
+[Frame 126/241]
+  8 cells  |  8 scars detected
+  A1: ✓  new=28.6px  old=150.9px  ratio=0.19  [neighbor_proximity]
+  E: ✓  new=21.3px  old=164.3px  ratio=0.13  [scar_based]
+  A0: ✓  new=43.6px  old=143.3px  ratio=0.30  [neighbor_proximity]
+  B: ✓  new=44.0px  old=147.9px  ratio=0.30  [neighbor_proximity]
+  H1: ✓  new=22.6px  old=155.6px  ratio=0.15  [neighbor_proximity]
+  H0: ✓  new=22.5px  old=141.8px  ratio=0.16  [neighbor_proximity]
+  C10: ✓  new=20.2px  old=144.6px  ratio=0.14  [neighbor_proximity]
+  C11: ✓  new=16.8px  old=148.1px  ratio=0.11  [neighbor_proximity]
+
+[Frame 127/241]
+  8 cells  |  8 scars detected
+  A1: ✓  new=29.7px  old=153.1px  ratio=0.19  [neighbor_proximity]
+  E: ✓  new=23.9px  old=161.7px  ratio=0.15  [scar_based]
+  A0: ✓  new=43.2px  old=129.5px  ratio=0.33  [neighbor_proximity]
+  B: ✓  new=26.2px  old=168.3px  ratio=0.16  [neighbor_proximity]
+  H1: ✓  new=23.8px  old=146.8px  ratio=0.16  [neighbor_proximity]
+  H0: ✓  new=72.2px  old=81.2px  ratio=0.89  [neighbor_proximity]
+  C10: ✓  new=20.7px  old=145.1px  ratio=0.14  [neighbor_proximity]
+  C11: ✓  new=19.4px  old=148.3px  ratio=0.13  [neighbor_proximity]
+
+[Frame 128/241]
+  8 cells  |  8 scars detected
+  A1: ✓  new=17.0px  old=166.6px  ratio=0.10  [neighbor_proximity]
+  E: ✓  new=21.3px  old=166.1px  ratio=0.13  [scar_based]
+  A0: ✓  new=53.4px  old=88.3px  ratio=0.61  [neighbor_proximity]
+  B: ✓  new=58.0px  old=137.5px  ratio=0.42  [neighbor_proximity]
+  H1: ✓  new=14.9px  old=160.5px  ratio=0.09  [neighbor_proximity]
+  H0: ✓  new=46.2px  old=108.9px  ratio=0.42  [neighbor_proximity]
+  C10: ✓  new=18.4px  old=149.1px  ratio=0.12  [neighbor_proximity]
+  C11: ✓  new=17.8px  old=151.6px  ratio=0.12  [neighbor_proximity]
+
+[Frame 129/241]
+  7 cells  |  7 scars detected
+  A1: ✓  new=18.2px  old=168.2px  ratio=0.11  [neighbor_proximity]
+  E: ✓  new=17.5px  old=173.5px  ratio=0.10  [scar_based]
+  B: ✓  new=28.2px  old=169.3px  ratio=0.17  [neighbor_proximity]
+  H1: ✓  new=26.3px  old=150.1px  ratio=0.18  [neighbor_proximity]
+  H0: ✓  new=74.6px  old=81.4px  ratio=0.92  [neighbor_proximity]
+  C10: ✓  new=21.2px  old=146.3px  ratio=0.15  [neighbor_proximity]
+  C11: ✓  new=18.0px  old=155.5px  ratio=0.12  [neighbor_proximity]
+
+[Frame 130/241]
+  7 cells  |  7 scars detected
+  A1: ✓  new=17.6px  old=170.2px  ratio=0.10  [neighbor_proximity]
+  E: ✓  new=19.4px  old=173.0px  ratio=0.11  [scar_based]
+  B: ✓  new=59.3px  old=140.7px  ratio=0.42  [neighbor_proximity]
+  H1: ✓  new=27.5px  old=148.6px  ratio=0.19  [neighbor_proximity]
+  H0: ✓  new=73.0px  old=83.2px  ratio=0.88  [neighbor_proximity]
+  C10: ✓  new=18.8px  old=149.6px  ratio=0.13  [neighbor_proximity]
+  C11: ✓  new=16.7px  old=155.8px  ratio=0.11  [neighbor_proximity]
+
+[Frame 131/241]
+  7 cells  |  7 scars detected
+  A1: ✓  new=19.0px  old=167.3px  ratio=0.11  [neighbor_proximity]
+  E: ✓  new=22.3px  old=176.5px  ratio=0.13  [scar_based]
+  B: ✓  new=21.4px  old=178.3px  ratio=0.12  [neighbor_proximity]
+  H1: ✓  new=27.5px  old=150.9px  ratio=0.18  [neighbor_proximity]
+  C10: ✓  new=19.8px  old=149.7px  ratio=0.13  [neighbor_proximity]
+  H0: ✓  new=75.3px  old=81.8px  ratio=0.92  [neighbor_proximity]
+  C11: ✓  new=17.9px  old=156.7px  ratio=0.11  [neighbor_proximity]
+
+[Frame 132/241]
+  7 cells  |  7 scars detected
+  A1: ✓  new=17.5px  old=171.4px  ratio=0.10  [neighbor_proximity]
+  E: ✓  new=91.6px  old=107.5px  ratio=0.85  [scar_based]
+  B: ✓  new=44.6px  old=155.5px  ratio=0.29  [neighbor_proximity]
+  H1: ✓  new=16.8px  old=165.4px  ratio=0.10  [neighbor_proximity]
+  C10: ✓  new=22.4px  old=148.6px  ratio=0.15  [neighbor_proximity]
+  H0: ✓  new=74.6px  old=85.1px  ratio=0.88  [neighbor_proximity]
+  C11: ✓  new=13.6px  old=159.8px  ratio=0.08  [neighbor_proximity]
+
+[Frame 133/241]
+  7 cells  |  7 scars detected
+  A1: ✓  new=19.6px  old=170.3px  ratio=0.12  [neighbor_proximity]
+  E: ✓  new=21.2px  old=179.4px  ratio=0.12  [scar_based]
+  B: ✓  new=44.9px  old=154.4px  ratio=0.29  [neighbor_proximity]
+  H1: ✓  new=28.0px  old=154.4px  ratio=0.18  [neighbor_proximity]
+  C10: ✓  new=20.9px  old=150.7px  ratio=0.14  [neighbor_proximity]
+  H0: ✓  new=20.9px  old=142.6px  ratio=0.15  [neighbor_proximity]
+  C11: ✓  new=15.2px  old=158.6px  ratio=0.10  [neighbor_proximity]
+
+[Frame 134/241]
+  7 cells  |  7 scars detected
+  A1: ✓  new=18.7px  old=171.4px  ratio=0.11  [neighbor_proximity]
+  E: ✓  new=21.4px  old=182.0px  ratio=0.12  [scar_based]
+  B: ✓  new=44.3px  old=156.2px  ratio=0.28  [neighbor_proximity]
+  H1: ✓  new=28.8px  old=151.2px  ratio=0.19  [neighbor_proximity]
+  C10: ✓  new=24.1px  old=150.3px  ratio=0.16  [scar_based]
+  H0: ✓  new=18.8px  old=152.4px  ratio=0.12  [neighbor_proximity]
+  C11: ✓  new=21.0px  old=155.5px  ratio=0.13  [neighbor_proximity]
+
+[Frame 135/241]
+  8 cells  |  8 scars detected
+  A1: ✓  new=16.9px  old=177.2px  ratio=0.10  [neighbor_proximity]
+  E: ✓  new=22.7px  old=182.3px  ratio=0.12  [scar_based]
+  B: ✓  new=34.5px  old=164.9px  ratio=0.21  [neighbor_proximity]
+  I: ✓  new=30.9px  old=106.4px  ratio=0.29  [scar_based]
+  H1: ✓  new=21.5px  old=164.6px  ratio=0.13  [neighbor_proximity]
+  C10: ✓  new=29.4px  old=145.8px  ratio=0.20  [scar_based]
+  H0: ✓  new=77.7px  old=85.4px  ratio=0.91  [neighbor_proximity]
+  C11: ✓  new=15.6px  old=163.1px  ratio=0.10  [neighbor_proximity]
+
+[Frame 136/241]
+  7 cells  |  7 scars detected
+  A1: ✓  new=19.3px  old=174.3px  ratio=0.11  [neighbor_proximity]
+  E: ✓  new=26.2px  old=179.0px  ratio=0.15  [scar_based]
+  B: ✓  new=25.4px  old=175.3px  ratio=0.14  [neighbor_proximity]
+  H1: ✓  new=29.6px  old=154.1px  ratio=0.19  [neighbor_proximity]
+  C10: ✓  new=20.8px  old=154.4px  ratio=0.13  [scar_based]
+  H0: ✓  new=15.0px  old=154.9px  ratio=0.10  [neighbor_proximity]
+  C11: ✓  new=17.9px  old=160.9px  ratio=0.11  [neighbor_proximity]
+
+[Frame 137/241]
+  7 cells  |  7 scars detected
+  A1: ✓  new=22.7px  old=172.3px  ratio=0.13  [neighbor_proximity]
+  E: ✓  new=20.5px  old=186.7px  ratio=0.11  [scar_based]
+  B: ✓  new=13.9px  old=178.0px  ratio=0.08  [neighbor_proximity]
+  H1: ✓  new=22.3px  old=165.4px  ratio=0.13  [neighbor_proximity]
+  C10: ✓  new=27.7px  old=148.2px  ratio=0.19  [scar_based]
+  H0: ✓  new=13.6px  old=150.7px  ratio=0.09  [neighbor_proximity]
+  C11: ✓  new=15.2px  old=162.5px  ratio=0.09  [neighbor_proximity]
+
+[Frame 138/241]
+  8 cells  |  8 scars detected
+  A1: ✓  new=19.9px  old=176.2px  ratio=0.11  [neighbor_proximity]
+  E: ✓  new=51.0px  old=157.7px  ratio=0.32  [scar_based]
+  J: ✓  new=32.4px  old=87.4px  ratio=0.37  [neighbor_proximity]
+  B: ✓  new=9.4px  old=156.4px  ratio=0.06  [neighbor_proximity]
+  H1: ✓  new=31.9px  old=153.5px  ratio=0.21  [neighbor_proximity]
+  C10: ✓  new=24.2px  old=154.1px  ratio=0.16  [scar_based]
+  H0: ✓  new=78.6px  old=88.0px  ratio=0.89  [neighbor_proximity]
+  C11: ✓  new=15.2px  old=163.1px  ratio=0.09  [neighbor_proximity]
+
+[Frame 139/241]
+  8 cells  |  8 scars detected
+  A1: ✓  new=20.1px  old=176.7px  ratio=0.11  [neighbor_proximity]
+  E: ✓  new=26.5px  old=182.2px  ratio=0.15  [scar_based]
+  J: ✓  new=33.3px  old=98.1px  ratio=0.34  [neighbor_proximity]
+  B: ✓  new=20.5px  old=180.2px  ratio=0.11  [neighbor_proximity]
+  H1: ✓  new=18.2px  old=172.1px  ratio=0.11  [neighbor_proximity]
+  C10: ✓  new=29.3px  old=148.7px  ratio=0.20  [scar_based]
+  H0: ✓  new=16.2px  old=159.2px  ratio=0.10  [neighbor_proximity]channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+
+  C11: ✓  new=16.1px  old=164.5px  ratio=0.10  [neighbor_proximity]
+
+[Frame 140/241]
+  7 cells  |  7 scars detected
+  A1: ✓  new=21.4px  old=180.5px  ratio=0.12  [neighbor_proximity]
+  E: ✓  new=19.1px  old=193.8px  ratio=0.10  [scar_based]
+  B: ✓  new=41.6px  old=159.6px  ratio=0.26  [neighbor_proximity]
+  H1: ✓  new=15.0px  old=175.4px  ratio=0.09  [neighbor_proximity]
+  C10: ✓  new=24.9px  old=155.4px  ratio=0.16  [scar_based]
+  H0: ✓  new=71.2px  old=98.5px  ratio=0.72  [neighbor_proximity]
+  C11: ✓  new=64.2px  old=117.5px  ratio=0.55  [neighbor_proximity]
+
+[Frame 141/241]
+  7 cells  |  7 scars detected
+  A1: ✓  new=20.1px  old=179.3px  ratio=0.11  [neighbor_proximity]
+  E: ✓  new=24.7px  old=189.2px  ratio=0.13  [scar_based]
+  B: ✓  new=19.8px  old=180.9px  ratio=0.11  [neighbor_proximity]
+  H1: ✓  new=29.6px  old=160.9px  ratio=0.18  [neighbor_proximity]
+  C10: ✓  new=30.1px  old=151.3px  ratio=0.20  [scar_based]
+  H0: ✓  new=88.6px  old=82.8px  ratio=1.07  [neighbor_proximity]
+  C11: ✓  new=14.9px  old=169.4px  ratio=0.09  [neighbor_proximity]
+
+[Frame 142/241]
+  7 cells  |  7 scars detected
+  A1: ✓  new=29.1px  old=172.4px  ratio=0.17  [neighbor_proximity]
+  E: ✓  new=33.2px  old=181.1px  ratio=0.18  [scar_based]
+  B: ✓  new=48.3px  old=151.8px  ratio=0.32  [neighbor_proximity]
+  H1: ✓  new=27.2px  old=165.0px  ratio=0.16  [neighbor_proximity]
+  C10: ✓  new=30.1px  old=151.2px  ratio=0.20  [scar_based]
+  H0: ✓  new=87.2px  old=84.3px  ratio=1.03  [neighbor_proximity]
+  C11: ✓  new=16.3px  old=168.0px  ratio=0.10  [neighbor_proximity]
+
+[Frame 143/241]
+  7 cells  |  7 scars detected
+  A1: ✓  new=20.3px  old=181.9px  ratio=0.11  [neighbor_proximity]
+  E: ✓  new=32.9px  old=182.1px  ratio=0.18  [scar_based]
+  B: ✓  new=42.7px  old=158.0px  ratio=0.27  [neighbor_proximity]
+  H1: ✓  new=15.6px  old=179.2px  ratio=0.09  [neighbor_proximity]
+  C10: ✓  new=30.1px  old=153.4px  ratio=0.20  [scar_based]
+  H0: ✓  new=28.9px  old=145.8px  ratio=0.20  [neighbor_proximity]
+  C11: ✓  new=15.9px  old=170.3px  ratio=0.09  [neighbor_proximity]
+
+[Frame 144/241]
+  7 cells  |  7 scars detected
+  A1: ✓  new=18.0px  old=187.0px  ratio=0.10  [neighbor_proximity]
+  E: ✓  new=24.8px  old=194.1px  ratio=0.13  [scar_based]
+  B: ✓  new=37.9px  old=162.5px  ratio=0.23  [neighbor_proximity]
+  H1: ✓  new=33.1px  old=161.7px  ratio=0.20  [neighbor_proximity]
+  C10: ✓  new=90.0px  old=92.7px  ratio=0.97  [scar_based]
+  H0: ✓  new=87.5px  old=86.2px  ratio=1.02  [neighbor_proximity]
+  C11: ✓  new=118.7px  old=67.5px  ratio=1.76  [neighbor_proximity]
+
+[Frame 145/241]
+  8 cells  |  8 scars detected
+  A1: ✓  new=25.1px  old=181.3px  ratio=0.14  [neighbor_proximity]
+  E: ✓  new=30.9px  old=189.2px  ratio=0.16  [scar_based]
+  B: ✓  new=43.4px  old=156.7px  ratio=0.28  [neighbor_proximity]
+  K: ✓  new=37.7px  old=117.2px  ratio=0.32  [neighbor_proximity]
+  H1: ✓  new=18.2px  old=178.7px  ratio=0.10  [neighbor_proximity]
+  C10: ✓  new=23.4px  old=163.1px  ratio=0.14  [scar_based]
+  H0: ✓  new=31.9px  old=145.9px  ratio=0.22  [neighbor_proximity]
+  C11: ✓  new=17.9px  old=170.0px  ratio=0.11  [neighbor_proximity]
+
+[Frame 146/241]
+  8 cells  |  8 scars detected
+  A1: ✓  new=17.2px  old=189.1px  ratio=0.09  [neighbor_proximity]
+  E: ✓  new=22.7px  old=194.9px  ratio=0.12  [scar_based]
+  B: ✓  new=24.8px  old=176.2px  ratio=0.14  [neighbor_proximity]
+  K: ✓  new=30.1px  old=124.1px  ratio=0.24  [scar_based]
+  H1: ✓  new=29.8px  old=167.3px  ratio=0.18  [neighbor_proximity]
+  C10: ✓  new=29.4px  old=158.2px  ratio=0.19  [scar_based]
+  H0: ✓  new=85.6px  old=92.1px  ratio=0.93  [scar_based]
+  C11: ✓  new=16.2px  old=173.0px  ratio=0.09  [neighbor_proximity]
+
+[Frame 147/241]
+  7 cells  |  7 scars detected
+  A1: ✓  new=18.0px  old=190.0px  ratio=0.09  [neighbor_proximity]
+  E: ✓  new=60.1px  old=161.9px  ratio=0.37  [scar_based]
+  B: ✓  new=20.0px  old=180.8px  ratio=0.11  [neighbor_proximity]
+  H1: ✓  new=31.3px  old=167.5px  ratio=0.19  [neighbor_proximity]
+  C10: ✓  new=25.1px  old=162.5px  ratio=0.15  [scar_based]
+  H0: ✓  new=85.6px  old=93.1px  ratio=0.92  [neighbor_proximity]
+  C11: ✓  new=14.9px  old=177.6px  ratio=0.08  [neighbor_proximity]
+
+[Frame 148/241]
+  8 cells  |  8 scars detected
+  A1: ✓  new=28.6px  old=178.6px  ratio=0.16  [neighbor_proximity]
+  E: ✓  new=26.1px  old=197.9px  ratio=0.13  [scar_based]
+  L: ✓  new=9.7px  old=177.8px  ratio=0.05  [neighbor_proximity]
+  B: ✓  new=24.6px  old=175.6px  ratio=0.14  [neighbor_proximity]
+  H1: ✓  new=15.8px  old=184.0px  ratio=0.09  [neighbor_proximity]
+  C10: ✓  new=24.4px  old=164.0px  ratio=0.15  [scar_based]
+  H0: ✓  new=79.6px  old=99.8px  ratio=0.80  [scar_based]
+  C11: ✓  new=67.8px  old=123.6px  ratio=0.55  [neighbor_proximity]
+
+[Frame 149/241]
+  8 cells  |  8 scars detected
+  A1: ✓  new=16.4px  old=191.1px  ratio=0.09  [neighbor_proximity]
+  E: ✓  new=26.1px  old=197.7px  ratio=0.13  [scar_based]
+  L: ✓  new=17.3px  old=176.4px  ratio=0.10  [neighbor_proximity]
+  B: ✓  new=34.8px  old=166.1px  ratio=0.21  [neighbor_proximity]
+  H1: ✓  new=18.7px  old=181.2px  ratio=0.10  [neighbor_proximity]
+  C10: ✓  new=30.1px  old=161.1px  ratio=0.19  [scar_based]
+  H0: ✓  new=90.8px  old=90.9px  ratio=1.00  [scar_based]
+  C11: ✓  new=15.3px  old=179.8px  ratio=0.09  [neighbor_proximity]
+
+[Frame 150/241]
+  8 cells  |  8 scars detected
+  A1: ✓  new=22.1px  old=190.3px  ratio=0.12  [neighbor_proximity]
+  E: ✓  new=25.8px  old=201.0px  ratio=0.13  [scar_based]
+  B: ✓  new=23.4px  old=177.6px  ratio=0.13  [neighbor_proximity]
+  L: ✓  new=16.7px  old=156.5px  ratio=0.11  [neighbor_proximity]
+  H1: ✓  new=19.7px  old=182.6px  ratio=0.11  [neighbor_proximity]
+  C10: ✓  new=94.5px  old=96.6px  ratio=0.98  [scar_based]
+  H0: ✓  new=88.8px  old=94.8px  ratio=0.94  [scar_based]
+  C11: ✓  new=15.3px  old=179.1px  ratio=0.09  [neighbor_proximity]
+
+[Frame 151/241]
+  8 cells  |  8 scars detected
+  A1: ✓  new=17.9px  old=190.4px  ratio=0.09  [neighbor_proximity]
+  E: ✓  new=23.1px  old=206.8px  ratio=0.11  [scar_based]
+  L: ✓  new=18.0px  old=176.0px  ratio=0.10  [neighbor_proximity]
+  B: ✓  new=25.5px  old=175.8px  ratio=0.14  [neighbor_proximity]
+  H1: ✓  new=26.7px  old=177.4px  ratio=0.15  [neighbor_proximity]
+  C10: ✓  new=20.9px  old=171.1px  ratio=0.12  [scar_based]
+  H0: ✓  new=17.4px  old=166.9px  ratio=0.10  [scar_based]
+  C11: ✓  new=13.9px  old=181.2px  ratio=0.08  [neighbor_proximity]
+
+[Frame 152/241]
+  8 cells  |  8 scars detected
+  A1: ✓  new=17.8px  old=191.8px  ratio=0.09  [neighbor_proximity]
+  E: ✓  new=25.3px  old=205.7px  ratio=0.12  [scar_based]
+  B: ✓  new=51.9px  old=147.9px  ratio=0.35  [neighbor_proximity]
+  L: ✓  new=42.3px  old=121.9px  ratio=0.35  [neighbor_proximity]
+  H1: ✓  new=31.8px  old=174.9px  ratio=0.18  [neighbor_proximity]
+  C10: ✓  new=25.5px  old=167.8px  ratio=0.15  [scar_based]
+  H0: ✓  new=89.6px  old=96.6px  ratio=0.93  [scar_based]
+  C11: ✓  new=16.4px  old=180.1px  ratio=0.09  [neighbor_proximity]
+
+[Frame 153/241]
+  8 cells  |  8 scars detected
+  A1: ✓  new=23.3px  old=188.0px  ratio=0.12  [neighbor_proximity]
+  E: ✓  new=25.4px  old=207.9px  ratio=0.12  [scar_based]
+  L: ✓  new=50.3px  old=142.0px  ratio=0.35  [neighbor_proximity]
+  B: ✓  new=23.6px  old=177.9px  ratio=0.13  [neighbor_proximity]
+  H1: ✓  new=19.8px  old=188.7px  ratio=0.10  [neighbor_proximity]
+  C10: ✓  new=24.4px  old=171.5px  ratio=0.14  [scar_based]
+  H0: ✓  new=90.7px  old=97.4px  ratio=0.93  [scar_based]
+  C11: ✓  new=23.8px  old=175.1px  ratio=0.14  [neighbor_proximity]
+
+[Frame 154/241]
+  8 cells  |  8 scars detected
+  A1: ✓  new=19.6px  old=190.4px  ratio=0.10  [neighbor_proximity]
+  E: ✓  new=75.5px  old=158.4px  ratio=0.48  [scar_based]
+  B: ✓  new=37.2px  old=164.0px  ratio=0.23  [neighbor_proximity]
+  L: ✓  new=27.3px  old=129.9px  ratio=0.21  [neighbor_proximity]
+  H1: ✓  new=20.4px  old=186.2px  ratio=0.11  [neighbor_proximity]
+  C10: ✓  new=31.6px  old=165.2px  ratio=0.19  [scar_based]
+  H0: ✓  new=91.3px  old=97.3px  ratio=0.94  [scar_based]channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+
+  C11: ✓  new=17.3px  old=181.1px  ratio=0.10  [neighbor_proximity]
+
+[Frame 155/241]
+  7 cells  |  7 scars detected
+  A1: ✓  new=18.1px  old=193.7px  ratio=0.09  [neighbor_proximity]
+  E: ✓  new=37.4px  old=197.3px  ratio=0.19  [scar_based]
+  B: ✓  new=54.6px  old=147.5px  ratio=0.37  [neighbor_proximity]
+  H1: ✓  new=30.0px  old=179.1px  ratio=0.17  [neighbor_proximity]
+  C10: ✓  new=28.4px  old=168.4px  ratio=0.17  [scar_based]
+  H0: ✓  new=93.4px  old=97.0px  ratio=0.96  [scar_based]
+  C11: ✓  new=13.7px  old=186.6px  ratio=0.07  [neighbor_proximity]
+
+[Frame 156/241]
+  7 cells  |  7 scars detected
+  A1: ✓  new=28.2px  old=178.9px  ratio=0.16  [neighbor_proximity]
+  E: ✓  new=80.1px  old=155.1px  ratio=0.52  [scar_based]
+  B: ✓  new=19.0px  old=176.2px  ratio=0.11  [neighbor_proximity]
+  H1: ✓  new=20.0px  old=191.2px  ratio=0.10  [neighbor_proximity]
+  C10: ✓  new=33.3px  old=166.6px  ratio=0.20  [scar_based]
+  H0: ✓  new=80.8px  old=111.2px  ratio=0.73  [scar_based]
+  C11: ✓  new=14.9px  old=185.4px  ratio=0.08  [neighbor_proximity]
+
+[Frame 157/241]
+  8 cells  |  8 scars detected
+  A1: ✓  new=29.3px  old=180.5px  ratio=0.16  [neighbor_proximity]
+  E: ✓  new=20.1px  old=217.4px  ratio=0.09  [neighbor_proximity]
+  B: ✓  new=29.2px  old=103.6px  ratio=0.28  [scar_based]
+  M: ✓  new=24.8px  old=143.0px  ratio=0.17  [neighbor_proximity]
+  H1: ✓  new=17.1px  old=197.5px  ratio=0.09  [neighbor_proximity]
+  C10: ✓  new=27.6px  old=173.3px  ratio=0.16  [scar_based]
+  H0: ✓  new=89.5px  old=105.4px  ratio=0.85  [scar_based]
+  C11: ✓  new=100.8px  old=101.1px  ratio=1.00  [neighbor_proximity]
+
+[Frame 158/241]
+  8 cells  |  8 scars detected
+  A1: ✓  new=25.3px  old=182.6px  ratio=0.14  [neighbor_proximity]
+  E: ✓  new=48.1px  old=190.8px  ratio=0.25  [neighbor_proximity]
+  B: ✓  new=31.3px  old=108.2px  ratio=0.29  [scar_based]
+  M: ✓  new=35.9px  old=125.8px  ratio=0.29  [scar_based]
+  H1: ✓  new=15.8px  old=199.1px  ratio=0.08  [neighbor_proximity]
+  C10: ✓  new=29.4px  old=173.0px  ratio=0.17  [scar_based]
+  H0: ✓  new=82.9px  old=113.2px  ratio=0.73  [scar_based]
+  C11: ✓  new=13.2px  old=191.4px  ratio=0.07  [neighbor_proximity]
+
+[Frame 159/241]
+  9 cells  |  9 scars detected
+  A1: ✓  new=29.3px  old=179.0px  ratio=0.16  [neighbor_proximity]
+  E: ✓  new=34.1px  old=207.2px  ratio=0.16  [neighbor_proximity]
+  N: ✓  new=21.7px  old=100.1px  ratio=0.22  [neighbor_proximity]
+  M: ✓  new=33.2px  old=172.8px  ratio=0.19  [neighbor_proximity]
+  B: ✓  new=20.4px  old=113.3px  ratio=0.18  [neighbor_proximity]
+  H1: ✓  new=17.5px  old=199.0px  ratio=0.09  [neighbor_proximity]
+  C10: ✓  new=24.8px  old=178.3px  ratio=0.14  [scar_based]
+  H0: ✓  new=86.6px  old=109.4px  ratio=0.79  [scar_based]
+  C11: ✓  new=15.3px  old=189.3px  ratio=0.08  [neighbor_proximity]
+
+[Frame 160/241]
+  9 cells  |  9 scars detected
+  A1: ✓  new=27.2px  old=180.7px  ratio=0.15  [neighbor_proximity]
+  E: ✓  new=24.4px  old=217.3px  ratio=0.11  [neighbor_proximity]
+  N: ✓  new=21.0px  old=102.1px  ratio=0.21  [neighbor_proximity]
+  B: ✓  new=19.5px  old=112.4px  ratio=0.17  [neighbor_proximity]
+  M: ✓  new=30.9px  old=122.7px  ratio=0.25  [scar_based]
+  H1: ✓  new=25.7px  old=190.0px  ratio=0.14  [neighbor_proximity]
+  C10: ✓  new=59.1px  old=147.5px  ratio=0.40  [scar_based]
+  H0: ✓  new=77.0px  old=120.8px  ratio=0.64  [scar_based]
+  C11: ✓  new=45.0px  old=160.2px  ratio=0.28  [neighbor_proximity]
+
+[Frame 161/241]
+  9 cells  |  9 scars detected
+  A1: ✓  new=26.4px  old=180.3px  ratio=0.15  [neighbor_proximity]
+  E: ✓  new=18.0px  old=224.2px  ratio=0.08  [neighbor_proximity]
+  N: ✓  new=19.1px  old=101.2px  ratio=0.19  [neighbor_proximity]
+  B: ✓  new=15.8px  old=114.4px  ratio=0.14  [neighbor_proximity]
+  M: ✓  new=32.7px  old=132.4px  ratio=0.25  [scar_based]
+  H1: ✓  new=32.0px  old=185.4px  ratio=0.17  [neighbor_proximity]
+  C10: ✓  new=31.9px  old=176.5px  ratio=0.18  [scar_based]
+  H0: ✓  new=90.3px  old=107.1px  ratio=0.84  [scar_based]
+  C11: ✓  new=14.9px  old=193.7px  ratio=0.08  [neighbor_proximity]
+
+[Frame 162/241]
+  9 cells  |  9 scars detected
+  A1: ✓  new=28.0px  old=180.6px  ratio=0.16  [neighbor_proximity]
+  E: ✓  new=23.9px  old=220.8px  ratio=0.11  [neighbor_proximity]
+  N: ✓  new=15.5px  old=106.2px  ratio=0.15  [neighbor_proximity]
+  B: ✓  new=16.2px  old=114.8px  ratio=0.14  [neighbor_proximity]
+  M: ✓  new=14.5px  old=169.4px  ratio=0.09  [neighbor_proximity]
+  H1: ✓  new=30.0px  old=186.8px  ratio=0.16  [neighbor_proximity]
+  C10: ✓  new=33.3px  old=175.3px  ratio=0.19  [scar_based]
+  H0: ✓  new=20.0px  old=184.0px  ratio=0.11  [scar_based]
+  C11: ✓  new=16.6px  old=193.3px  ratio=0.09  [neighbor_proximity]
+
+[Frame 163/241]
+  8 cells  |  8 scars detected
+  A1: ✓  new=14.8px  old=192.8px  ratio=0.08  [scar_based]
+  E: ✓  new=58.1px  old=188.4px  ratio=0.31  [neighbor_proximity]
+  N: ✓  new=22.8px  old=107.7px  ratio=0.21  [neighbor_proximity]
+  B: ✓  new=12.3px  old=115.8px  ratio=0.11  [neighbor_proximity]
+  H1: ✓  new=29.5px  old=189.2px  ratio=0.16  [neighbor_proximity]
+  C10: ✓  new=36.3px  old=173.6px  ratio=0.21  [scar_based]
+  H0: ✓  new=91.6px  old=109.0px  ratio=0.84  [scar_based]
+  C11: ✓  new=18.0px  old=193.4px  ratio=0.09  [neighbor_proximity]
+
+[Frame 164/241]
+  8 cells  |  8 scars detected
+  A1: ✓  new=26.1px  old=183.6px  ratio=0.14  [neighbor_proximity]
+  E: ✓  new=33.1px  old=210.5px  ratio=0.16  [neighbor_proximity]
+  N: ✓  new=18.3px  old=103.2px  ratio=0.18  [neighbor_proximity]
+  B: ✓  new=17.3px  old=112.9px  ratio=0.15  [neighbor_proximity]
+  H1: ✓  new=15.5px  old=202.2px  ratio=0.08  [neighbor_proximity]
+  C10: ✓  new=32.6px  old=179.8px  ratio=0.18  [scar_based]
+  H0: ✓  new=92.7px  old=109.0px  ratio=0.85  [scar_based]
+  C11: ✓  new=16.7px  old=194.2px  ratio=0.09  [neighbor_proximity]
+
+[Frame 165/241]
+  9 cells  |  9 scars detected
+  A1: ✓  new=28.0px  old=184.0px  ratio=0.15  [neighbor_proximity]
+  E: ✓  new=86.1px  old=158.8px  ratio=0.54  [neighbor_proximity]
+  N: ✓  new=23.4px  old=101.0px  ratio=0.23  [neighbor_proximity]
+  B: ✓  new=20.8px  old=117.2px  ratio=0.18  [neighbor_proximity]
+  O: ✓  new=17.5px  old=188.6px  ratio=0.09  [neighbor_proximity]
+  H1: ✓  new=21.9px  old=195.2px  ratio=0.11  [neighbor_proximity]
+  C10: ✓  new=32.1px  old=181.2px  ratio=0.18  [scar_based]
+  H0: ✓  new=20.1px  old=184.3px  ratio=0.11  [scar_based]
+  C11: ✓  new=13.5px  old=199.2px  ratio=0.07  [neighbor_proximity]
+
+[Frame 166/241]
+  8 cells  |  8 scars detected
+  A1: ✓  new=25.8px  old=183.9px  ratio=0.14  [neighbor_proximity]
+  E: ✓  new=21.3px  old=223.8px  ratio=0.10  [scar_based]
+  N: ✓  new=17.4px  old=105.3px  ratio=0.17  [neighbor_proximity]
+  B: ✓  new=24.1px  old=109.9px  ratio=0.22  [neighbor_proximity]
+  H1: ✓  new=16.1px  old=203.1px  ratio=0.08  [neighbor_proximity]
+  C10: ✓  new=31.2px  old=184.4px  ratio=0.17  [scar_based]
+  H0: ✓  new=92.4px  old=111.3px  ratio=0.83  [scar_based]
+  C11: ✓  new=13.1px  old=200.4px  ratio=0.07  [neighbor_proximity]
+
+[Frame 167/241]
+  9 cells  |  9 scars detected
+  A1: ✓  new=19.5px  old=191.7px  ratio=0.10  [neighbor_proximity]
+  E: ✓  new=23.2px  old=221.7px  ratio=0.10  [scar_based]
+  N: ✓  new=16.9px  old=106.8px  ratio=0.16  [neighbor_proximity]
+  B: ✓  new=22.0px  old=110.5px  ratio=0.20  [neighbor_proximity]
+  P: ✓  new=13.5px  old=165.6px  ratio=0.08  [neighbor_proximity]
+  H1: ✓  new=14.7px  old=202.4px  ratio=0.07  [neighbor_proximity]
+  C10: ✓  new=33.7px  old=182.9px  ratio=0.18  [scar_based]
+  H0: ✓  new=101.5px  old=104.1px  ratio=0.97  [scar_based]
+  C11: ✓  new=15.2px  old=200.3px  ratio=0.08  [neighbor_proximity]
+
+[Frame 168/241]
+  9 cells  |  9 scars detected
+  A1: ✓  new=18.5px  old=193.6px  ratio=0.10  [neighbor_proximity]
+  E: ✓  new=102.0px  old=141.6px  ratio=0.72  [scar_based]
+  N: ✓  new=18.9px  old=106.3px  ratio=0.18  [neighbor_proximity]
+  B: ✓  new=24.2px  old=110.0px  ratio=0.22  [neighbor_proximity]
+  P: ✓  new=20.5px  old=148.3px  ratio=0.14  [neighbor_proximity]channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+
+  H1: ✓  new=28.0px  old=191.3px  ratio=0.15  [neighbor_proximity]
+  C10: ✓  new=32.6px  old=190.1px  ratio=0.17  [scar_based]
+  H0: ✓  new=19.9px  old=189.2px  ratio=0.11  [scar_based]
+  C11: ✓  new=12.7px  old=203.8px  ratio=0.06  [neighbor_proximity]
+
+[Frame 169/241]
+  8 cells  |  8 scars detected
+  A1: ✓  new=31.7px  old=182.9px  ratio=0.17  [neighbor_proximity]
+  E: ✓  new=76.9px  old=168.6px  ratio=0.46  [scar_based]
+  N: ✓  new=15.5px  old=112.2px  ratio=0.14  [neighbor_proximity]
+  B: ✓  new=20.2px  old=116.4px  ratio=0.17  [neighbor_proximity]
+  H1: ✓  new=32.6px  old=187.2px  ratio=0.17  [neighbor_proximity]
+  C10: ✓  new=34.1px  old=187.2px  ratio=0.18  [scar_based]
+  H0: ✓  new=16.8px  old=192.4px  ratio=0.09  [scar_based]
+  C11: ✓  new=14.3px  old=204.1px  ratio=0.07  [neighbor_proximity]
+
+[Frame 170/241]
+  8 cells  |  8 scars detected
+  A1: ✓  new=32.3px  old=181.4px  ratio=0.18  [neighbor_proximity]
+  E: ✓  new=96.5px  old=147.7px  ratio=0.65  [scar_based]
+  N: ✓  new=16.0px  old=110.8px  ratio=0.14  [neighbor_proximity]
+  B: ✓  new=24.2px  old=113.0px  ratio=0.21  [neighbor_proximity]
+  H1: ✓  new=16.5px  old=203.3px  ratio=0.08  [neighbor_proximity]
+  C10: ✓  new=42.5px  old=184.1px  ratio=0.23  [scar_based]
+  H0: ✓  new=19.1px  old=192.3px  ratio=0.10  [scar_based]
+  C11: ✓  new=14.0px  old=203.5px  ratio=0.07  [neighbor_proximity]
+
+[Frame 171/241]
+  Division detected: A1 → A10, A11
+  Lineage poles applied: A10 / A11
+  9 cells  |  9 scars detected
+  A11: ✓  new=21.3px  old=109.7px  ratio=0.19  [lineage]
+  E: ✓  new=36.6px  old=208.1px  ratio=0.18  [neighbor_proximity]
+  A10: ✓  new=13.2px  old=110.9px  ratio=0.12  [lineage]
+  N: ✓  new=18.8px  old=109.2px  ratio=0.17  [neighbor_proximity]
+  B: ✓  new=16.3px  old=122.0px  ratio=0.13  [neighbor_proximity]
+  H1: ✓  new=16.5px  old=202.6px  ratio=0.08  [neighbor_proximity]
+  C10: ✓  new=36.3px  old=189.3px  ratio=0.19  [scar_based]
+  H0: ✓  new=19.6px  old=194.3px  ratio=0.10  [scar_based]
+  C11: ✓  new=11.9px  old=207.3px  ratio=0.06  [neighbor_proximity]
+
+[Frame 172/241]
+  9 cells  |  9 scars detected
+  A11: ✓  new=15.8px  old=113.3px  ratio=0.14  [neighbor_proximity]
+  E: ✓  new=30.2px  old=214.0px  ratio=0.14  [neighbor_proximity]
+  A10: ✓  new=18.8px  old=105.6px  ratio=0.18  [scar_based]
+  N: ✓  new=16.0px  old=111.6px  ratio=0.14  [neighbor_proximity]
+  B: ✓  new=24.2px  old=114.8px  ratio=0.21  [neighbor_proximity]
+  H1: ✓  new=22.4px  old=196.2px  ratio=0.11  [neighbor_proximity]
+  C10: ✓  new=104.7px  old=120.0px  ratio=0.87  [scar_based]
+  H0: ✓  new=20.7px  old=193.7px  ratio=0.11  [scar_based]
+  C11: ✓  new=12.5px  old=207.6px  ratio=0.06  [neighbor_proximity]
+
+[Frame 173/241]
+  9 cells  |  9 scars detected
+  A11: ✓  new=16.5px  old=113.4px  ratio=0.15  [neighbor_proximity]
+  E: ✓  new=122.4px  old=123.6px  ratio=0.99  [scar_based]
+  A10: ✓  new=14.2px  old=109.9px  ratio=0.13  [scar_based]
+  N: ✓  new=21.8px  old=114.9px  ratio=0.19  [neighbor_proximity]
+  B: ✓  new=22.4px  old=117.9px  ratio=0.19  [neighbor_proximity]
+  H1: ✓  new=21.5px  old=195.0px  ratio=0.11  [neighbor_proximity]
+  C10: ✓  new=37.5px  old=187.9px  ratio=0.20  [scar_based]
+  H0: ✓  new=105.0px  old=111.9px  ratio=0.94  [scar_based]
+  C11: ✓  new=16.7px  old=206.2px  ratio=0.08  [neighbor_proximity]
+
+[Frame 174/241]
+  9 cells  |  9 scars detected
+  A11: ✓  new=17.3px  old=115.8px  ratio=0.15  [neighbor_proximity]
+  E: ✓  new=21.0px  old=225.2px  ratio=0.09  [neighbor_proximity]
+  A10: ✓  new=11.5px  old=110.3px  ratio=0.10  [scar_based]
+  N: ✓  new=21.9px  old=112.8px  ratio=0.19  [neighbor_proximity]
+  B: ✓  new=20.5px  old=121.4px  ratio=0.17  [neighbor_proximity]
+  H1: ✓  new=28.2px  old=190.9px  ratio=0.15  [neighbor_proximity]
+  C10: ✓  new=42.9px  old=182.7px  ratio=0.23  [scar_based]
+  H0: ✓  new=28.6px  old=190.3px  ratio=0.15  [neighbor_proximity]
+  C11: ✓  new=17.7px  old=208.0px  ratio=0.09  [neighbor_proximity]
+
+[Frame 175/241]
+  9 cells  |  9 scars detected
+  A11: ✓  new=15.0px  old=116.3px  ratio=0.13  [neighbor_proximity]
+  E: ✓  new=20.8px  old=225.2px  ratio=0.09  [neighbor_proximity]
+  A10: ✓  new=19.6px  old=109.8px  ratio=0.18  [scar_based]
+  N: ✓  new=26.3px  old=109.6px  ratio=0.24  [neighbor_proximity]
+  B: ✓  new=22.3px  old=121.4px  ratio=0.18  [neighbor_proximity]
+  H1: ✓  new=22.8px  old=197.5px  ratio=0.12  [neighbor_proximity]
+  C10: ✓  new=48.3px  old=178.5px  ratio=0.27  [scar_based]
+  H0: ✓  new=36.2px  old=185.4px  ratio=0.20  [neighbor_proximity]
+  C11: ✓  new=13.9px  old=213.4px  ratio=0.06  [neighbor_proximity]
+
+[Frame 176/241]
+  9 cells  |  9 scars detected
+  A11: ✓  new=18.2px  old=109.8px  ratio=0.17  [neighbor_proximity]
+  E: ✓  new=20.9px  old=225.6px  ratio=0.09  [neighbor_proximity]
+  A10: ✓  new=22.6px  old=102.8px  ratio=0.22  [scar_based]
+  N: ✓  new=20.0px  old=116.7px  ratio=0.17  [neighbor_proximity]
+  B: ✓  new=19.4px  old=125.2px  ratio=0.15  [neighbor_proximity]
+  H1: ✓  new=25.8px  old=193.1px  ratio=0.13  [neighbor_proximity]
+  C10: ✓  new=40.2px  old=184.5px  ratio=0.22  [scar_based]
+  H0: ✓  new=35.2px  old=189.0px  ratio=0.19  [neighbor_proximity]
+  C11: ✓  new=17.2px  old=209.9px  ratio=0.08  [neighbor_proximity]
+
+[Frame 177/241]
+  9 cells  |  9 scars detected
+  A11: ✓  new=14.4px  old=116.3px  ratio=0.12  [neighbor_proximity]
+  E: ✓  new=25.9px  old=221.3px  ratio=0.12  [neighbor_proximity]
+  A10: ✓  new=21.6px  old=107.0px  ratio=0.20  [scar_based]
+  N: ✓  new=20.9px  old=117.5px  ratio=0.18  [neighbor_proximity]
+  B: ✓  new=20.8px  old=126.0px  ratio=0.16  [neighbor_proximity]
+  H1: ✓  new=32.0px  old=111.7px  ratio=0.29  [scar_based]
+  C10: ✓  new=39.1px  old=186.6px  ratio=0.21  [scar_based]
+  H0: ✓  new=34.9px  old=192.1px  ratio=0.18  [neighbor_proximity]
+  C11: ✓  new=15.0px  old=213.3px  ratio=0.07  [neighbor_proximity]
+
+[Frame 178/241]
+  9 cells  |  9 scars detected
+  A11: ✓  new=14.8px  old=117.0px  ratio=0.13  [neighbor_proximity]
+  E: ✓  new=22.9px  old=224.0px  ratio=0.10  [neighbor_proximity]
+  A10: ✓  new=22.5px  old=103.4px  ratio=0.22  [scar_based]
+  N: ✓  new=25.5px  old=111.7px  ratio=0.23  [neighbor_proximity]
+  B: ✓  new=18.8px  old=127.9px  ratio=0.15  [neighbor_proximity]
+  H1: ✓  new=24.9px  old=193.5px  ratio=0.13  [neighbor_proximity]
+  C10: ✓  new=36.3px  old=190.9px  ratio=0.19  [scar_based]
+  H0: ✓  new=34.8px  old=191.9px  ratio=0.18  [neighbor_proximity]
+  C11: ✓  new=12.8px  old=216.6px  ratio=0.06  [neighbor_proximity]
+
+[Frame 179/241]
+  9 cells  |  9 scars detected
+  A11: ✓  new=14.3px  old=117.0px  ratio=0.12  [neighbor_proximity]
+  E: ✓  new=20.2px  old=225.9px  ratio=0.09  [neighbor_proximity]
+  A10: ✓  new=21.0px  old=106.3px  ratio=0.20  [scar_based]
+  N: ✓  new=25.5px  old=114.7px  ratio=0.22  [neighbor_proximity]
+  B: ✓  new=20.7px  old=127.2px  ratio=0.16  [neighbor_proximity]
+  H1: ✓  new=16.1px  old=203.5px  ratio=0.08  [neighbor_proximity]
+  C10: ✓  new=34.7px  old=190.9px  ratio=0.18  [scar_based]
+  H0: ✓  new=22.5px  old=208.3px  ratio=0.11  [neighbor_proximity]
+  C11: ✓  new=13.3px  old=218.6px  ratio=0.06  [neighbor_proximity]
+
+[Frame 180/241]
+  8 cells  |  8 scars detected
+  A11: ✓  new=16.0px  old=116.7px  ratio=0.14  [neighbor_proximity]
+  E: ✓  new=21.3px  old=225.4px  ratio=0.09  [neighbor_proximity]
+  A10: ✓  new=19.9px  old=107.3px  ratio=0.19  [scar_based]
+  N: ✓  new=23.4px  old=118.4px  ratio=0.20  [neighbor_proximity]
+  B: ✓  new=27.1px  old=120.6px  ratio=0.22  [neighbor_proximity]
+  C10: ✓  new=105.9px  old=119.2px  ratio=0.89  [scar_based]
+  H0: ✓  new=52.5px  old=177.8px  ratio=0.30  [neighbor_proximity]
+  C11: ✓  new=12.8px  old=220.1px  ratio=0.06  [neighbor_proximity]
+
+[Frame 181/241]
+  10 cells  |  10 scars detected
+  A11: ✓  new=16.9px  old=117.1px  ratio=0.14  [neighbor_proximity]
+  E: ✓  new=41.7px  old=204.1px  ratio=0.20  [neighbor_proximity]
+  A10: ✓  new=20.8px  old=107.5px  ratio=0.19  [scar_based]
+  N: ✓  new=22.8px  old=117.9px  ratio=0.19  [neighbor_proximity]channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+
+  B: ✓  new=17.4px  old=131.3px  ratio=0.13  [neighbor_proximity]
+  Q: ✓  new=27.9px  old=143.4px  ratio=0.19  [scar_based]
+  R: ✓  new=22.1px  old=197.3px  ratio=0.11  [neighbor_proximity]
+  C10: ✓  new=111.9px  old=113.2px  ratio=0.99  [scar_based]
+  H0: ✓  new=31.0px  old=202.3px  ratio=0.15  [neighbor_proximity]
+  C11: ✓  new=11.5px  old=221.3px  ratio=0.05  [neighbor_proximity]
+
+[Frame 182/241]
+  8 cells  |  8 scars detected
+  A11: ✓  new=15.4px  old=117.7px  ratio=0.13  [neighbor_proximity]
+  A10: ✓  new=16.1px  old=112.4px  ratio=0.14  [neighbor_proximity]
+  N: ✓  new=26.3px  old=118.0px  ratio=0.22  [neighbor_proximity]
+  B: ✓  new=19.8px  old=129.5px  ratio=0.15  [neighbor_proximity]
+  R: ✓  new=23.0px  old=196.6px  ratio=0.12  [neighbor_proximity]
+  C10: ✓  new=34.4px  old=190.7px  ratio=0.18  [scar_based]
+  H0: ✓  new=24.1px  old=210.8px  ratio=0.11  [neighbor_proximity]
+  C11: ✓  new=13.6px  old=221.2px  ratio=0.06  [neighbor_proximity]
+
+[Frame 183/241]
+  10 cells  |  10 scars detected
+  A11: ✓  new=16.2px  old=117.1px  ratio=0.14  [neighbor_proximity]
+  S: ✓  new=35.7px  old=213.6px  ratio=0.17  [neighbor_proximity]
+  A10: ✓  new=17.2px  old=111.4px  ratio=0.15  [scar_based]
+  N: ✓  new=32.2px  old=108.9px  ratio=0.30  [neighbor_proximity]
+  B: ✓  new=20.0px  old=131.1px  ratio=0.15  [neighbor_proximity]
+  T: ✓  new=19.2px  old=137.4px  ratio=0.14  [scar_based]
+  R: ✓  new=22.5px  old=197.8px  ratio=0.11  [neighbor_proximity]
+  C10: ✓  new=33.8px  old=188.1px  ratio=0.18  [scar_based]
+  H0: ✓  new=27.1px  old=209.7px  ratio=0.13  [neighbor_proximity]
+  C11: ✓  new=13.3px  old=224.1px  ratio=0.06  [neighbor_proximity]
+
+[Frame 184/241]
+  9 cells  |  9 scars detected
+  A11: ✓  new=15.4px  old=119.4px  ratio=0.13  [neighbor_proximity]
+  A10: ✓  new=15.4px  old=114.5px  ratio=0.13  [neighbor_proximity]
+  N: ✓  new=24.0px  old=121.2px  ratio=0.20  [neighbor_proximity]
+  B: ✓  new=20.7px  old=131.2px  ratio=0.16  [neighbor_proximity]
+  T: ✓  new=31.1px  old=144.7px  ratio=0.21  [scar_based]
+  R: ✓  new=17.0px  old=109.9px  ratio=0.15  [scar_based]
+  C10: ✓  new=28.9px  old=197.1px  ratio=0.15  [scar_based]
+  H0: ✓  new=30.4px  old=207.2px  ratio=0.15  [neighbor_proximity]
+  C11: ✓  new=18.0px  old=221.3px  ratio=0.08  [neighbor_proximity]
+
+[Frame 185/241]
+  10 cells  |  10 scars detected
+  U: ✓  new=12.4px  old=125.1px  ratio=0.10  [scar_based]
+  A11: ✓  new=13.8px  old=121.9px  ratio=0.11  [neighbor_proximity]
+  A10: ✓  new=24.6px  old=107.5px  ratio=0.23  [scar_based]
+  N: ✓  new=29.5px  old=117.8px  ratio=0.25  [scar_based]
+  B: ✓  new=25.0px  old=127.6px  ratio=0.20  [neighbor_proximity]
+  T: ✓  new=32.9px  old=110.9px  ratio=0.30  [neighbor_proximity]
+  R: ✓  new=12.2px  old=117.1px  ratio=0.10  [scar_based]
+  C10: ✓  new=88.9px  old=135.2px  ratio=0.66  [scar_based]
+  H0: ✓  new=24.7px  old=215.1px  ratio=0.11  [neighbor_proximity]
+  C11: ✓  new=14.5px  old=226.0px  ratio=0.06  [neighbor_proximity]
+
+[Frame 186/241]
+  10 cells  |  10 scars detected
+  U: ✓  new=11.1px  old=127.7px  ratio=0.09  [scar_based]
+  A11: ✓  new=17.5px  old=119.3px  ratio=0.15  [neighbor_proximity]
+  A10: ✓  new=18.0px  old=116.0px  ratio=0.16  [scar_based]
+  N: ✓  new=32.2px  old=116.5px  ratio=0.28  [scar_based]
+  B: ✓  new=17.8px  old=135.6px  ratio=0.13  [neighbor_proximity]
+  T: ✓  new=42.3px  old=102.9px  ratio=0.41  [neighbor_proximity]
+  R: ✓  new=15.0px  old=112.0px  ratio=0.13  [scar_based]
+  C10: ✓  new=35.6px  old=188.5px  ratio=0.19  [scar_based]
+  H0: ✓  new=41.4px  old=200.4px  ratio=0.21  [neighbor_proximity]
+  C11: ✓  new=14.5px  old=226.2px  ratio=0.06  [neighbor_proximity]
+
+[Frame 187/241]
+  11 cells  |  11 scars detected
+  U: ✓  new=20.9px  old=123.5px  ratio=0.17  [scar_based]
+  A11: ✓  new=13.4px  old=123.4px  ratio=0.11  [neighbor_proximity]
+  A10: ✓  new=18.4px  old=116.1px  ratio=0.16  [scar_based]
+  N: ✓  new=26.3px  old=123.9px  ratio=0.21  [scar_based]
+  B: ✓  new=21.4px  old=132.4px  ratio=0.16  [neighbor_proximity]
+  T: ✓  new=37.3px  old=108.3px  ratio=0.34  [neighbor_proximity]
+  R: ✓  new=11.0px  old=122.2px  ratio=0.09  [neighbor_proximity]
+  V: ✓  new=21.8px  old=108.2px  ratio=0.20  [scar_based]
+  C10: ✓  new=33.7px  old=185.3px  ratio=0.18  [scar_based]
+  H0: ✓  new=26.8px  old=219.2px  ratio=0.12  [neighbor_proximity]
+  C11: ✓  new=13.4px  old=228.7px  ratio=0.06  [neighbor_proximity]
+
+[Frame 188/241]
+  11 cells  |  11 scars detected
+  U: ✓  new=11.8px  old=127.2px  ratio=0.09  [scar_based]
+  A11: ✓  new=18.3px  old=120.1px  ratio=0.15  [neighbor_proximity]
+  A10: ✓  new=18.5px  old=116.4px  ratio=0.16  [scar_based]
+  N: ✓  new=27.9px  old=123.6px  ratio=0.23  [scar_based]
+  B: ✓  new=23.3px  old=133.1px  ratio=0.17  [neighbor_proximity]
+  T: ✓  new=49.5px  old=97.7px  ratio=0.51  [neighbor_proximity]
+  R: ✓  new=13.8px  old=115.0px  ratio=0.12  [neighbor_proximity]
+  V: ✓  new=20.8px  old=108.9px  ratio=0.19  [scar_based]
+  C10: ✓  new=30.8px  old=188.8px  ratio=0.16  [scar_based]
+  H0: ✓  new=42.2px  old=197.4px  ratio=0.21  [neighbor_proximity]
+  C11: ✓  new=13.8px  old=228.5px  ratio=0.06  [neighbor_proximity]
+
+[Frame 189/241]
+  11 cells  |  11 scars detected
+  U: ✓  new=15.6px  old=125.5px  ratio=0.12  [scar_based]
+  A11: ✓  new=17.9px  old=121.3px  ratio=0.15  [neighbor_proximity]
+  A10: ✓  new=19.2px  old=116.5px  ratio=0.16  [scar_based]
+  N: ✓  new=21.7px  old=132.6px  ratio=0.16  [scar_based]
+  B: ✓  new=20.1px  old=137.4px  ratio=0.15  [neighbor_proximity]
+  T: ✓  new=41.4px  old=107.7px  ratio=0.38  [neighbor_proximity]
+  R: ✓  new=16.0px  old=113.6px  ratio=0.14  [neighbor_proximity]
+  V: ✓  new=21.6px  old=101.0px  ratio=0.21  [scar_based]
+  C10: ✓  new=38.6px  old=185.6px  ratio=0.21  [scar_based]
+  H0: ✓  new=31.2px  old=215.4px  ratio=0.14  [neighbor_proximity]
+  C11: ✓  new=19.4px  old=222.6px  ratio=0.09  [neighbor_proximity]
+
+[Frame 190/241]
+  13 cells  |  13 scars detected
+  U: ✓  new=17.0px  old=125.7px  ratio=0.14  [scar_based]
+  A11: ✓  new=16.0px  old=124.5px  ratio=0.13  [neighbor_proximity]
+  A10: ✓  new=22.4px  old=114.1px  ratio=0.20  [scar_based]
+  N: ✓  new=39.9px  old=113.9px  ratio=0.35  [scar_based]
+  W: ✓  new=31.5px  old=124.4px  ratio=0.25  [scar_based]
+  B: ✓  new=20.8px  old=138.3px  ratio=0.15  [neighbor_proximity]
+  T: ✓  new=50.1px  old=99.7px  ratio=0.50  [neighbor_proximity]
+  X: ✓  new=31.1px  old=116.6px  ratio=0.27  [neighbor_proximity]
+  R: ✓  new=8.2px  old=122.6px  ratio=0.07  [neighbor_proximity]
+  V: ✓  new=17.9px  old=112.6px  ratio=0.16  [scar_based]
+  C10: ✓  new=98.3px  old=125.9px  ratio=0.78  [scar_based]
+  H0: ✓  new=38.7px  old=187.3px  ratio=0.21  [neighbor_proximity]
+  C11: ✓  new=16.2px  old=229.6px  ratio=0.07  [neighbor_proximity]
+
+[Frame 191/241]
+  11 cells  |  11 scars detected
+  U: ✓  new=18.9px  old=126.5px  ratio=0.15  [scar_based]
+  A11: ✓  new=16.9px  old=126.1px  ratio=0.13  [neighbor_proximity]
+  A10: ✓  new=19.0px  old=116.7px  ratio=0.16  [scar_based]
+  N: ✓  new=76.1px  old=79.3px  ratio=0.96  [scar_based]
+  B: ✓  new=18.5px  old=141.1px  ratio=0.13  [neighbor_proximity]
+  T: ✓  new=35.5px  old=116.1px  ratio=0.31  [neighbor_proximity]
+  R: ✓  new=8.2px  old=121.0px  ratio=0.07  [neighbor_proximity]
+  V: ✓  new=28.6px  old=100.1px  ratio=0.29  [scar_based]
+  C10: ✓  new=24.0px  old=200.3px  ratio=0.12  [scar_based]
+  H0: ✓  new=24.1px  old=182.6px  ratio=0.13  [neighbor_proximity]
+  C11: ✓  new=16.0px  old=228.5px  ratio=0.07  [neighbor_proximity]
+
+[Frame 192/241]
+  11 cells  |  11 scars detected
+  U: ✓  new=19.5px  old=125.2px  ratio=0.16  [scar_based]
+  A11: ✓  new=14.4px  old=126.7px  ratio=0.11  [neighbor_proximity]
+  A10: ✓  new=43.9px  old=94.7px  ratio=0.46  [scar_based]
+  N: ✓  new=61.1px  old=93.6px  ratio=0.65  [scar_based]
+  B: ✓  new=20.1px  old=140.7px  ratio=0.14  [neighbor_proximity]
+  T: ✓  new=51.4px  old=102.5px  ratio=0.50  [neighbor_proximity]
+  R: ✓  new=14.4px  old=116.7px  ratio=0.12  [neighbor_proximity]channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+
+  V: ✓  new=24.7px  old=104.3px  ratio=0.24  [scar_based]
+  C10: ✓  new=25.5px  old=198.0px  ratio=0.13  [scar_based]
+  H0: ✓  new=23.1px  old=230.2px  ratio=0.10  [neighbor_proximity]
+  C11: ✓  new=15.8px  old=228.2px  ratio=0.07  [neighbor_proximity]
+
+[Frame 193/241]
+  12 cells  |  12 scars detected
+  U: ✓  new=20.1px  old=124.0px  ratio=0.16  [scar_based]
+  A11: ✓  new=15.8px  old=126.7px  ratio=0.12  [neighbor_proximity]
+  A10: ✓  new=24.2px  old=115.1px  ratio=0.21  [scar_based]
+  N: ✓  new=34.2px  old=122.8px  ratio=0.28  [scar_based]
+  Y: ✓  new=31.4px  old=123.3px  ratio=0.25  [scar_based]
+  B: ✓  new=20.4px  old=141.6px  ratio=0.14  [neighbor_proximity]
+  T: ✓  new=28.4px  old=127.3px  ratio=0.22  [neighbor_proximity]
+  R: ✓  new=14.4px  old=118.9px  ratio=0.12  [neighbor_proximity]
+  V: ✓  new=20.1px  old=113.0px  ratio=0.18  [scar_based]
+  C10: ✓  new=25.8px  old=198.7px  ratio=0.13  [scar_based]
+  H0: ✓  new=44.4px  old=129.9px  ratio=0.34  [neighbor_proximity]
+  C11: ✓  new=15.2px  old=227.3px  ratio=0.07  [neighbor_proximity]
+
+[Frame 194/241]
+  12 cells  |  12 scars detected
+  U: ✓  new=33.5px  old=115.6px  ratio=0.29  [scar_based]
+  A11: ✓  new=14.3px  old=130.5px  ratio=0.11  [neighbor_proximity]
+  A10: ✓  new=23.8px  old=117.2px  ratio=0.20  [scar_based]
+  N: ✓  new=72.2px  old=84.7px  ratio=0.85  [scar_based]
+  Y: ✓  new=33.5px  old=124.8px  ratio=0.27  [scar_based]
+  B: ✓  new=20.0px  old=143.8px  ratio=0.14  [neighbor_proximity]
+  T: ✓  new=44.1px  old=110.8px  ratio=0.40  [neighbor_proximity]
+  R: ✓  new=14.2px  old=117.9px  ratio=0.12  [neighbor_proximity]
+  V: ✓  new=38.6px  old=93.0px  ratio=0.42  [scar_based]
+  C10: ✓  new=30.4px  old=193.7px  ratio=0.16  [scar_based]
+  H0: ✓  new=34.1px  old=211.0px  ratio=0.16  [neighbor_proximity]
+  C11: ✓  new=14.1px  old=227.9px  ratio=0.06  [neighbor_proximity]
+
+[Frame 195/241]
+  10 cells  |  10 scars detected
+  U: ✓  new=20.7px  old=126.6px  ratio=0.16  [scar_based]
+  A11: ✓  new=17.2px  old=130.0px  ratio=0.13  [neighbor_proximity]
+  A10: ✓  new=20.0px  old=120.8px  ratio=0.17  [scar_based]
+  N: ✓  new=68.3px  old=90.8px  ratio=0.75  [scar_based]
+  B: ✓  new=18.7px  old=144.9px  ratio=0.13  [neighbor_proximity]
+  T: ✓  new=39.3px  old=116.6px  ratio=0.34  [neighbor_proximity]
+  R: ✓  new=8.2px  old=126.6px  ratio=0.07  [neighbor_proximity]
+  V: ✓  new=21.9px  old=116.2px  ratio=0.19  [scar_based]
+  C10: ✓  new=111.7px  old=117.4px  ratio=0.95  [scar_based]
+  C11: ✓  new=14.0px  old=228.6px  ratio=0.06  [neighbor_proximity]
+
+[Frame 196/241]
+  Division detected: C10 → C100, C101
+  Lineage poles applied: C100 / C101
+  12 cells  |  12 scars detected
+  U: ✓  new=34.3px  old=114.7px  ratio=0.30  [scar_based]
+  A11: ✓  new=15.3px  old=131.2px  ratio=0.12  [neighbor_proximity]
+  A10: ✓  new=25.0px  old=115.7px  ratio=0.22  [scar_based]
+  N: ✓  new=71.9px  old=85.0px  ratio=0.85  [scar_based]
+  Z: ✓  new=30.1px  old=126.1px  ratio=0.24  [scar_based]
+  B: ✓  new=20.5px  old=144.3px  ratio=0.14  [neighbor_proximity]
+  T: ✓  new=48.3px  old=105.8px  ratio=0.46  [neighbor_proximity]
+  R: ✓  new=8.6px  old=127.0px  ratio=0.07  [neighbor_proximity]
+  V: ✓  new=35.0px  old=98.8px  ratio=0.35  [scar_based]
+  C101: ✓  new=24.1px  old=123.9px  ratio=0.19  [lineage]
+  C100: ✓  new=24.4px  old=107.9px  ratio=0.23  [lineage]
+  C11: ✓  new=22.6px  old=223.5px  ratio=0.10  [neighbor_proximity]
+
+[Frame 197/241]
+  13 cells  |  13 scars detected
+  U: ✓  new=38.7px  old=111.2px  ratio=0.35  [scar_based]
+  A11: ✓  new=15.4px  old=131.9px  ratio=0.12  [neighbor_proximity]
+  A10: ✓  new=26.2px  old=121.2px  ratio=0.22  [scar_based]
+  N: ✓  new=74.6px  old=85.0px  ratio=0.88  [scar_based]
+  Z: ✓  new=27.4px  old=130.9px  ratio=0.21  [scar_based]
+  B: ✓  new=28.8px  old=139.3px  ratio=0.21  [neighbor_proximity]
+  T: ✓  new=42.0px  old=114.1px  ratio=0.37  [scar_based]
+  AA: ✓  new=27.6px  old=128.9px  ratio=0.21  [scar_based]
+  R: ✓  new=15.4px  old=121.9px  ratio=0.13  [neighbor_proximity]
+  V: ✓  new=35.9px  old=98.4px  ratio=0.37  [scar_based]
+  C101: ✓  new=24.6px  old=128.7px  ratio=0.19  [scar_based]
+  C100: ✓  new=9.5px  old=107.5px  ratio=0.09  [scar_based]
+  C11: ✓  new=20.3px  old=223.5px  ratio=0.09  [neighbor_proximity]
+
+[Frame 198/241]
+  13 cells  |  13 scars detected
+  U: ✓  new=61.7px  old=88.2px  ratio=0.70  [scar_based]
+  A11: ✓  new=15.4px  old=132.3px  ratio=0.12  [neighbor_proximity]
+  A10: ✓  new=22.4px  old=129.0px  ratio=0.17  [scar_based]
+  N: ✓  new=44.2px  old=115.3px  ratio=0.38  [scar_based]
+  Z: ✓  new=24.8px  old=126.4px  ratio=0.20  [scar_based]
+  B: ✓  new=20.9px  old=147.9px  ratio=0.14  [neighbor_proximity]
+  T: ✓  new=43.1px  old=115.4px  ratio=0.37  [scar_based]
+  AA: ✓  new=18.6px  old=130.3px  ratio=0.14  [scar_based]
+  R: ✓  new=15.7px  old=122.6px  ratio=0.13  [neighbor_proximity]
+  V: ✓  new=50.9px  old=84.0px  ratio=0.61  [scar_based]
+  C101: ✓  new=17.2px  old=127.6px  ratio=0.14  [scar_based]
+  C100: ✓  new=10.4px  old=106.9px  ratio=0.10  [scar_based]
+  C11: ✓  new=16.1px  old=227.5px  ratio=0.07  [neighbor_proximity]
+
+[Frame 199/241]
+  13 cells  |  13 scars detected
+  U: ✓  new=39.9px  old=113.4px  ratio=0.35  [scar_based]
+  A10: ✓  new=64.8px  old=85.1px  ratio=0.76  [scar_based]
+  A11: ✓  new=14.4px  old=134.2px  ratio=0.11  [neighbor_proximity]
+  N: ✓  new=58.7px  old=103.9px  ratio=0.56  [scar_based]
+  Z: ✓  new=19.4px  old=126.3px  ratio=0.15  [scar_based]
+  B: ✓  new=24.9px  old=145.9px  ratio=0.17  [neighbor_proximity]
+  T: ✓  new=43.8px  old=115.4px  ratio=0.38  [scar_based]
+  AA: ✓  new=24.0px  old=133.9px  ratio=0.18  [scar_based]
+  R: ✓  new=13.6px  old=130.2px  ratio=0.10  [neighbor_proximity]
+  V: ✓  new=17.3px  old=121.0px  ratio=0.14  [scar_based]
+  C101: ✓  new=17.4px  old=128.5px  ratio=0.14  [neighbor_proximity]
+  C100: ✓  new=9.6px  old=108.5px  ratio=0.09  [scar_based]
+  C11: ✓  new=18.2px  old=228.3px  ratio=0.08  [neighbor_proximity]
+
+[Frame 200/241]
+  13 cells  |  13 scars detected
+  U: ✓  new=62.5px  old=89.6px  ratio=0.70  [scar_based]
+  A10: ✓  new=26.2px  old=127.3px  ratio=0.21  [scar_based]
+  A11: ✓  new=13.8px  old=136.5px  ratio=0.10  [neighbor_proximity]
+  N: ✓  new=46.8px  old=115.7px  ratio=0.40  [scar_based]
+  Z: ✓  new=56.5px  old=81.4px  ratio=0.69  [scar_based]
+  B: ✓  new=24.3px  old=147.3px  ratio=0.16  [neighbor_proximity]
+  T: ✓  new=53.1px  old=105.7px  ratio=0.50  [scar_based]
+  AA: ✓  new=13.8px  old=130.5px  ratio=0.11  [scar_based]
+  R: ✓  new=10.0px  old=131.1px  ratio=0.08  [neighbor_proximity]
+  C101: ✓  new=11.8px  old=130.2px  ratio=0.09  [neighbor_proximity]
+  V: ✓  new=42.1px  old=96.9px  ratio=0.43  [scar_based]
+  C100: ✓  new=8.8px  old=109.3px  ratio=0.08  [scar_based]
+  C11: ✓  new=18.6px  old=224.9px  ratio=0.08  [neighbor_proximity]
+
+[Frame 201/241]
+  13 cells  |  13 scars detected
+  U: ✓  new=41.8px  old=110.5px  ratio=0.38  [scar_based]
+  A10: ✓  new=57.6px  old=95.3px  ratio=0.60  [scar_based]
+  A11: ✓  new=12.7px  old=137.9px  ratio=0.09  [neighbor_proximity]
+  N: ✓  new=59.5px  old=104.0px  ratio=0.57  [scar_based]
+  Z: ✓  new=58.2px  old=82.5px  ratio=0.71  [scar_based]
+  B: ✓  new=24.8px  old=147.5px  ratio=0.17  [neighbor_proximity]
+  T: ✓  new=70.4px  old=90.2px  ratio=0.78  [scar_based]
+  AA: ✓  new=16.5px  old=131.9px  ratio=0.12  [scar_based]
+  R: ✓  new=15.0px  old=132.7px  ratio=0.11  [neighbor_proximity]
+  C101: ✓  new=15.4px  old=132.2px  ratio=0.12  [neighbor_proximity]
+  V: ✓  new=43.1px  old=98.1px  ratio=0.44  [scar_based]
+  C100: ✓  new=9.7px  old=110.3px  ratio=0.09  [scar_based]
+  C11: ✓  new=22.0px  old=222.3px  ratio=0.10  [neighbor_proximity]
+
+[Frame 202/241]
+  13 cells  |  13 scars detected
+  U: ✓  new=55.7px  old=99.1px  ratio=0.56  [scar_based]
+  A10: ✓  new=24.8px  old=129.7px  ratio=0.19  [scar_based]
+  A11: ✓  new=15.2px  old=136.6px  ratio=0.11  [neighbor_proximity]
+  N: ✓  new=64.5px  old=98.3px  ratio=0.66  [scar_based]
+  Z: ✓  new=55.7px  old=83.8px  ratio=0.66  [scar_based]channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+
+  B: ✓  new=25.4px  old=147.4px  ratio=0.17  [neighbor_proximity]
+  T: ✓  new=42.9px  old=119.3px  ratio=0.36  [scar_based]
+  AA: ✓  new=13.5px  old=133.1px  ratio=0.10  [scar_based]
+  R: ✓  new=12.6px  old=129.2px  ratio=0.10  [neighbor_proximity]
+  C101: ✓  new=13.6px  old=133.9px  ratio=0.10  [neighbor_proximity]
+  V: ✓  new=44.2px  old=99.7px  ratio=0.44  [scar_based]
+  C100: ✓  new=10.9px  old=113.7px  ratio=0.10  [scar_based]
+  C11: ✓  new=22.7px  old=223.0px  ratio=0.10  [neighbor_proximity]
+
+[Frame 203/241]
+  13 cells  |  13 scars detected
+  U: ✓  new=55.1px  old=99.7px  ratio=0.55  [scar_based]
+  A10: ✓  new=20.4px  old=135.5px  ratio=0.15  [scar_based]
+  A11: ✓  new=15.6px  old=136.0px  ratio=0.11  [neighbor_proximity]
+  N: ✓  new=65.2px  old=98.7px  ratio=0.66  [scar_based]
+  Z: ✓  new=22.2px  old=129.1px  ratio=0.17  [scar_based]
+  B: ✓  new=25.1px  old=149.7px  ratio=0.17  [neighbor_proximity]
+  T: ✓  new=47.9px  old=115.2px  ratio=0.42  [scar_based]
+  AA: ✓  new=18.6px  old=131.0px  ratio=0.14  [scar_based]
+  R: ✓  new=13.1px  old=134.8px  ratio=0.10  [neighbor_proximity]
+  C101: ✓  new=17.3px  old=129.1px  ratio=0.13  [neighbor_proximity]
+  V: ✓  new=46.4px  old=100.1px  ratio=0.46  [scar_based]
+  C100: ✓  new=39.5px  old=86.7px  ratio=0.46  [scar_based]
+  C11: ✓  new=17.6px  old=229.6px  ratio=0.08  [neighbor_proximity]
+
+[Frame 204/241]
+  13 cells  |  13 scars detected
+  U: ✓  new=10.2px  old=145.4px  ratio=0.07  [scar_based]
+  A10: ✓  new=56.9px  old=99.5px  ratio=0.57  [scar_based]
+  A11: ✓  new=13.8px  old=140.3px  ratio=0.10  [neighbor_proximity]
+  N: ✓  new=46.0px  old=118.1px  ratio=0.39  [neighbor_proximity]
+  Z: ✓  new=23.0px  old=122.4px  ratio=0.19  [scar_based]
+  B: ✓  new=24.7px  old=150.2px  ratio=0.16  [neighbor_proximity]
+  T: ✓  new=43.4px  old=119.6px  ratio=0.36  [scar_based]
+  AA: ✓  new=15.7px  old=135.0px  ratio=0.12  [scar_based]
+  R: ✓  new=15.2px  old=134.1px  ratio=0.11  [neighbor_proximity]
+  C101: ✓  new=12.8px  old=135.9px  ratio=0.09  [neighbor_proximity]
+  V: ✓  new=45.6px  old=100.2px  ratio=0.45  [scar_based]
+  C100: ✓  new=19.4px  old=120.5px  ratio=0.16  [scar_based]
+  C11: ✓  new=19.6px  old=228.8px  ratio=0.09  [neighbor_proximity]
+
+[Frame 205/241]
+  13 cells  |  13 scars detected
+  U: ✓  new=59.4px  old=97.2px  ratio=0.61  [scar_based]
+  A10: ✓  new=78.3px  old=78.9px  ratio=0.99  [scar_based]
+  A11: ✓  new=19.3px  old=137.1px  ratio=0.14  [neighbor_proximity]
+  N: ✓  new=34.9px  old=130.5px  ratio=0.27  [neighbor_proximity]
+  Z: ✓  new=18.5px  old=130.3px  ratio=0.14  [scar_based]
+  B: ✓  new=25.6px  old=151.4px  ratio=0.17  [neighbor_proximity]
+  T: ✓  new=44.5px  old=121.5px  ratio=0.37  [scar_based]
+  AA: ✓  new=15.0px  old=133.8px  ratio=0.11  [scar_based]
+  R: ✓  new=16.0px  old=133.3px  ratio=0.12  [neighbor_proximity]
+  C101: ✓  new=12.4px  old=136.0px  ratio=0.09  [neighbor_proximity]
+  V: ✓  new=65.0px  old=81.3px  ratio=0.80  [scar_based]
+  C100: ✓  new=39.5px  old=88.2px  ratio=0.45  [scar_based]
+  C11: ✓  new=19.0px  old=229.6px  ratio=0.08  [neighbor_proximity]
+
+[Frame 206/241]
+  13 cells  |  13 scars detected
+  U: ✓  new=58.1px  old=99.1px  ratio=0.59  [scar_based]
+  A10: ✓  new=29.5px  old=130.1px  ratio=0.23  [scar_based]
+  A11: ✓  new=20.5px  old=135.8px  ratio=0.15  [neighbor_proximity]
+  N: ✓  new=36.9px  old=130.7px  ratio=0.28  [neighbor_proximity]
+  Z: ✓  new=22.0px  old=131.7px  ratio=0.17  [scar_based]
+  B: ✓  new=25.0px  old=152.7px  ratio=0.16  [neighbor_proximity]
+  T: ✓  new=44.8px  old=121.6px  ratio=0.37  [scar_based]
+  AA: ✓  new=15.7px  old=132.5px  ratio=0.12  [scar_based]
+  R: ✓  new=16.8px  old=132.3px  ratio=0.13  [neighbor_proximity]
+  C101: ✓  new=14.4px  old=133.5px  ratio=0.11  [neighbor_proximity]
+  V: ✓  new=72.0px  old=78.6px  ratio=0.92  [scar_based]
+  C100: ✓  new=19.5px  old=112.5px  ratio=0.17  [scar_based]
+  C11: ✓  new=20.3px  old=228.8px  ratio=0.09  [neighbor_proximity]
+
+[Frame 207/241]
+  13 cells  |  13 scars detected
+  U: ✓  new=11.1px  old=148.5px  ratio=0.07  [scar_based]
+  A10: ✓  new=65.8px  old=95.0px  ratio=0.69  [scar_based]
+  A11: ✓  new=18.0px  old=138.5px  ratio=0.13  [neighbor_proximity]
+  N: ✓  new=48.2px  old=120.5px  ratio=0.40  [neighbor_proximity]
+  Z: ✓  new=13.1px  old=135.5px  ratio=0.10  [scar_based]
+  B: ✓  new=26.3px  old=152.3px  ratio=0.17  [neighbor_proximity]
+  T: ✓  new=56.0px  old=111.2px  ratio=0.50  [scar_based]
+  AA: ✓  new=11.0px  old=138.1px  ratio=0.08  [scar_based]
+  R: ✓  new=15.6px  old=135.1px  ratio=0.12  [neighbor_proximity]
+  C101: ✓  new=13.8px  old=137.0px  ratio=0.10  [neighbor_proximity]
+  V: ✓  new=32.0px  old=117.8px  ratio=0.27  [scar_based]
+  C100: ✓  new=18.4px  old=118.0px  ratio=0.16  [scar_based]
+  C11: ✓  new=21.0px  old=227.5px  ratio=0.09  [neighbor_proximity]
+
+[Frame 208/241]
+  13 cells  |  13 scars detected
+  U: ✓  new=40.5px  old=120.3px  ratio=0.34  [scar_based]
+  A10: ✓  new=24.5px  old=138.0px  ratio=0.18  [scar_based]
+  A11: ✓  new=19.8px  old=139.1px  ratio=0.14  [neighbor_proximity]
+  N: ✓  new=24.2px  old=145.0px  ratio=0.17  [neighbor_proximity]
+  Z: ✓  new=11.5px  old=133.1px  ratio=0.09  [scar_based]
+  B: ✓  new=22.7px  old=156.7px  ratio=0.15  [neighbor_proximity]
+  T: ✓  new=45.7px  old=124.1px  ratio=0.37  [scar_based]
+  AA: ✓  new=11.1px  old=138.3px  ratio=0.08  [scar_based]
+  R: ✓  new=14.2px  old=138.3px  ratio=0.10  [neighbor_proximity]
+  C101: ✓  new=15.8px  old=134.8px  ratio=0.12  [neighbor_proximity]
+  V: ✓  new=48.2px  old=101.0px  ratio=0.48  [scar_based]
+  C100: ✓  new=20.0px  old=113.2px  ratio=0.18  [scar_based]
+  C11: ✓  new=18.7px  old=232.5px  ratio=0.08  [neighbor_proximity]
+
+[Frame 209/241]
+  13 cells  |  13 scars detected
+  U: ✓  new=43.6px  old=116.7px  ratio=0.37  [scar_based]
+  A10: ✓  new=23.6px  old=138.6px  ratio=0.17  [scar_based]
+  A11: ✓  new=18.2px  old=144.3px  ratio=0.13  [neighbor_proximity]
+  Z: ✓  new=22.7px  old=136.7px  ratio=0.17  [scar_based]
+  N: ✓  new=39.8px  old=131.4px  ratio=0.30  [neighbor_proximity]
+  B: ✓  new=27.6px  old=155.6px  ratio=0.18  [neighbor_proximity]
+  T: ✓  new=56.1px  old=114.4px  ratio=0.49  [scar_based]
+  AA: ✓  new=12.7px  old=137.8px  ratio=0.09  [scar_based]
+  R: ✓  new=15.6px  old=135.1px  ratio=0.12  [neighbor_proximity]
+  C101: ✓  new=17.8px  old=135.4px  ratio=0.13  [neighbor_proximity]
+  V: ✓  new=68.4px  old=84.1px  ratio=0.81  [scar_based]
+  C100: ✓  new=20.4px  old=113.7px  ratio=0.18  [scar_based]
+  C11: ✓  new=19.1px  old=232.6px  ratio=0.08  [neighbor_proximity]
+
+[Frame 210/241]
+  13 cells  |  13 scars detected
+  U: ✓  new=14.2px  old=149.8px  ratio=0.09  [scar_based]
+  A10: ✓  new=65.1px  old=98.0px  ratio=0.66  [scar_based]
+  A11: ✓  new=14.2px  old=147.5px  ratio=0.10  [neighbor_proximity]
+  N: ✓  new=38.0px  old=134.9px  ratio=0.28  [neighbor_proximity]
+  Z: ✓  new=18.9px  old=137.9px  ratio=0.14  [scar_based]
+  B: ✓  new=38.5px  old=144.3px  ratio=0.27  [neighbor_proximity]
+  T: ✓  new=48.5px  old=124.4px  ratio=0.39  [scar_based]
+  AA: ✓  new=15.8px  old=135.0px  ratio=0.12  [scar_based]
+  R: ✓  new=15.5px  old=138.1px  ratio=0.11  [neighbor_proximity]
+  C101: ✓  new=18.8px  old=136.5px  ratio=0.14  [neighbor_proximity]
+  V: ✓  new=51.1px  old=102.3px  ratio=0.50  [scar_based]
+  C100: ✓  new=19.5px  old=118.9px  ratio=0.16  [scar_based]
+  C11: ✓  new=16.0px  old=236.7px  ratio=0.07  [neighbor_proximity]
+
+[Frame 211/241]
+  13 cells  |  13 scars detected
+  U: ✓  new=10.1px  old=154.2px  ratio=0.07  [scar_based]
+  A10: ✓  new=65.4px  old=100.3px  ratio=0.65  [scar_based]
+  A11: ✓  new=20.9px  old=145.2px  ratio=0.14  [neighbor_proximity]
+  N: ✓  new=53.5px  old=120.9px  ratio=0.44  [neighbor_proximity]
+  Z: ✓  new=23.0px  old=127.6px  ratio=0.18  [scar_based]
+  B: ✓  new=23.0px  old=162.3px  ratio=0.14  [neighbor_proximity]
+  T: ✓  new=46.4px  old=127.3px  ratio=0.36  [scar_based]
+  AA: ✓  new=14.6px  old=136.6px  ratio=0.11  [scar_based]
+  R: ✓  new=19.6px  old=136.0px  ratio=0.14  [neighbor_proximity]channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+
+  C101: ✓  new=15.9px  old=138.6px  ratio=0.11  [neighbor_proximity]
+  V: ✓  new=50.1px  old=106.6px  ratio=0.47  [scar_based]
+  C100: ✓  new=19.4px  old=119.1px  ratio=0.16  [neighbor_proximity]
+  C11: ✓  new=16.8px  old=238.2px  ratio=0.07  [scar_based]
+
+[Frame 212/241]
+  Division detected: C11 → C110, C111
+  Lineage poles applied: C110 / C111
+  14 cells  |  14 scars detected
+  U: ✓  new=44.0px  old=119.8px  ratio=0.37  [scar_based]
+  A10: ✓  new=67.3px  old=100.0px  ratio=0.67  [scar_based]
+  A11: ✓  new=17.9px  old=146.8px  ratio=0.12  [neighbor_proximity]
+  N: ✓  new=26.7px  old=147.8px  ratio=0.18  [neighbor_proximity]
+  Z: ✓  new=16.8px  old=140.5px  ratio=0.12  [scar_based]
+  B: ✓  new=23.0px  old=161.9px  ratio=0.14  [neighbor_proximity]
+  T: ✓  new=37.8px  old=137.8px  ratio=0.27  [scar_based]
+  AA: ✓  new=13.1px  old=139.3px  ratio=0.09  [scar_based]
+  R: ✓  new=15.2px  old=138.8px  ratio=0.11  [neighbor_proximity]
+  C101: ✓  new=18.9px  old=136.8px  ratio=0.14  [neighbor_proximity]
+  V: ✓  new=16.9px  old=142.3px  ratio=0.12  [scar_based]
+  C100: ✓  new=16.4px  old=120.6px  ratio=0.14  [scar_based]
+  C110: ✓  new=23.8px  old=121.9px  ratio=0.20  [lineage]
+  C111: ✓  new=22.1px  old=136.4px  ratio=0.16  [lineage]
+
+[Frame 213/241]
+  14 cells  |  14 scars detected
+  U: ✓  new=18.0px  old=152.1px  ratio=0.12  [scar_based]
+  A10: ✓  new=34.3px  old=133.2px  ratio=0.26  [scar_based]
+  A11: ✓  new=17.1px  old=149.1px  ratio=0.11  [neighbor_proximity]
+  N: ✓  new=29.9px  old=144.8px  ratio=0.21  [neighbor_proximity]
+  Z: ✓  new=15.1px  old=140.0px  ratio=0.11  [scar_based]
+  B: ✓  new=22.9px  old=163.4px  ratio=0.14  [neighbor_proximity]
+  T: ✓  new=79.2px  old=96.4px  ratio=0.82  [scar_based]
+  AA: ✓  new=12.5px  old=139.9px  ratio=0.09  [scar_based]
+  R: ✓  new=15.0px  old=139.3px  ratio=0.11  [neighbor_proximity]
+  C101: ✓  new=16.6px  old=139.4px  ratio=0.12  [neighbor_proximity]
+  V: ✓  new=78.4px  old=80.8px  ratio=0.97  [scar_based]
+  C100: ✓  new=15.6px  old=125.7px  ratio=0.12  [scar_based]
+  C110: ✓  new=24.8px  old=128.0px  ratio=0.19  [neighbor_proximity]
+  C111: ✓  new=25.4px  old=136.4px  ratio=0.19  [neighbor_proximity]
+
+[Frame 214/241]
+  15 cells  |  15 scars detected
+  U: ✓  new=42.7px  old=123.7px  ratio=0.35  [scar_based]
+  A10: ✓  new=68.6px  old=100.1px  ratio=0.68  [scar_based]
+  A11: ✓  new=16.4px  old=150.7px  ratio=0.11  [neighbor_proximity]
+  N: ✓  new=20.6px  old=156.1px  ratio=0.13  [neighbor_proximity]
+  Z: ✓  new=18.5px  old=142.2px  ratio=0.13  [scar_based]
+  B: ✓  new=21.6px  old=164.8px  ratio=0.13  [neighbor_proximity]
+  T: ✓  new=47.2px  old=130.0px  ratio=0.36  [scar_based]
+  AA: ✓  new=17.6px  old=136.6px  ratio=0.13  [scar_based]
+  R: ✓  new=16.1px  old=139.8px  ratio=0.12  [neighbor_proximity]
+  C101: ✓  new=18.7px  old=138.9px  ratio=0.13  [neighbor_proximity]
+  V: ✓  new=73.9px  old=80.9px  ratio=0.91  [scar_based]
+  C100: ✓  new=19.7px  old=121.7px  ratio=0.16  [neighbor_proximity]
+  C110: ✓  new=17.3px  old=128.5px  ratio=0.13  [neighbor_proximity]
+  AB: ✓  new=38.1px  old=124.6px  ratio=0.31  [neighbor_proximity]
+  C111: ✓  new=71.4px  old=74.0px  ratio=0.96  [scar_based]
+
+[Frame 215/241]
+  15 cells  |  14 scars detected
+  U: ✓  new=42.4px  old=125.1px  ratio=0.34  [scar_based]
+  A10: ✓  new=68.1px  old=101.0px  ratio=0.67  [scar_based]
+  A11: ✓  new=18.5px  old=150.1px  ratio=0.12  [neighbor_proximity]
+  N: ✓  new=25.4px  old=154.3px  ratio=0.16  [neighbor_proximity]
+  Z: ✓  new=14.3px  old=143.3px  ratio=0.10  [scar_based]
+  B: ✓  new=23.0px  old=166.1px  ratio=0.14  [neighbor_proximity]
+  T: ✓  new=41.5px  old=138.3px  ratio=0.30  [scar_based]
+  AA: ✓  new=17.6px  old=137.7px  ratio=0.13  [scar_based]
+  R: ✓  new=17.7px  old=139.9px  ratio=0.13  [neighbor_proximity]
+  C101: ✓  new=14.9px  old=144.6px  ratio=0.10  [neighbor_proximity]
+  V: ✓  new=52.8px  old=106.7px  ratio=0.50  [scar_based]
+  C100: ✓  new=19.1px  old=128.0px  ratio=0.15  [neighbor_proximity]
+  C110: ✓  new=20.3px  old=129.0px  ratio=0.16  [neighbor_proximity]
+  AB: ✓  new=23.5px  old=141.2px  ratio=0.17  [neighbor_proximity]
+  C111: ✗  (no_valid_pairs)
+
+[Frame 216/241]
+  14 cells  |  14 scars detected
+  U: ✓  new=58.6px  old=109.6px  ratio=0.53  [scar_based]
+  A10: ✓  new=32.6px  old=138.3px  ratio=0.24  [scar_based]
+  A11: ✓  new=18.0px  old=151.4px  ratio=0.12  [neighbor_proximity]
+  Z: ✓  new=16.1px  old=137.7px  ratio=0.12  [scar_based]
+  N: ✓  new=23.3px  old=155.2px  ratio=0.15  [neighbor_proximity]
+  B: ✓  new=23.4px  old=166.0px  ratio=0.14  [neighbor_proximity]
+  T: ✓  new=47.8px  old=132.9px  ratio=0.36  [scar_based]
+  AA: ✓  new=13.9px  old=142.3px  ratio=0.10  [scar_based]
+  R: ✓  new=17.7px  old=140.5px  ratio=0.13  [neighbor_proximity]
+  C101: ✓  new=20.0px  old=142.2px  ratio=0.14  [neighbor_proximity]
+  V: ✓  new=53.8px  old=106.2px  ratio=0.51  [scar_based]
+  C100: ✓  new=16.0px  old=128.7px  ratio=0.12  [scar_based]
+  C110: ✓  new=12.7px  old=128.7px  ratio=0.10  [neighbor_proximity]
+  C111: ✓  new=12.6px  old=138.1px  ratio=0.09  [neighbor_proximity]
+
+[Frame 217/241]
+  14 cells  |  14 scars detected
+  U: ✓  new=49.3px  old=122.2px  ratio=0.40  [scar_based]
+  A10: ✓  new=64.8px  old=106.5px  ratio=0.61  [scar_based]
+  A11: ✓  new=17.8px  old=150.8px  ratio=0.12  [neighbor_proximity]
+  N: ✓  new=26.3px  old=154.1px  ratio=0.17  [neighbor_proximity]
+  Z: ✓  new=18.7px  old=144.5px  ratio=0.13  [scar_based]
+  B: ✓  new=23.8px  old=166.9px  ratio=0.14  [neighbor_proximity]
+  T: ✓  new=54.1px  old=129.5px  ratio=0.42  [scar_based]
+  AA: ✓  new=22.3px  old=136.0px  ratio=0.16  [scar_based]
+  R: ✓  new=15.7px  old=142.6px  ratio=0.11  [neighbor_proximity]
+  C101: ✓  new=15.0px  old=142.9px  ratio=0.11  [neighbor_proximity]
+  V: ✓  new=35.4px  old=123.3px  ratio=0.29  [scar_based]
+  C100: ✓  new=18.9px  old=122.1px  ratio=0.15  [scar_based]
+  C110: ✓  new=17.6px  old=129.3px  ratio=0.14  [neighbor_proximity]
+  C111: ✓  new=9.2px  old=137.4px  ratio=0.07  [neighbor_proximity]
+
+[Frame 218/241]
+  14 cells  |  14 scars detected
+  U: ✓  new=16.9px  old=155.7px  ratio=0.11  [scar_based]
+  A10: ✓  new=75.0px  old=96.8px  ratio=0.77  [scar_based]
+  A11: ✓  new=17.0px  old=151.7px  ratio=0.11  [neighbor_proximity]
+  Z: ✓  new=10.8px  old=145.4px  ratio=0.07  [scar_based]
+  N: ✓  new=42.4px  old=139.2px  ratio=0.30  [neighbor_proximity]
+  B: ✓  new=29.3px  old=163.1px  ratio=0.18  [neighbor_proximity]
+  T: ✓  new=41.6px  old=142.7px  ratio=0.29  [scar_based]
+  AA: ✓  new=15.7px  old=143.4px  ratio=0.11  [scar_based]
+  R: ✓  new=15.8px  old=144.9px  ratio=0.11  [neighbor_proximity]
+  C101: ✓  new=17.2px  old=142.5px  ratio=0.12  [neighbor_proximity]
+  V: ✓  new=36.1px  old=122.1px  ratio=0.30  [scar_based]
+  C100: ✓  new=63.7px  old=77.8px  ratio=0.82  [scar_based]
+  C110: ✓  new=13.4px  old=129.5px  ratio=0.10  [neighbor_proximity]
+  C111: ✓  new=15.1px  old=134.8px  ratio=0.11  [neighbor_proximity]
+
+[Frame 219/241]
+  14 cells  |  14 scars detected
+  U: ✓  new=16.0px  old=157.3px  ratio=0.10  [scar_based]
+  A10: ✓  new=27.2px  old=147.5px  ratio=0.18  [scar_based]
+  A11: ✓  new=15.8px  old=152.9px  ratio=0.10  [neighbor_proximity]
+  Z: ✓  new=13.1px  old=147.9px  ratio=0.09  [scar_based]
+  N: ✓  new=21.1px  old=161.2px  ratio=0.13  [neighbor_proximity]
+  B: ✓  new=30.6px  old=162.8px  ratio=0.19  [neighbor_proximity]
+  T: ✓  new=42.7px  old=143.1px  ratio=0.30  [scar_based]
+  AA: ✓  new=16.4px  old=142.6px  ratio=0.12  [scar_based]
+  R: ✓  new=12.9px  old=148.1px  ratio=0.09  [neighbor_proximity]
+  C101: ✓  new=16.1px  old=146.7px  ratio=0.11  [neighbor_proximity]
+  V: ✓  new=71.3px  old=88.5px  ratio=0.81  [scar_based]
+  C100: ✓  new=19.1px  old=131.8px  ratio=0.14  [scar_based]
+  C110: ✓  new=15.8px  old=133.8px  ratio=0.12  [neighbor_proximity]
+  C111: ✓  new=6.0px  old=140.2px  ratio=0.04  [neighbor_proximity]
+
+[Frame 220/241]
+  15 cells  |  15 scars detected
+  U: ✓  new=14.2px  old=159.7px  ratio=0.09  [scar_based]channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+
+  A10: ✓  new=78.0px  old=99.6px  ratio=0.78  [scar_based]
+  A11: ✓  new=17.7px  old=154.0px  ratio=0.11  [neighbor_proximity]
+  N: ✓  new=25.7px  old=158.2px  ratio=0.16  [neighbor_proximity]
+  Z: ✓  new=77.2px  old=79.6px  ratio=0.97  [scar_based]
+  B: ✓  new=23.5px  old=172.1px  ratio=0.14  [neighbor_proximity]
+  T: ✓  new=50.8px  old=136.6px  ratio=0.37  [scar_based]
+  AA: ✓  new=18.6px  old=141.8px  ratio=0.13  [scar_based]
+  R: ✓  new=17.0px  old=146.5px  ratio=0.12  [neighbor_proximity]
+  C101: ✓  new=17.9px  old=146.1px  ratio=0.12  [neighbor_proximity]
+  V: ✓  new=72.6px  old=89.7px  ratio=0.81  [scar_based]
+  C100: ✓  new=19.1px  old=130.1px  ratio=0.15  [scar_based]
+  C110: ✓  new=13.0px  old=136.9px  ratio=0.09  [neighbor_proximity]
+  AC: ✓  new=41.1px  old=126.6px  ratio=0.32  [neighbor_proximity]
+  C111: ✓  new=13.4px  old=135.7px  ratio=0.10  [scar_based]
+
+[Frame 221/241]
+  16 cells  |  16 scars detected
+  U: ✓  new=21.6px  old=156.5px  ratio=0.14  [scar_based]
+  A10: ✓  new=73.4px  old=103.1px  ratio=0.71  [scar_based]
+  A11: ✓  new=19.5px  old=153.1px  ratio=0.13  [neighbor_proximity]
+  Z: ✓  new=13.3px  old=144.8px  ratio=0.09  [scar_based]
+  N: ✓  new=27.4px  old=158.9px  ratio=0.17  [neighbor_proximity]
+  B: ✓  new=43.0px  old=154.5px  ratio=0.28  [neighbor_proximity]
+  T: ✓  new=51.5px  old=136.6px  ratio=0.38  [scar_based]
+  AA: ✓  new=18.8px  old=143.0px  ratio=0.13  [scar_based]
+  R: ✓  new=17.3px  old=143.0px  ratio=0.12  [neighbor_proximity]
+  C101: ✓  new=13.6px  old=148.8px  ratio=0.09  [neighbor_proximity]
+  V: ✓  new=72.8px  old=93.6px  ratio=0.78  [scar_based]
+  AD: ✓  new=27.7px  old=146.1px  ratio=0.19  [scar_based]
+  C100: ✓  new=23.9px  old=124.3px  ratio=0.19  [scar_based]
+  C110: ✓  new=15.9px  old=133.1px  ratio=0.12  [scar_based]
+  AC: ✓  new=25.0px  old=140.7px  ratio=0.18  [scar_based]
+  C111: ✓  new=15.6px  old=142.2px  ratio=0.11  [scar_based]
+
+[Frame 222/241]
+  16 cells  |  15 scars detected
+  U: ✓  new=16.4px  old=160.8px  ratio=0.10  [scar_based]
+  A10: ✓  new=43.7px  old=132.4px  ratio=0.33  [scar_based]
+  A11: ✓  new=16.7px  old=154.8px  ratio=0.11  [neighbor_proximity]
+  Z: ✓  new=9.8px  old=149.9px  ratio=0.07  [scar_based]
+  N: ✓  new=30.6px  old=156.1px  ratio=0.20  [neighbor_proximity]
+  B: ✓  new=44.2px  old=153.4px  ratio=0.29  [neighbor_proximity]
+  T: ✓  new=44.1px  old=145.2px  ratio=0.30  [scar_based]
+  AA: ✓  new=16.5px  old=145.3px  ratio=0.11  [scar_based]
+  R: ✓  new=32.6px  old=134.1px  ratio=0.24  [neighbor_proximity]
+  C101: ✓  new=19.5px  old=145.8px  ratio=0.13  [neighbor_proximity]
+  V: ✓  new=73.7px  old=94.4px  ratio=0.78  [scar_based]
+  AD: ✓  new=22.3px  old=138.6px  ratio=0.16  [scar_based]
+  C100: ✓  new=22.7px  old=129.1px  ratio=0.18  [scar_based]
+  C110: ✓  new=16.7px  old=138.7px  ratio=0.12  [scar_based]
+  AC: ✗  (no_valid_pairs)
+  C111: ✓  new=23.3px  old=138.0px  ratio=0.17  [scar_based]
+
+[Frame 223/241]
+  16 cells  |  16 scars detected
+  U: ✓  new=71.0px  old=108.1px  ratio=0.66  [scar_based]
+  A10: ✓  new=69.1px  old=111.6px  ratio=0.62  [scar_based]
+  A11: ✓  new=18.3px  old=155.4px  ratio=0.12  [neighbor_proximity]
+  Z: ✓  new=16.3px  old=144.0px  ratio=0.11  [scar_based]
+  N: ✓  new=29.9px  old=159.2px  ratio=0.19  [neighbor_proximity]
+  B: ✓  new=24.1px  old=177.0px  ratio=0.14  [neighbor_proximity]
+  T: ✓  new=51.5px  old=140.0px  ratio=0.37  [scar_based]
+  AA: ✓  new=19.1px  old=144.3px  ratio=0.13  [scar_based]
+  R: ✓  new=17.5px  old=146.7px  ratio=0.12  [neighbor_proximity]
+  C101: ✓  new=18.7px  old=146.4px  ratio=0.13  [neighbor_proximity]
+  V: ✓  new=79.5px  old=89.3px  ratio=0.89  [scar_based]
+  AD: ✓  new=22.7px  old=142.5px  ratio=0.16  [neighbor_proximity]
+  C100: ✓  new=25.5px  old=139.0px  ratio=0.18  [scar_based]
+  C110: ✓  new=15.4px  old=138.0px  ratio=0.11  [scar_based]
+  AC: ✓  new=21.5px  old=130.7px  ratio=0.16  [scar_based]
+  C111: ✓  new=72.1px  old=80.3px  ratio=0.90  [scar_based]
+
+[Frame 224/241]
+  16 cells  |  16 scars detected
+  U: ✓  new=64.7px  old=113.1px  ratio=0.57  [scar_based]
+  A10: ✓  new=78.4px  old=101.6px  ratio=0.77  [scar_based]
+  A11: ✓  new=14.1px  old=160.6px  ratio=0.09  [neighbor_proximity]
+  Z: ✓  new=80.4px  old=82.9px  ratio=0.97  [scar_based]
+  N: ✓  new=33.9px  old=155.6px  ratio=0.22  [neighbor_proximity]
+  B: ✓  new=22.4px  old=180.3px  ratio=0.12  [neighbor_proximity]
+  T: ✓  new=44.8px  old=148.3px  ratio=0.30  [scar_based]
+  AA: ✓  new=19.3px  old=144.6px  ratio=0.13  [scar_based]
+  R: ✓  new=14.5px  old=151.6px  ratio=0.10  [neighbor_proximity]
+  C101: ✓  new=15.2px  old=150.1px  ratio=0.10  [neighbor_proximity]
+  V: ✓  new=74.1px  old=95.0px  ratio=0.78  [scar_based]
+  AD: ✓  new=21.7px  old=145.2px  ratio=0.15  [neighbor_proximity]
+  C100: ✓  new=24.5px  old=127.2px  ratio=0.19  [scar_based]
+  C110: ✓  new=18.4px  old=140.1px  ratio=0.13  [scar_based]
+  AC: ✓  new=19.9px  old=130.3px  ratio=0.15  [scar_based]
+  C111: ✓  new=24.8px  old=141.8px  ratio=0.17  [scar_based]
+
+[Frame 225/241]
+  16 cells  |  16 scars detected
+  U: ✓  new=27.2px  old=156.4px  ratio=0.17  [scar_based]
+  A10: ✓  new=67.7px  old=115.8px  ratio=0.58  [scar_based]
+  A11: ✓  new=15.7px  old=161.0px  ratio=0.10  [neighbor_proximity]
+  Z: ✓  new=79.6px  old=85.2px  ratio=0.93  [scar_based]
+  N: ✓  new=27.6px  old=163.3px  ratio=0.17  [neighbor_proximity]
+  B: ✓  new=23.2px  old=180.5px  ratio=0.13  [neighbor_proximity]
+  T: ✓  new=93.1px  old=102.9px  ratio=0.90  [scar_based]
+  AA: ✓  new=19.7px  old=145.3px  ratio=0.14  [scar_based]
+  R: ✓  new=18.5px  old=150.0px  ratio=0.12  [neighbor_proximity]
+  C101: ✓  new=16.4px  old=151.2px  ratio=0.11  [neighbor_proximity]
+  V: ✓  new=76.3px  old=96.0px  ratio=0.79  [scar_based]
+  AD: ✓  new=22.3px  old=142.7px  ratio=0.16  [neighbor_proximity]
+  C100: ✓  new=24.8px  old=140.0px  ratio=0.18  [scar_based]
+  C110: ✓  new=15.0px  old=140.1px  ratio=0.11  [scar_based]
+  AC: ✓  new=19.1px  old=132.9px  ratio=0.14  [scar_based]
+  C111: ✓  new=25.2px  old=132.9px  ratio=0.19  [scar_based]
+
+[Frame 226/241]
+  16 cells  |  16 scars detected
+  U: ✓  new=59.8px  old=123.0px  ratio=0.49  [scar_based]
+  A10: ✓  new=79.4px  old=105.9px  ratio=0.75  [scar_based]
+  A11: ✓  new=14.7px  old=161.8px  ratio=0.09  [neighbor_proximity]
+  Z: ✓  new=15.5px  old=149.8px  ratio=0.10  [scar_based]
+  N: ✓  new=21.1px  old=170.9px  ratio=0.12  [neighbor_proximity]
+  B: ✓  new=23.4px  old=183.2px  ratio=0.13  [neighbor_proximity]
+  T: ✓  new=93.4px  old=102.3px  ratio=0.91  [scar_based]
+  AA: ✓  new=19.8px  old=146.3px  ratio=0.14  [scar_based]
+  R: ✓  new=21.0px  old=149.2px  ratio=0.14  [neighbor_proximity]
+  C101: ✓  new=16.5px  old=152.1px  ratio=0.11  [neighbor_proximity]
+  V: ✓  new=72.3px  old=102.0px  ratio=0.71  [scar_based]
+  AD: ✓  new=22.4px  old=145.3px  ratio=0.15  [neighbor_proximity]
+  C100: ✓  new=19.2px  old=133.0px  ratio=0.14  [scar_based]
+  C110: ✓  new=13.3px  old=144.9px  ratio=0.09  [neighbor_proximity]
+  AC: ✓  new=22.3px  old=131.5px  ratio=0.17  [scar_based]
+  C111: ✓  new=20.2px  old=144.6px  ratio=0.14  [scar_based]
+
+[Frame 227/241]
+  16 cells  |  16 scars detected
+  U: ✓  new=81.5px  old=103.7px  ratio=0.79  [scar_based]
+  A10: ✓  new=52.6px  old=133.2px  ratio=0.39  [scar_based]
+  A11: ✓  new=14.4px  old=164.1px  ratio=0.09  [neighbor_proximity]
+  Z: ✓  new=79.8px  old=90.1px  ratio=0.89  [scar_based]
+  N: ✓  new=28.7px  old=164.6px  ratio=0.17  [neighbor_proximity]
+  B: ✓  new=23.2px  old=184.3px  ratio=0.13  [neighbor_proximity]
+  T: ✓  new=15.4px  old=181.1px  ratio=0.09  [scar_based]
+  AA: ✓  new=17.6px  old=150.2px  ratio=0.12  [scar_based]
+  R: ✓  new=30.8px  old=139.7px  ratio=0.22  [neighbor_proximity]
+  C101: ✓  new=17.6px  old=152.4px  ratio=0.12  [neighbor_proximity]
+  V: ✓  new=78.0px  old=97.1px  ratio=0.80  [scar_based]
+  AD: ✓  new=20.7px  old=146.8px  ratio=0.14  [neighbor_proximity]
+  C100: ✓  new=33.6px  old=117.8px  ratio=0.29  [scar_based]channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+
+  C110: ✓  new=17.2px  old=144.5px  ratio=0.12  [neighbor_proximity]
+  AC: ✓  new=21.9px  old=132.5px  ratio=0.16  [scar_based]
+  C111: ✓  new=17.1px  old=140.2px  ratio=0.12  [scar_based]
+
+[Frame 228/241]
+  16 cells  |  16 scars detected
+  U: ✓  new=68.9px  old=118.2px  ratio=0.58  [scar_based]
+  A10: ✓  new=81.6px  old=105.6px  ratio=0.77  [scar_based]
+  A11: ✓  new=17.9px  old=159.8px  ratio=0.11  [neighbor_proximity]
+  Z: ✓  new=83.3px  old=86.5px  ratio=0.96  [scar_based]
+  N: ✓  new=34.9px  old=159.1px  ratio=0.22  [neighbor_proximity]
+  B: ✓  new=27.2px  old=181.9px  ratio=0.15  [neighbor_proximity]
+  T: ✓  new=53.2px  old=146.6px  ratio=0.36  [scar_based]
+  AA: ✓  new=17.8px  old=150.8px  ratio=0.12  [scar_based]
+  R: ✓  new=19.1px  old=152.9px  ratio=0.13  [neighbor_proximity]
+  C101: ✓  new=19.4px  old=151.6px  ratio=0.13  [neighbor_proximity]
+  V: ✓  new=83.9px  old=92.0px  ratio=0.91  [scar_based]
+  AD: ✓  new=22.3px  old=145.2px  ratio=0.15  [neighbor_proximity]
+  C100: ✓  new=14.1px  old=141.9px  ratio=0.10  [scar_based]
+  C110: ✓  new=13.6px  old=145.3px  ratio=0.09  [neighbor_proximity]
+  AC: ✓  new=21.0px  old=133.3px  ratio=0.16  [scar_based]
+  C111: ✓  new=23.4px  old=147.5px  ratio=0.16  [scar_based]
+
+[Frame 229/241]
+  16 cells  |  16 scars detected
+  U: ✓  new=92.6px  old=94.6px  ratio=0.98  [scar_based]
+  A10: ✓  new=82.7px  old=104.9px  ratio=0.79  [scar_based]
+  A11: ✓  new=18.0px  old=162.2px  ratio=0.11  [neighbor_proximity]
+  Z: ✓  new=24.4px  old=147.0px  ratio=0.17  [scar_based]
+  N: ✓  new=31.9px  old=164.0px  ratio=0.19  [neighbor_proximity]
+  B: ✓  new=21.9px  old=188.5px  ratio=0.12  [neighbor_proximity]
+  T: ✓  new=39.4px  old=163.3px  ratio=0.24  [scar_based]
+  AA: ✓  new=18.1px  old=151.1px  ratio=0.12  [scar_based]
+  R: ✓  new=16.7px  old=154.3px  ratio=0.11  [neighbor_proximity]
+  C101: ✓  new=16.7px  old=155.9px  ratio=0.11  [neighbor_proximity]
+  V: ✓  new=85.0px  old=92.7px  ratio=0.92  [scar_based]
+  AD: ✓  new=21.7px  old=147.3px  ratio=0.15  [neighbor_proximity]
+  C100: ✓  new=42.7px  old=109.5px  ratio=0.39  [scar_based]
+  C110: ✓  new=15.5px  old=143.4px  ratio=0.11  [neighbor_proximity]
+  AC: ✓  new=21.4px  old=133.8px  ratio=0.16  [scar_based]
+  C111: ✓  new=32.0px  old=129.6px  ratio=0.25  [scar_based]
+
+[Frame 230/241]
+  16 cells  |  16 scars detected
+  U: ✓  new=83.9px  old=104.9px  ratio=0.80  [scar_based]
+  A10: ✓  new=16.8px  old=172.0px  ratio=0.10  [scar_based]
+  A11: ✓  new=15.0px  old=166.3px  ratio=0.09  [neighbor_proximity]
+  Z: ✓  new=70.3px  old=101.3px  ratio=0.69  [scar_based]
+  N: ✓  new=33.1px  old=163.8px  ratio=0.20  [neighbor_proximity]
+  B: ✓  new=24.8px  old=187.8px  ratio=0.13  [neighbor_proximity]
+  T: ✓  new=97.6px  old=105.5px  ratio=0.93  [scar_based]
+  AA: ✓  new=21.7px  old=148.3px  ratio=0.15  [scar_based]
+  R: ✓  new=15.2px  old=157.2px  ratio=0.10  [neighbor_proximity]
+  C101: ✓  new=16.9px  old=154.0px  ratio=0.11  [neighbor_proximity]
+  V: ✓  new=17.4px  old=164.1px  ratio=0.11  [scar_based]
+  AD: ✓  new=20.9px  old=149.2px  ratio=0.14  [neighbor_proximity]
+  C100: ✓  new=37.5px  old=117.5px  ratio=0.32  [scar_based]
+  C110: ✓  new=16.8px  old=145.3px  ratio=0.12  [neighbor_proximity]
+  AC: ✓  new=18.2px  old=138.6px  ratio=0.13  [scar_based]
+  C111: ✓  new=76.4px  old=83.6px  ratio=0.91  [scar_based]
+
+[Frame 231/241]
+  16 cells  |  16 scars detected
+  U: ✓  new=79.8px  old=110.9px  ratio=0.72  [scar_based]
+  A10: ✓  new=83.9px  old=105.9px  ratio=0.79  [scar_based]
+  A11: ✓  new=20.4px  old=162.3px  ratio=0.13  [neighbor_proximity]
+  Z: ✓  new=20.1px  old=155.1px  ratio=0.13  [scar_based]
+  N: ✓  new=33.1px  old=165.2px  ratio=0.20  [neighbor_proximity]
+  B: ✓  new=19.5px  old=194.4px  ratio=0.10  [neighbor_proximity]
+  T: ✓  new=49.2px  old=155.9px  ratio=0.32  [scar_based]
+  AA: ✓  new=66.9px  old=104.3px  ratio=0.64  [scar_based]
+  R: ✓  new=25.0px  old=152.1px  ratio=0.16  [neighbor_proximity]
+  C101: ✓  new=21.3px  old=156.1px  ratio=0.14  [neighbor_proximity]
+  V: ✓  new=24.3px  old=155.9px  ratio=0.16  [scar_based]
+  AD: ✓  new=20.9px  old=149.1px  ratio=0.14  [neighbor_proximity]
+  C100: ✓  new=31.5px  old=124.8px  ratio=0.25  [scar_based]
+  C110: ✓  new=17.1px  old=144.8px  ratio=0.12  [scar_based]
+  AC: ✓  new=19.7px  old=138.5px  ratio=0.14  [scar_based]
+  C111: ✓  new=20.7px  old=145.7px  ratio=0.14  [scar_based]
+
+[Frame 232/241]
+  16 cells  |  16 scars detected
+  U: ✓  new=73.3px  old=118.6px  ratio=0.62  [scar_based]
+  A10: ✓  new=84.2px  old=107.1px  ratio=0.79  [scar_based]
+  A11: ✓  new=16.2px  old=168.2px  ratio=0.10  [neighbor_proximity]
+  Z: ✓  new=85.2px  old=90.3px  ratio=0.94  [scar_based]
+  N: ✓  new=25.9px  old=174.9px  ratio=0.15  [neighbor_proximity]
+  B: ✓  new=19.5px  old=196.0px  ratio=0.10  [neighbor_proximity]
+  T: ✓  new=99.0px  old=107.4px  ratio=0.92  [scar_based]
+  AA: ✓  new=23.1px  old=149.8px  ratio=0.15  [scar_based]
+  R: ✓  new=19.4px  old=155.6px  ratio=0.13  [neighbor_proximity]
+  C101: ✓  new=14.0px  old=159.4px  ratio=0.09  [neighbor_proximity]
+  V: ✓  new=23.8px  old=157.5px  ratio=0.15  [scar_based]
+  AD: ✓  new=20.9px  old=150.9px  ratio=0.14  [neighbor_proximity]
+  C100: ✓  new=38.7px  old=118.8px  ratio=0.33  [scar_based]
+  C110: ✓  new=16.6px  old=145.1px  ratio=0.11  [scar_based]
+  AC: ✓  new=23.2px  old=135.3px  ratio=0.17  [scar_based]
+  C111: ✓  new=41.3px  old=121.5px  ratio=0.34  [scar_based]
+
+[Frame 233/241]
+  16 cells  |  16 scars detected
+  U: ✓  new=57.1px  old=136.3px  ratio=0.42  [scar_based]
+  A10: ✓  new=81.5px  old=110.5px  ratio=0.74  [scar_based]
+  A11: ✓  new=18.2px  old=167.1px  ratio=0.11  [neighbor_proximity]
+  Z: ✓  new=34.1px  old=143.6px  ratio=0.24  [scar_based]
+  N: ✓  new=46.1px  old=154.8px  ratio=0.30  [neighbor_proximity]
+  B: ✓  new=26.5px  old=191.2px  ratio=0.14  [neighbor_proximity]
+  T: ✓  new=59.5px  old=148.0px  ratio=0.40  [scar_based]
+  AA: ✓  new=18.0px  old=155.4px  ratio=0.12  [scar_based]
+  R: ✓  new=19.4px  old=157.0px  ratio=0.12  [neighbor_proximity]
+  C101: ✓  new=17.6px  old=159.1px  ratio=0.11  [neighbor_proximity]
+  V: ✓  new=18.9px  old=163.9px  ratio=0.12  [scar_based]
+  AD: ✓  new=21.5px  old=151.6px  ratio=0.14  [neighbor_proximity]
+  C100: ✓  new=32.8px  old=125.5px  ratio=0.26  [scar_based]
+  C110: ✓  new=18.1px  old=146.7px  ratio=0.12  [scar_based]
+  AC: ✓  new=23.5px  old=135.9px  ratio=0.17  [scar_based]
+  C111: ✓  new=12.5px  old=154.4px  ratio=0.08  [scar_based]
+
+[Frame 234/241]
+  16 cells  |  16 scars detected
+  U: ✓  new=80.8px  old=112.9px  ratio=0.72  [scar_based]
+  A10: ✓  new=85.3px  old=107.5px  ratio=0.79  [scar_based]
+  A11: ✓  new=15.8px  old=171.9px  ratio=0.09  [neighbor_proximity]
+  Z: ✓  new=24.4px  old=153.6px  ratio=0.16  [scar_based]
+  N: ✓  new=25.0px  old=177.1px  ratio=0.14  [neighbor_proximity]
+  B: ✓  new=26.5px  old=192.6px  ratio=0.14  [neighbor_proximity]
+  T: ✓  new=60.0px  old=150.7px  ratio=0.40  [scar_based]
+  AA: ✓  new=74.0px  old=101.5px  ratio=0.73  [scar_based]
+  R: ✓  new=30.1px  old=148.6px  ratio=0.20  [neighbor_proximity]
+  C101: ✓  new=15.6px  old=162.9px  ratio=0.10  [neighbor_proximity]
+  V: ✓  new=20.2px  old=163.2px  ratio=0.12  [scar_based]
+  AD: ✓  new=16.9px  old=157.2px  ratio=0.11  [neighbor_proximity]
+  C100: ✓  new=36.3px  old=123.1px  ratio=0.30  [scar_based]
+  C110: ✓  new=20.9px  old=150.4px  ratio=0.14  [neighbor_proximity]
+  AC: ✓  new=22.8px  old=137.9px  ratio=0.17  [scar_based]
+  C111: ✓  new=78.8px  old=86.6px  ratio=0.91  [scar_based]
+
+[Frame 235/241]
+  16 cells  |  16 scars detected
+  U: ✓  new=93.0px  old=101.6px  ratio=0.91  [scar_based]
+  A10: ✓  new=49.7px  old=142.8px  ratio=0.35  [scar_based]
+  A11: ✓  new=18.5px  old=170.6px  ratio=0.11  [neighbor_proximity]
+  Z: ✓  new=21.0px  old=158.8px  ratio=0.13  [scar_based]
+  N: ✓  new=44.5px  old=157.7px  ratio=0.28  [neighbor_proximity]
+  B: ✓  new=26.9px  old=193.3px  ratio=0.14  [neighbor_proximity]channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+channels deprecated in v4.0.1+. If data contain more than 3 channels, only the first 3 channels will be used
+
+  T: ✓  new=26.1px  old=185.2px  ratio=0.14  [scar_based]
+  AA: ✓  new=74.5px  old=101.0px  ratio=0.74  [scar_based]
+  R: ✓  new=14.7px  old=165.0px  ratio=0.09  [neighbor_proximity]
+  C101: ✓  new=14.2px  old=165.6px  ratio=0.09  [neighbor_proximity]
+  V: ✓  new=24.5px  old=158.6px  ratio=0.15  [scar_based]
+  AD: ✓  new=16.2px  old=158.6px  ratio=0.10  [neighbor_proximity]
+  C100: ✓  new=39.1px  old=121.1px  ratio=0.32  [scar_based]
+  C110: ✓  new=21.6px  old=147.7px  ratio=0.15  [scar_based]
+  AC: ✓  new=24.0px  old=138.3px  ratio=0.17  [scar_based]
+  C111: ✓  new=25.2px  old=149.6px  ratio=0.17  [scar_based]
+
+[Frame 236/241]
+  16 cells  |  16 scars detected
+  U: ✓  new=64.7px  old=131.6px  ratio=0.49  [scar_based]
+  A10: ✓  new=77.2px  old=117.1px  ratio=0.66  [scar_based]
+  A11: ✓  new=15.8px  old=175.3px  ratio=0.09  [neighbor_proximity]
+  Z: ✓  new=31.1px  old=151.3px  ratio=0.21  [scar_based]
+  N: ✓  new=26.5px  old=179.8px  ratio=0.15  [neighbor_proximity]
+  B: ✓  new=20.5px  old=202.3px  ratio=0.10  [neighbor_proximity]
+  T: ✓  new=69.5px  old=141.4px  ratio=0.49  [scar_based]
+  AA: ✓  new=74.4px  old=102.8px  ratio=0.72  [scar_based]
+  R: ✓  new=31.3px  old=149.1px  ratio=0.21  [neighbor_proximity]
+  C101: ✓  new=17.0px  old=163.0px  ratio=0.10  [neighbor_proximity]
+  V: ✓  new=18.5px  old=170.9px  ratio=0.11  [scar_based]
+  AD: ✓  new=15.5px  old=159.8px  ratio=0.10  [neighbor_proximity]
+  C100: ✓  new=36.1px  old=125.5px  ratio=0.29  [scar_based]
+  C110: ✓  new=24.3px  old=143.3px  ratio=0.17  [neighbor_proximity]
+  AC: ✓  new=23.8px  old=139.5px  ratio=0.17  [scar_based]
+  C111: ✓  new=17.7px  old=149.9px  ratio=0.12  [scar_based]
+
+[Frame 237/241]
+  16 cells  |  16 scars detected
+  U: ✓  new=93.5px  old=103.8px  ratio=0.90  [scar_based]
+  A10: ✓  new=57.1px  old=137.4px  ratio=0.42  [scar_based]
+  A11: ✓  new=18.8px  old=171.9px  ratio=0.11  [neighbor_proximity]
+  Z: ✓  new=85.1px  old=96.0px  ratio=0.89  [scar_based]
+  N: ✓  new=52.5px  old=154.9px  ratio=0.34  [neighbor_proximity]
+  B: ✓  new=24.4px  old=200.3px  ratio=0.12  [neighbor_proximity]
+  T: ✓  new=83.5px  old=130.3px  ratio=0.64  [scar_based]
+  AA: ✓  new=26.4px  old=152.5px  ratio=0.17  [scar_based]
+  R: ✓  new=31.9px  old=151.3px  ratio=0.21  [neighbor_proximity]
+  C101: ✓  new=17.0px  old=165.0px  ratio=0.10  [neighbor_proximity]
+  V: ✓  new=83.0px  old=102.8px  ratio=0.81  [scar_based]
+  AD: ✓  new=16.0px  old=160.7px  ratio=0.10  [neighbor_proximity]
+  C100: ✓  new=45.5px  old=117.6px  ratio=0.39  [scar_based]
+  C110: ✓  new=54.1px  old=116.1px  ratio=0.47  [scar_based]
+  AC: ✓  new=28.3px  old=135.1px  ratio=0.21  [scar_based]
+  C111: ✓  new=38.5px  old=132.9px  ratio=0.29  [scar_based]
+
+[Frame 238/241]
+  16 cells  |  16 scars detected
+  U: ✓  new=98.5px  old=100.4px  ratio=0.98  [scar_based]
+  A10: ✓  new=71.8px  old=124.7px  ratio=0.58  [scar_based]
+  A11: ✓  new=17.2px  old=175.0px  ratio=0.10  [neighbor_proximity]
+  Z: ✓  new=25.8px  old=157.6px  ratio=0.16  [scar_based]
+  N: ✓  new=29.9px  old=181.2px  ratio=0.17  [neighbor_proximity]
+  B: ✓  new=23.4px  old=201.1px  ratio=0.12  [neighbor_proximity]
+  T: ✓  new=83.9px  old=131.3px  ratio=0.64  [scar_based]
+  AA: ✓  new=25.5px  old=152.5px  ratio=0.17  [scar_based]
+  R: ✓  new=33.3px  old=151.7px  ratio=0.22  [neighbor_proximity]
+  C101: ✓  new=17.2px  old=166.2px  ratio=0.10  [neighbor_proximity]
+  V: ✓  new=23.4px  old=163.2px  ratio=0.14  [scar_based]
+  AD: ✓  new=24.5px  old=153.7px  ratio=0.16  [scar_based]
+  C100: ✓  new=12.4px  old=153.7px  ratio=0.08  [scar_based]
+  C110: ✓  new=28.8px  old=143.3px  ratio=0.20  [scar_based]
+  AC: ✓  new=24.4px  old=139.8px  ratio=0.17  [scar_based]
+  C111: ✓  new=82.2px  old=88.2px  ratio=0.93  [scar_based]
+
+[Frame 239/241]
+  16 cells  |  16 scars detected
+  U: ✓  new=87.3px  old=112.9px  ratio=0.77  [scar_based]
+  A10: ✓  new=86.5px  old=112.0px  ratio=0.77  [scar_based]
+  A11: ✓  new=18.5px  old=174.7px  ratio=0.11  [neighbor_proximity]
+  Z: ✓  new=22.0px  old=164.3px  ratio=0.13  [scar_based]
+  N: ✓  new=30.3px  old=182.4px  ratio=0.17  [neighbor_proximity]
+  B: ✓  new=20.7px  old=206.3px  ratio=0.10  [neighbor_proximity]
+  T: ✓  new=101.8px  old=115.0px  ratio=0.89  [scar_based]
+  AA: ✓  new=26.3px  old=155.4px  ratio=0.17  [scar_based]
+  R: ✓  new=18.3px  old=167.4px  ratio=0.11  [neighbor_proximity]
+  C101: ✓  new=18.8px  old=166.0px  ratio=0.11  [neighbor_proximity]
+  V: ✓  new=19.3px  old=169.4px  ratio=0.11  [scar_based]
+  AD: ✓  new=25.1px  old=154.1px  ratio=0.16  [scar_based]
+  C100: ✓  new=33.5px  old=130.6px  ratio=0.26  [scar_based]
+  C110: ✓  new=22.2px  old=152.4px  ratio=0.15  [scar_based]
+  AC: ✓  new=24.4px  old=141.6px  ratio=0.17  [scar_based]
+  C111: ✓  new=19.0px  old=152.5px  ratio=0.12  [scar_based]
+
+[Frame 240/241]
+  16 cells  |  16 scars detected
+  U: ✓  new=92.9px  old=107.1px  ratio=0.87  [scar_based]
+  A10: ✓  new=85.9px  old=113.7px  ratio=0.75  [scar_based]
+  A11: ✓  new=16.9px  old=176.8px  ratio=0.10  [neighbor_proximity]
+  Z: ✓  new=74.5px  old=111.3px  ratio=0.67  [scar_based]
+  N: ✓  new=34.9px  old=179.0px  ratio=0.20  [neighbor_proximity]
+  B: ✓  new=26.9px  old=201.3px  ratio=0.13  [neighbor_proximity]
+  T: ✓  new=39.5px  old=178.4px  ratio=0.22  [scar_based]
+  AA: ✓  new=19.6px  old=163.9px  ratio=0.12  [scar_based]
+  R: ✓  new=33.4px  old=153.3px  ratio=0.22  [neighbor_proximity]
+  C101: ✓  new=17.3px  old=167.1px  ratio=0.10  [neighbor_proximity]
+  V: ✓  new=42.2px  old=146.1px  ratio=0.29  [scar_based]
+  AD: ✓  new=79.7px  old=99.0px  ratio=0.81  [scar_based]
+  C100: ✓  new=10.6px  old=156.1px  ratio=0.07  [scar_based]
+  C110: ✓  new=30.3px  old=146.4px  ratio=0.21  [scar_based]
+  AC: ✓  new=24.9px  old=142.0px  ratio=0.18  [scar_based]
+  C111: ✓  new=83.4px  old=89.0px  ratio=0.94  [scar_based]
+
+[Frame 241/241]
+  16 cells  |  16 scars detected
+  U: ✓  new=67.4px  old=135.0px  ratio=0.50  [scar_based]
+  A10: ✓  new=91.1px  old=110.6px  ratio=0.82  [scar_based]
+  A11: ✓  new=18.9px  old=177.7px  ratio=0.11  [neighbor_proximity]
+  Z: ✓  new=93.9px  old=94.4px  ratio=0.99  [scar_based]
+  N: ✓  new=29.6px  old=187.1px  ratio=0.16  [neighbor_proximity]
+  B: ✓  new=22.6px  old=209.0px  ratio=0.11  [neighbor_proximity]
+  T: ✓  new=23.7px  old=195.8px  ratio=0.12  [scar_based]
+  AA: ✓  new=27.1px  old=156.3px  ratio=0.17  [scar_based]
+  R: ✓  new=17.7px  old=171.0px  ratio=0.10  [neighbor_proximity]
+  C101: ✓  new=18.7px  old=168.4px  ratio=0.11  [neighbor_proximity]
+  V: ✓  new=86.7px  old=104.4px  ratio=0.83  [scar_based]
+  AD: ✓  new=17.2px  old=163.5px  ratio=0.10  [scar_based]
+  C100: ✓  new=10.6px  old=156.1px  ratio=0.07  [scar_based]
+  C110: ✓  new=19.7px  old=161.8px  ratio=0.12  [scar_based]
+  AC: ✓  new=25.6px  old=142.6px  ratio=0.18  [scar_based]
+  C111: ✓  new=83.3px  old=90.0px  ratio=0.93  [scar_based]
+  Scar stabilization – A: {'interpolated': 10, 'corrected': 4}  [stable]
+  Scar stabilization – B: {'interpolated': 18, 'corrected': 5}  [stable]
+  Scar stabilization – C: {'corrected': 10}  [UNSTABLE]
+  Scar stabilization – C1: {'corrected': 68, 'interpolated': 2}  [UNSTABLE]
+  Scar stabilization – E: {'corrected': 79, 'interpolated': 1}  [UNSTABLE]
+  Scar stabilization – A1: {'interpolated': 25, 'corrected': 19}  [UNSTABLE]
+  Scar stabilization – A0: {'corrected': 34, 'interpolated': 1}  [UNSTABLE]
+  Scar stabilization – C10: {'corrected': 14}  [stable]
+  Scar stabilization – C11: {'interpolated': 5}  [stable]
+  Scar stabilization – G: {'corrected': 1}  [UNSTABLE]
+  Scar stabilization – H: {'corrected': 2}  [UNSTABLE]
+  Scar stabilization – H1: {'interpolated': 11, 'corrected': 3}  [stable]
+  Scar stabilization – H0: {'corrected': 53, 'interpolated': 10}  [UNSTABLE]
+  Scar stabilization – J: {'corrected': 2}  [UNSTABLE]
+  Scar stabilization – L: {'corrected': 7}  [UNSTABLE]
+  Scar stabilization – M: {'corrected': 1}  [stable]
+  Scar stabilization – N: {'corrected': 72, 'interpolated': 1}  [UNSTABLE]
+  Scar stabilization – P: {'corrected': 2}  [UNSTABLE]
+  Scar stabilization – A11: {'interpolated': 9, 'corrected': 5}  [stable]
+  Scar stabilization – A10: {'interpolated': 5, 'corrected': 35}  [UNSTABLE]
+  Scar stabilization – R: {'interpolated': 2, 'corrected': 1}  [stable]
+  Scar stabilization – T: {'corrected': 14}  [stable]
+  Scar stabilization – U: {'interpolated': 9, 'corrected': 30}  [UNSTABLE]
+  Scar stabilization – V: {'interpolated': 11, 'corrected': 25}  [UNSTABLE]
+  Scar stabilization – Z: {'corrected': 11, 'interpolated': 2}  [stable]
+  Scar stabilization – C100: {'interpolated': 1, 'corrected': 13}  [UNSTABLE]
+  Scar stabilization – AA: {'corrected': 4}  [stable]
+  Scar stabilization – C110: {'interpolated': 1}  [stable]
+  Scar stabilization – C111: {'interpolated': 5, 'corrected': 6}  [UNSTABLE]
+  Scar stabilization – AB: {'corrected': 2}  [UNSTABLE]
+  Scar stabilization – AC: {'corrected': 1, 'interpolated': 1}  [stable]
+  Scar stabilization – AD: {'corrected': 1}  [stable]
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0000_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0001_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0002_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0003_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0004_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0005_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0006_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0007_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0008_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0009_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0010_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0011_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0012_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0013_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0014_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0015_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0016_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0017_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0018_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0019_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0020_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0021_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0022_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0023_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0024_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0025_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0026_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0027_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0028_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0029_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0030_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0031_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0032_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0033_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0034_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0035_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0036_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0037_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0038_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0039_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0040_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0041_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0042_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0043_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0044_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0045_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0046_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0047_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0048_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0049_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0050_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0051_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0052_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0053_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0054_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0055_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0056_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0057_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0058_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0059_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0060_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0061_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0062_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0063_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0064_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0065_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0066_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0067_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0068_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0069_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0070_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0071_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0072_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0073_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0074_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0075_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0076_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0077_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0078_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0079_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0080_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0081_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0082_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0083_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0084_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0085_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0086_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0087_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0088_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0089_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0090_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0091_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0092_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0093_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0094_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0095_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0096_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0097_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0098_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0099_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0100_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0101_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0102_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0103_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0104_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0105_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0106_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0107_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0108_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0109_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0110_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0111_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0112_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0113_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0114_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0115_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0116_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0117_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0118_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0119_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0120_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0121_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0122_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0123_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0124_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0125_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0126_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0127_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0128_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0129_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0130_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0131_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0132_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0133_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0134_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0135_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0136_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0137_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0138_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0139_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0140_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0141_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0142_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0143_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0144_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0145_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0146_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0147_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0148_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0149_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0150_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0151_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0152_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0153_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0154_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0155_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0156_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0157_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0158_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0159_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0160_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0161_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0162_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0163_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0164_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0165_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0166_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0167_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0168_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0169_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0170_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0171_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0172_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0173_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0174_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0175_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0176_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0177_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0178_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0179_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0180_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0181_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0182_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0183_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0184_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0185_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0186_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0187_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0188_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0189_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0190_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0191_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0192_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0193_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0194_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0195_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0196_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0197_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0198_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0199_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0200_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0201_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0202_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0203_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0204_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0205_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0206_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0207_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0208_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0209_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0210_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0211_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0212_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0213_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0214_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0215_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0216_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0217_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0218_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0219_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0220_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0221_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0222_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0223_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0224_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0225_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0226_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0227_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0228_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0229_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0230_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0231_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0232_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0233_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0234_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0235_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0236_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0237_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0238_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0239_blinded.png
+  Saved validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_frame0240_blinded.png
+CSV saved: validation/runs/experiment_03272025_wt_ymd494__xy2/measure/experiment_03272025_wt_ymd494__xy2_bs_detector_measurements.csv  (1926 rows)

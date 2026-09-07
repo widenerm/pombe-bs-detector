@@ -102,8 +102,14 @@ class BirthScarDetector:
         peaks = self._find_peaks(kappa)
         debug_info['peaks'] = peaks
 
+        window_profile = []
         all_cands = self._collect_windowed_candidates(
-            smooth_pts, kappa, center, axis, normal_vec, avg_width, long_norm)
+            smooth_pts, kappa, center, axis, normal_vec, avg_width, long_norm,
+            profile_out=window_profile)
+        # Keep the diagnostic signal that drives the current detector.  This
+        # lets the notebook distinguish raw point curvature from the
+        # windowed, opposite-side curvature measure used for selection.
+        debug_info['windowed_curvature_profile'] = window_profile
         for c in all_cands:
             c['match_type'] = 'windowed'
 
@@ -192,7 +198,8 @@ class BirthScarDetector:
         return prom * (1.0 + perp)
 
     def _collect_windowed_candidates(self, smooth_pts, kappa, center, axis,
-                                     normal_vec, reference_width, long_norm):
+                                     normal_vec, reference_width, long_norm,
+                                     profile_out=None):
         """Collect candidates by integrating curvature in longitudinal windows.
 
         Unlike peak pairing, each side contributes independently.  This makes
@@ -235,6 +242,14 @@ class BirthScarDetector:
                 side_scores.append(float(np.mean(excess[members])))
                 side_indices.append(int(members[np.argmax(excess[members])]))
 
+            window_curvature = float(side_scores[0] + side_scores[1])
+            if profile_out is not None:
+                profile_out.append({
+                    'center': float(target),
+                    'curvature_sum': window_curvature,
+                    'side_scores': tuple(float(s) for s in side_scores),
+                })
+
             if side_indices[0] is None or side_indices[1] is None:
                 continue
             p1, p2 = side_indices
@@ -262,7 +277,7 @@ class BirthScarDetector:
             # Width is informative, but tapered near-pole scars must not be
             # rejected merely because they are narrower than mid-cell width.
             width_weight = width_floor + (1.0 - width_floor) * min(width_ratio, 1.0)
-            score = ((side_scores[0] + side_scores[1]) * angle_weight *
+            score = (window_curvature * angle_weight *
                      recency_weight * width_weight)
             # A geometrically valid cross-section is not automatically a
             # scar.  In particular, a smooth scar-free rod should not yield
@@ -274,7 +289,7 @@ class BirthScarDetector:
                 points=(smooth_pts[p1], smooth_pts[p2]),
                 score=float(score),
                 window_center=float(target),
-                window_curvature=float(side_scores[0] + side_scores[1]),
+                window_curvature=window_curvature,
                 angle_weight=float(angle_weight),
                 width=float(width),
                 width_weight=float(width_weight),

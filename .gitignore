@@ -14,6 +14,10 @@ measurements.csv
 *.svg
 *.pdf
 
+# Validation run outputs (blinded images, key files, comparison CSVs —
+# all derived from real experimental data, never commit)
+validation/runs/
+
 # Python
 __pycache__/
 *.py[cod]
@@ -49,3 +53,5 @@ Thumbs.db
 # Allow documentation figures
 !docs/**/*.png
 !docs/**/*.pdf
+# Large validation packages
+validation/*.zip

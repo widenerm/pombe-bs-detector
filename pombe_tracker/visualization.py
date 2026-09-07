@@ -365,7 +365,14 @@ def plot_curvature_profiles(frame_or_results, results_or_frame_idx,
                              frame_idx_or_config=None, config=None,
                              poster=False):
     """
-    Contour curvature (κ) vs. contour index for every cell in the frame.
+    Show both curvature diagnostics used by the birth-scar detector.
+
+    The upper panel for each cell shows pointwise contour curvature (κ).
+    The lower panel shows the detector's windowed summed *curvature excess*
+    on the two opposite sides of the PCA axis.  This lower signal is the
+    quantity that replaces the old strict peak-pair search; it is plotted
+    against normalized longitudinal position so cap exclusion and the
+    near-pole recency prior are visible.
 
     Accepts two calling conventions:
         plot_curvature_profiles(frame, results, frame_idx, config)   ← 4-arg
@@ -385,17 +392,24 @@ def plot_curvature_profiles(frame_or_results, results_or_frame_idx,
         ncols = min(n, 3)
         nrows = max(1, (n + ncols - 1) // ncols)
         fw    = (6 * ncols) if poster else (5 * ncols)
-        fh    = (4 * nrows) if poster else (3 * nrows)
-        fig, axes = plt.subplots(nrows, ncols, figsize=(fw, fh), squeeze=False)
-        axes_flat = axes.flatten()
+        fh    = (7 * nrows) if poster else (5.5 * nrows)
+        # Each cell occupies two vertically aligned panels: raw κ above and
+        # the actual windowed summed-curvature diagnostic below.
+        fig, axes = plt.subplots(nrows * 2, ncols, figsize=(fw, fh),
+                                 squeeze=False)
 
-        for ax, r in zip(axes_flat, results):
+        for cell_idx, r in enumerate(results):
+            row = (cell_idx // ncols) * 2
+            col = cell_idx % ncols
+            ax_raw = axes[row, col]
+            ax_sum = axes[row + 1, col]
             dbg  = r['debug_info']
             name = r.get('cell_name', str(r['label']))
 
             if 'kappa' not in dbg:
-                ax.text(0.5, 0.5, 'No data', ha='center', va='center')
-                ax.set_title(name)
+                ax_raw.text(0.5, 0.5, 'No data', ha='center', va='center')
+                ax_raw.set_title(name)
+                ax_sum.axis('off')
                 continue
 
             kappa        = dbg['kappa']
@@ -404,45 +418,87 @@ def plot_curvature_profiles(frame_or_results, results_or_frame_idx,
             idx_arr      = np.arange(len(kappa))
 
             lw = 1.5 if poster else 1.0
-            ax.plot(idx_arr, kappa, color='steelblue', lw=lw, alpha=0.85)
-            ax.axhline(0, color='k', ls='--', lw=0.6, alpha=0.4)
-            ax.fill_between(idx_arr, 0, kappa, where=display_mask,
+            ax_raw.plot(idx_arr, kappa, color='steelblue', lw=lw, alpha=0.85)
+            ax_raw.axhline(0, color='k', ls='--', lw=0.6, alpha=0.4)
+            ax_raw.fill_between(idx_arr, 0, kappa, where=display_mask,
                             color='steelblue', alpha=0.10,
                             label='Contour (full search)')
 
             if config is not None:
                 thresh = getattr(config, 'CURVATURE_QUALITY_THRESHOLD', 0.10)
-                ax.axhline(thresh, color='orange', ls=':', lw=1.2, alpha=0.8,
+                ax_raw.axhline(thresh, color='orange', ls=':', lw=1.2, alpha=0.8,
                            label=f'QC threshold (±{thresh})')
-                ax.axhline(-thresh, color='orange', ls=':', lw=1.2, alpha=0.8)
+                ax_raw.axhline(-thresh, color='orange', ls=':', lw=1.2, alpha=0.8)
 
             if 'peaks' in dbg and len(dbg['peaks']) > 0:
                 pk = dbg['peaks']
-                ax.plot(pk, kappa[pk], 'ro',
+                ax_raw.plot(pk, kappa[pk], 'ro',
                         ms=6 if poster else 4,
                         label=f'{len(pk)} curvature peaks')
 
+            selected_u = None
             if 'best_pair' in dbg:
                 p1, p2 = dbg['best_pair']
-                ax.plot([p1, p2], [kappa[p1], kappa[p2]], 'g^',
+                ax_raw.plot([p1, p2], [kappa[p1], kappa[p2]], 'g^',
                         ms=11 if poster else 8,
                         mec='black', mew=1.2,
                         label='Selected scar pair', zorder=5)
+                if 'long_norm' in dbg:
+                    selected_u = float(np.mean(np.asarray(dbg['long_norm'])[[p1, p2]]))
 
-            ax.set_title(f'Cell {name}' if poster else name,
+            ax_raw.set_title(f'Cell {name}' if poster else name,
                          fontsize=rc.get('axes.titlesize', 9))
-            ax.set_xlabel('Contour position (index)',
+            ax_raw.set_xlabel('Contour position (index)',
                           fontsize=rc.get('axes.labelsize', 8))
-            ax.set_ylabel('Contour curvature  κ',
+            ax_raw.set_ylabel('Point curvature  κ',
                           fontsize=rc.get('axes.labelsize', 8))
-            ax.tick_params(labelsize=rc.get('xtick.labelsize', 7))
-            ax.grid(True, alpha=0.2)
-            if ax is axes_flat[0]:
-                ax.legend(fontsize=rc.get('legend.fontsize', 7),
+            ax_raw.tick_params(labelsize=rc.get('xtick.labelsize', 7))
+            ax_raw.grid(True, alpha=0.2)
+            if cell_idx == 0:
+                ax_raw.legend(fontsize=rc.get('legend.fontsize', 7),
                           framealpha=0.85)
 
-        for ax in axes_flat[n:]:
-            ax.axis('off')
+            profile = dbg.get('windowed_curvature_profile', [])
+            if profile:
+                u = np.asarray([p['center'] for p in profile], dtype=float)
+                summed = np.asarray([p['curvature_sum'] for p in profile], dtype=float)
+                ax_sum.plot(u, summed, color='darkviolet', lw=lw + 0.4,
+                            marker='o', ms=3 if not poster else 4,
+                            label='Summed windowed curvature excess')
+                cap = float(getattr(config, 'SCAR_CAP_EXCLUSION', 0.12)) \
+                    if config is not None else 0.12
+                ax_sum.axvspan(0, cap, color='gray', alpha=0.15,
+                               label='Excluded cap')
+                ax_sum.axvspan(1.0 - cap, 1.0, color='gray', alpha=0.15)
+                if selected_u is not None:
+                    selected_y = float(np.interp(selected_u, u, summed))
+                    ax_sum.plot(selected_u, selected_y, marker='*',
+                                color='limegreen', mec='black',
+                                ms=12 if poster else 9,
+                                label='Selected scar')
+                ax_sum.set_xlim(0, 1)
+                ax_sum.set_ylabel('Windowed summed\ncurvature excess',
+                                  fontsize=rc.get('axes.labelsize', 8))
+                ax_sum.set_xlabel('PCA longitudinal position (0 = pole, 1 = pole)',
+                                  fontsize=rc.get('axes.labelsize', 8))
+                ax_sum.set_title('Detector signal: opposite-side window sum',
+                                 fontsize=rc.get('axes.titlesize', 8))
+                ax_sum.grid(True, alpha=0.2)
+                ax_sum.tick_params(labelsize=rc.get('xtick.labelsize', 7))
+                if cell_idx == 0:
+                    ax_sum.legend(fontsize=rc.get('legend.fontsize', 7),
+                                  framealpha=0.85)
+            else:
+                ax_sum.text(0.5, 0.5,
+                            'No windowed profile saved\n(rerun with current detector)',
+                            ha='center', va='center', fontsize=9)
+                ax_sum.set_axis_off()
+
+        for cell_idx in range(n, nrows * ncols):
+            row = (cell_idx // ncols) * 2
+            col = cell_idx % ncols
+            axes[row, col].axis('off')
+            axes[row + 1, col].axis('off')
 
         if not poster:
             fig.suptitle(f'Frame {frame_idx} \u2013 Curvature profiles',
