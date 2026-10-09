@@ -1,0 +1,126 @@
+{
+  "segmentation": {
+    "batch_size": 1,
+    "cellpose": "4.0.9",
+    "channels": [
+      0,
+      0
+    ],
+    "device": "cuda:0",
+    "diameter": null,
+    "dtype": "bfloat16",
+    "model": "/root/.cellpose/models/cpsam",
+    "model_sha256": "e1440429eb384f95afe32bcba6510f90d518eaedc917ede549bed6804004abe2",
+    "torch": "2.10.0"
+  },
+  "segmentation_runtime_variants": [
+    {
+      "batch_size": 1,
+      "cellpose": "4.0.9",
+      "channels": [
+        0,
+        0
+      ],
+      "device": "mps",
+      "diameter": null,
+      "model": "/Users/xwidener/.cellpose/models/cpsam",
+      "model_sha256": "e1440429eb384f95afe32bcba6510f90d518eaedc917ede549bed6804004abe2",
+      "torch": "2.10.0"
+    },
+    {
+      "batch_size": 1,
+      "cellpose": "4.0.9",
+      "channels": [
+        0,
+        0
+      ],
+      "device": "cuda:0",
+      "diameter": null,
+      "dtype": "bfloat16",
+      "model": "/root/.cellpose/models/cpsam",
+      "model_sha256": "e1440429eb384f95afe32bcba6510f90d518eaedc917ede549bed6804004abe2",
+      "torch": "2.10.0"
+    }
+  ],
+  "allow_runtime_variation": true,
+  "overrides": {
+    "SCAR_DETECTOR_MODE": "experimental"
+  },
+  "gt_sha256": "91d587b7b52a54889dcc1f387f58086d2fbee1121c0ec8ff32e921874518fa97",
+  "source_sha256": {
+    "/content/pombe_scar_audit/pombe_tracker/__init__.py": "17e1beaa49185da7803514c6b7b83890627343e3e15d282937f125943cae8aec",
+    "/content/pombe_scar_audit/pombe_tracker/config.py": "126f54706f56bca18827956d08fe006b969bf41998391c07ad6a9e9b302992d1",
+    "/content/pombe_scar_audit/pombe_tracker/tracking.py": "c0d2282fec095706366a0dc977589c63c6d8045e112d7d06bfbcf6449d79b309",
+    "/content/pombe_scar_audit/pombe_tracker/detection.py": "e6e1517ba2d4d8380f6c4c122fb6c008d08c4f63911bc3f7fedb8097525a6990",
+    "/content/pombe_scar_audit/pombe_tracker/geometry.py": "8330bb30b844b941c099805628355289b59f2d2526adb516e7717d7902e6ba81",
+    "/content/pombe_scar_audit/pombe_tracker/poles.py": "ef2ff690ce9154fa180ff3158d8b3c729d7842265ce3dca4cb9fd8719eaca504",
+    "/content/pombe_scar_audit/pombe_tracker/segmentation.py": "853e282728ea88ab1d7626f15f75a0ebd4b99316c4ecae6d06ca34256084f3f8",
+    "/content/pombe_scar_audit/pombe_tracker/postprocessing.py": "6162c07fda9c98545472c599a5b81d8dd6bcd8f9d61a4330205cb25b8ef1815e",
+    "/content/pombe_scar_audit/pombe_tracker/io_utils.py": "51a5d5407d3873865ac9ca387332bf9724da6645abf4c8805778cb48a7dba167",
+    "/content/pombe_scar_audit/pombe_tracker/pipeline.py": "be0d097335a025976995401b644231b048b58b683d5619ade24621c2e8bd7c7b",
+    "/content/pombe_scar_audit/pombe_tracker/visualization.py": "e427ba34199e7bf3b0e7b2be6201cbd332460e4f69822d4563398ad72bc57355",
+    "/content/pombe_scar_audit/validation/scar_batch.py": "99688eda771fa07ae63aed82d4149a4d613291eda224eef97e290d25a9cfd509"
+  },
+  "anchors_sha256": "33b0b759d6c81fcd617a7020c97ee45e5748ccf7405b141f74a12af12d5f1096",
+  "config": {
+    "ASPECT_RATIO_MIN": 1.5,
+    "CELLPOSE_DIAMETER": null,
+    "COST_WEIGHT_AREA": 0.5,
+    "COST_WEIGHT_CURVATURE": 0.3,
+    "COST_WEIGHT_DISTANCE": 1.0,
+    "CSV_COLUMNS": [
+      "cell_name",
+      "frame",
+      "length",
+      "width_centroid",
+      "width_scar",
+      "new_end_length",
+      "old_end_length",
+      "area",
+      "scar_detected",
+      "scar_source",
+      "scar_stable",
+      "seg_quality",
+      "pole_method",
+      "pole_confidence"
+    ],
+    "CURVATURE_QUALITY_THRESHOLD": 0.1,
+    "DIVISION_AREA_RATIO": 0.35,
+    "EXPORT_CSV": true,
+    "GHOST_FINGERPRINT_THRESHOLD": 1.0,
+    "GHOST_FRAMES": 3,
+    "H5_DATASET_KEY": "frames",
+    "H5_FILE_PATH": "/content/drive/MyDrive/your_experiment.h5",
+    "MAX_ANGLE_DEVIATION": 30.0,
+    "MAX_CIRCULARITY": 0.85,
+    "MAX_TRACKING_DISTANCE": 80.0,
+    "MIN_CELL_AREA": 150,
+    "MIN_SCAR_WIDTH_RATIO": 0.8,
+    "NEIGHBOR_HIGH_CONFIDENCE_DIST": 75.0,
+    "NUM_FRAMES": null,
+    "N_CONTOUR_POINTS": 300,
+    "OUTPUT_DIR": "/content/drive/MyDrive/pombe_results",
+    "POLE_PROXIMITY_THRESHOLD": 100.0,
+    "SAVE_FIGURES": false,
+    "SCAR_BASELINE_SAMPLES": 25,
+    "SCAR_CAP_EXCLUSION": 0.12,
+    "SCAR_CURVATURE_WINDOW": 0.08,
+    "SCAR_DETECTOR_MODE": "experimental",
+    "SCAR_HINT_STRENGTH": 0.2,
+    "SCAR_INSTABILITY_FRACTION": 0.3,
+    "SCAR_INTERPOLATE": true,
+    "SCAR_MAX_LONGITUDINAL_OFFSET": 0.08,
+    "SCAR_N_WINDOWS": null,
+    "SCAR_RECENCY_SPREAD": 0.16,
+    "SCAR_RECENCY_TARGET": 0.22,
+    "SCAR_STABILITY_THRESHOLD": 0.12,
+    "SCAR_STABILITY_WINDOW": 3,
+    "SCAR_WIDTH_SOFT_FLOOR": 0.35,
+    "SHOW_CELL_OVERVIEW": true,
+    "SHOW_CURVATURE_HEATMAPS": true,
+    "SHOW_CURVATURE_PROFILES": true,
+    "SHOW_INDIVIDUAL_CELLS": true,
+    "SHOW_LINEAGE_TREE": true,
+    "SMOOTH_FACTOR": 40.0
+  }
+}

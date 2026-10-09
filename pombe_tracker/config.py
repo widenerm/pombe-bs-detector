@@ -56,6 +56,57 @@ class Config:
     # important because ordinary pole rounding is often the strongest
     # curvature on an otherwise scar-free cell.
 
+    # 'profile' (default): interpretable axial-profile localizer, see
+    #   pombe_tracker/scar_profile.py. Scores every 1-px cross-section from
+    #   each pole with the named terms below; needs the frame image for the
+    #   membrane terms (falls back to mask width without it).
+    # 'legacy' / 'experimental': previous windowed-curvature detector.
+    SCAR_DETECTOR_MODE = 'profile'
+
+    # Profile mode. Lengths are in units of the mid-cell width W so they
+    # transfer between strains; re-fit with validation/scar_fit.py for
+    # mutants with different morphology.
+    # Expected scar distance from the new pole: d/W ~ Normal(mu, SD) with
+    # mu = OFFSET + SLOPE * (cell length / W). Fitted on 80 WT cells.
+    SCAR_PRIOR_OFFSET = -0.740
+    SCAR_PRIOR_SLOPE  = 0.374
+    SCAR_PRIOR_SD     = 0.194
+    SCAR_PRIOR_WEIGHT = 1.0
+    SCAR_MIN_DISTANCE_W = 0.18     # search window for the scar, in W
+    SCAR_MAX_DISTANCE_W = 1.15
+    SCAR_HINT_WEIGHT = 2.01        # bonus for the neighbor-derived new pole end
+    SCAR_MEMBRANE_WIDTH_WEIGHT = 44.19   # scar ridge = widest point of the end
+    SCAR_MEMBRANE_RIDGE_WEIGHT = 18.30   # concave corner/ridge on both flanks
+    SCAR_PROFILE_SMOOTHING = 0.15  # spline residual budget per contour point
+    SCAR_MEMBRANE_SEARCH_PX = 6.0  # membrane search range along each normal
+    SCAR_MEMBRANE_SMOOTHNESS = 0.3 # penalty on jumps of the traced membrane
+    SCAR_MEMBRANE_CLIP_PX = 3.0
+    SCAR_WIDTH_SMOOTH_PX = 2.0
+    SCAR_RIDGE_SCALE_PX = 6.0
+    # Bilateral mode ('bilateral'): windowed curvature of the image-traced
+    # membrane on both flanks. Lengths in W unless named _PX.
+    SCAR_BILATERAL_COMBINE = 'min'      # 'min' both flanks bulge | 'sum' lopsided OK | 'max'
+    SCAR_BILATERAL_WINDOW_W = 0.15      # axial averaging window per flank
+    SCAR_BILATERAL_SCALE_PX = 4.0       # curvature smoothing scale
+    SCAR_BILATERAL_BASELINE_PX = 10.0   # smooth cell-shape curvature removed
+    SCAR_BILATERAL_SEARCH_PX = 5.0      # membrane search range along each normal
+    SCAR_BILATERAL_MIN_DISTANCE_W = 0.1
+    SCAR_BILATERAL_PRIOR_OFFSET = -0.155
+    SCAR_BILATERAL_PRIOR_SLOPE = 0.254
+    SCAR_BILATERAL_PRIOR_SD = 0.11
+    SCAR_BILATERAL_PRIOR_WEIGHT = 1.0
+    SCAR_BILATERAL_BLUNTNESS_WEIGHT = 0.25  # no hint: favor the blunter (newer) end
+    SCAR_BILATERAL_SEPARATION_W = 0.1       # confidence margin: alternatives this far away
+    SCAR_BILATERAL_CONFIDENCE_FLAG = 1.5    # below this, scar_needs_review = True
+
+    # Confidence = probability mass within RADIUS px of the chosen point.
+    # Cells below FLAG get scar_needs_review = True for manual checking.
+    SCAR_CONFIDENCE_RADIUS = 5.0
+    SCAR_CONFIDENCE_FLAG = 0.5
+    SCAR_HINT_STRENGTH = 0.2       # experimental: at most 20% multiplicative bonus
+    SCAR_N_WINDOWS = None        # None retains legacy max(12, n_points // 12)
+    SCAR_BASELINE_SAMPLES = 25   # radius; scale with sampling density in ablations
+
     MIN_SCAR_WIDTH_RATIO = 0.80   # legacy hard gate; windowed scoring uses soft width
     MAX_ANGLE_DEVIATION  = 30.0   # soft score penalty; try 20–35
     SCAR_CURVATURE_WINDOW = 0.08  # longitudinal window, as fraction of cell length
@@ -143,4 +194,7 @@ class Config:
         'seg_quality',      # ok | border_clip | septum_fragment
         'pole_method',      # How the poles were assigned
         'pole_confidence',  # Confidence level of pole assignment
+        'scar_confidence',  # profile mode: probability mass near the chosen scar
+        'scar_needs_review',# profile mode: low confidence or scar/pole conflict
+        'scar_pole_conflict', # scar nearer the assigned old pole than the new pole
     ]

@@ -38,6 +38,7 @@ def export_csv(all_results, output_path, columns=None):
         'new_end_length', 'old_end_length', 'area',
         'scar_detected', 'scar_source', 'scar_stable',
         'seg_quality', 'pole_method', 'pole_confidence',
+        'scar_confidence', 'scar_needs_review', 'scar_pole_conflict',
     ]
     columns = columns or default_cols
 

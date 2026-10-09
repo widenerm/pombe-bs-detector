@@ -17,22 +17,28 @@ BS-Detector finds these scars automatically by:
 
 1. **Filtering** segmentation masks by area, aspect ratio, and circularity to reject debris before any tracking occurs
 2. **Segmenting** cells with [Cellpose](https://github.com/MouseLand/cellpose)
-3. **Computing** a smoothed curvature profile along each cell's contour
-4. **Finding** birth-scar candidates by summing local curvature excess in a
-   longitudinal window on both sides of the PCA axis. This allows a scar to
-   be prominent on only one side, while excluding the rounded pole caps:
-   - The pair must be on **opposite sides** of the cell
-   - Candidate windows in the first/last `SCAR_CAP_EXCLUSION` fraction of the
-     cell are rejected
-   - The connecting vector receives a soft perpendicularity weight, allowing
-     slightly diagonal scars
-   - The pair must span **≥ `MIN_SCAR_WIDTH_RATIO`** of the cell's **average mid-cell width** (sampled at seven cross-sections between 20–80% of cell length, which is more stable than the maximum width)
-5. **Scoring** candidates by the sum of positive local curvature excess in the
-   window multiplied by a soft perpendicularity weight
+3. **Measuring** every 1-px cross-section perpendicular to the cell axis,
+   from each pole inward, and tracing the dark membrane line in the
+   brightfield image along each contour normal (the Cellpose mask boundary
+   alone smooths the scar away)
+4. **Scoring** each cross-section (default `SCAR_DETECTOR_MODE = 'profile'`)
+   with a few named, tunable terms, all lengths in units of cell width W:
+   an expected scar distance from the new pole (grows with cell length), a
+   bonus for the end touching the sibling, and the membrane-traced width and
+   ridge (the scar ridge is the widest point of the new end). The
+   alternative `'bilateral'` mode scores windowed membrane curvature on both
+   flanks (`SCAR_BILATERAL_COMBINE` = `'min'`, `'sum'` for lopsided scars, or
+   `'max'`); `'legacy'` keeps the previous mask-curvature detector
+5. **Reporting** the scar as the midpoint of the best cross-section, with a
+   `scar_confidence` and a `scar_needs_review` flag (low confidence, or the
+   scar sits nearer the assigned old pole: `scar_pole_conflict`) so
+   uncertain cells can be checked by hand. Accuracy against 80 manually
+   annotated cells: 57/80 within 5 px (54/80 held out); see
+   [validation/reports/scar_v3/REPORT.md](validation/reports/scar_v3/REPORT.md)
 6. **Identifying** new vs. old poles via, in priority order: lineage inheritance at division, birth scar geometry, unambiguous neighbor proximity, or pole morphology as a fallback. Chain cells (both poles touching credible neighbors) are detected explicitly and fall through to scar-based assignment rather than producing a false positive
 7. **Tracking** cells across frames with a Hungarian algorithm using center displacement, area change, and a curvature fingerprint. Ghost-track matching resumes lost tracks through bad-segmentation frames rather than minting new lineage names
 8. **Assigning lineage names**: `A → A0 / A1 → A00 / A01 / A10 / A11 → …` where `0` always denotes the new-end daughter and `1` the old-end daughter. Daughter pole assignments are corrected immediately at division using the parent's stored pole coordinates
-9. **Stabilizing** scar positions across frames via a consensus pass: all valid candidates from every frame are pooled, the most-supported position is found, and frames that deviate are corrected or interpolated retroactively
+9. **Stabilizing** scar positions across frames via a consensus pass: each frame's selected scar (measured from the new pole) casts one vote, the most-supported position is found, and frames that deviate are corrected to a nearby candidate or interpolated along that frame's own pole-to-pole line
 
 ### Curvature analysis
 
@@ -180,15 +186,22 @@ pombe-bs-detector/
 
 | Parameter | Default | Effect |
 |---|---|---|
-| `SMOOTH_FACTOR` | 40.0 | B-spline smoothing; increase to reduce noise |
-| `MIN_SCAR_WIDTH_RATIO` | 0.80 | Minimum scar width as a fraction of average mid-cell width; increase to be stricter |
-| `SCAR_CURVATURE_WINDOW` | 0.08 | Longitudinal scoring-window width as a fraction of cell length |
-| `SCAR_CAP_EXCLUSION` | 0.12 | Fraction at each pole excluded from scar candidate windows |
-| `SCAR_MAX_LONGITUDINAL_OFFSET` | 0.08 | Maximum longitudinal offset between selected endpoints |
-| `SCAR_RECENCY_TARGET` | 0.22 | Preferred distance from the nearest pole for a recent scar |
-| `SCAR_RECENCY_SPREAD` | 0.16 | Softness of the near-pole preference |
-| `SCAR_WIDTH_SOFT_FLOOR` | 0.35 | Minimum relative weight for a narrow but valid scar |
-| `MAX_ANGLE_DEVIATION` | 30.0° | Retained for legacy pair validation; windowed scoring uses a soft angle weight |
+| `SCAR_DETECTOR_MODE` | `'profile'` | `'profile'`, `'bilateral'`, or `'legacy'` (previous curvature detector) |
+| `SCAR_PRIOR_OFFSET`, `SCAR_PRIOR_SLOPE` | −0.740, 0.374 | Expected scar distance from the new pole: d/W = offset + slope·(length/W) |
+| `SCAR_PRIOR_SD` | 0.194 | Spread of that expectation (in widths); loosen for unusual morphologies |
+| `SCAR_HINT_WEIGHT` | 2.01 | Preference for the pole touching the sibling cell |
+| `SCAR_MEMBRANE_WIDTH_WEIGHT`, `SCAR_MEMBRANE_RIDGE_WEIGHT` | 44.2, 18.3 | Weight of the image-traced membrane width and ridge |
+| `SCAR_CONFIDENCE_FLAG` | 0.5 | Below this confidence a cell gets `scar_needs_review = True` |
+| `SCAR_BILATERAL_COMBINE` | `'min'` | Bilateral mode: how the two flanks combine (`'min'`, `'sum'`, `'max'`) |
+| `SCAR_BILATERAL_WINDOW_W` | 0.15 | Bilateral mode: axial averaging window, in cell widths |
+
+Re-fit the profile weights for a new strain or mutant from a few dozen
+annotated cells with `python -m validation.scar_fit cells.pkl` (see the
+v3 report). Legacy-mode parameters (`SCAR_CURVATURE_WINDOW`,
+`SCAR_CAP_EXCLUSION`, ...) are documented in `config.py`.
+
+| Parameter | Default | Effect |
+|---|---|---|
 | `ASPECT_RATIO_MIN` | 1.5 | Minimum major/minor axis ratio; increase to reject shorter debris |
 | `MAX_CIRCULARITY` | 0.85 | Maximum 4π·area/perimeter²; decrease to be stricter about rod shape |
 | `POLE_PROXIMITY_THRESHOLD` | 100 px | Max tip-to-tip distance to call two cells neighbors |
@@ -204,3 +217,52 @@ All parameters are documented in [`pombe_tracker/config.py`](pombe_tracker/confi
 ## License
 
 MIT
+
+### Sparse v2 scar validation (no tracking)
+
+Use [the batch validation notebook](notebooks/BS_Detector_Validation_Tuning.ipynb)
+or run the equivalent command from the repository root:
+
+```bash
+python -m validation.scar_batch \
+  --h5-dir validation/h5_for_drive/carmen_package_2 \
+  --gt validation/package_for_carmen_2/ground_truth_template_cr_v2.csv \
+  --anchors validation/reports/scar_v2/cell_anchors.csv \
+  --cache validation/runs/scar_v2/cache \
+  --out validation/runs/scar_v2/baseline \
+  --segment-missing --gallery
+python -m validation.scar_ablations
+python -m unittest discover -s tests -v
+```
+
+The cache records image hashes and segmentation model provenance, with separate
+paths for each video and original frame number. The default inference batch size
+is 1 to limit GPU memory; image resolution and segmentation thresholds remain
+unchanged. Remove the cache deliberately when changing the segmentation model.
+The independent cell anchors are historical pole midpoints from the original
+blinded-package run, not manual scar positions. On another dataset, supply a
+matching anchor CSV or omit `--anchors` for conditional GT-containment matching.
+
+Outputs include every cell prediction, one error row per annotation, per-video
+and combined metrics, the exact cells outside 5 pixels, and a diagnostic gallery
+with every candidate and its score components. `recall_5px` includes missed
+predictions; `detection_recall` measures only prediction presence. Precision at
+5 pixels is conditional on annotated cells. Unannotated cells and blank,
+uncertain scar annotations are not treated as negatives.
+
+The [audit](validation/reports/scar_v2/AUDIT.md) documents the comparison design.
+Raw data, segmentation caches and gallery images stay in ignored run directories.
+
+For Google Colab, use
+[the dedicated Colab notebook](notebooks/BS_Detector_Validation_Colab.ipynb).
+Build its companion code-and-mask bundle from the current working tree with
+`python validation/build_colab_handoff.py`. The ZIP and a notebook copy are saved
+under ignored `validation/runs/scar_v2/colab/`; no H5 files, TIFFs, PNGs or model
+weights are bundled. Rebuild after code changes so the notebook's bundle hash
+matches. Upload both files to Colab, select a GPU runtime, mount Drive, and set
+the H5 folder in the notebook. All four videos run in one batch and masks and
+results persist in Drive. Compatible bfloat16 GPUs can reuse the saved Mac masks;
+other GPUs use a separate float32 cache. Device differences are recorded and
+model hashes, precision, package releases and inference settings remain checked.
+The notebook downloads a small review ZIP after producing baseline metrics,
+targeted ablations, the experimental comparison, and complete failure galleries.

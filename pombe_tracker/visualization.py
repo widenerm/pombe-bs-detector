@@ -912,3 +912,73 @@ def visualize_all(all_results, config, save_dir=None):
             path = os.path.join(save_dir, 'lineage_tree.png')
             fig.savefig(path, dpi=150, bbox_inches='tight')
         plt.close(fig)
+
+
+def plot_scar_diagnostics(frame, result, config=None, ground_truth=None,
+                          origin=(0, 0), title=None):
+    """Audit all candidates and score components; frame may be a crop at origin.
+
+    Returns a Figure without displaying it. Ground truth is display-only.
+    Exact candidate values remain in result['debug_info']['scar_candidates'].
+    """
+    from .config import Config
+    from .detection import BirthScarDetector
+    cfg = config or Config()
+    r = result; d = r['debug_info']; origin = np.asarray(origin)
+    pts=d['smooth_pts']; k=d['kappa']; u=d['long_norm']; center=d['center']; axis=d['axis']
+    fig,axs=plt.subplots(2,3,figsize=(17,10))
+    for ax in axs[0,:2]:
+        crop=frame; ax.imshow(crop,cmap='gray',extent=(origin[1],origin[1]+crop.shape[1],origin[0]+crop.shape[0],origin[0]),vmin=np.percentile(crop,1),vmax=np.percentile(crop,99))
+        c=r['contour'];ax.plot(c[:,1],c[:,0],color='cyan',lw=.7)
+        if ground_truth is not None:
+            ax.plot(ground_truth[1],ground_truth[0],'r+',ms=12,mew=2,label='manual scar')
+    ax=axs[0,0]
+    ax.plot(pts[:,1],pts[:,0],color='orange',lw=.8,label='spline')
+    proj=(pts-center)@axis; poles=pts[[proj.argmin(),proj.argmax()]]
+    ends=center+np.array([proj.min(),proj.max()])[:,None]*axis
+    ax.plot(ends[:,1],ends[:,0],'w--',lw=1,label='PCA')
+    ax.plot(poles[:,1],poles[:,0],'mo',label='poles')
+    ax.legend(fontsize=7);ax.set_title('Raw contour, spline, PCA and poles')
+    ax=axs[0,1]
+    cands=d['scar_candidates']
+    for j,c in enumerate(cands):
+        p=np.asarray(c['points']);mp=p.mean(axis=0)
+        ax.plot(p[:,1],p[:,0],color='yellow',alpha=.2,lw=.6)
+        ax.text(mp[1],mp[0],str(j),fontsize=6,color='yellow')
+    if r.get('scar_midpoint') is not None:
+        mp=r['scar_midpoint'];ax.plot(mp[1],mp[0],'g*',ms=13,label='selected')
+    ax.set_title('Every candidate ID; selected scar (green)\n'+d.get('selection_rule',''))
+    baseline=d.get('curvature_baseline')
+    excess=d.get('curvature_excess')
+    if excess is None: excess=BirthScarDetector(cfg)._local_curvature_excess(k)
+    if baseline is None:
+        baseline=np.array([np.median(k[(i+np.r_[np.arange(-25,0),np.arange(1,26)])%len(k)]) for i in range(len(k))])
+    ax=axs[0,2]
+    ax.plot(k,label='raw curvature');ax.plot(baseline,label='local/cap baseline');ax.plot(excess,label='positive excess')
+    ax.set_xlabel('contour sample');ax.legend(fontsize=8)
+    if 'best_pair' in d:
+        ix=list(d['best_pair']);ax.plot(ix,k[ix],'g*',ms=10)
+    ax=axs[1,0]
+    normal=np.array([-axis[1],axis[0]]);side=(pts-center)@normal
+    for sign in [-1,1]:
+        mask=side*sign>0; order=np.argsort(u[mask]);ax.plot(u[mask][order],excess[mask][order],label=f'excess side {sign}')
+    cap=getattr(cfg,'SCAR_CAP_EXCLUSION',.12)
+    ax.axvspan(0,cap,color='gray',alpha=.2);ax.axvspan(1-cap,1,color='gray',alpha=.2)
+    ax.set_title('Excess along cell; fixed cap exclusion shaded');ax.legend(fontsize=8)
+    ax=axs[1,1]
+    profile=d.get('windowed_curvature_profile',[])
+    for j in [0,1]:ax.plot([p['center'] for p in profile],[p['side_scores'][j] for p in profile],label=f'window side {j}')
+    ax.plot([p['center'] for p in profile],[p['curvature_sum'] for p in profile],label='combined')
+    ax.set_title('Windowed opposite-side score');ax.legend(fontsize=8)
+    ax=axs[1,2]
+    for key in ['score','selection_score','window_curvature','angle_weight','recency_weight','width_weight','hint_weight','bilateral_weight']:
+        if not any(c.get(key) is not None for c in cands): continue
+        vals=np.array([c.get(key,1) for c in cands],float)
+        if len(vals):ax.plot(vals/(np.max(np.abs(vals))+1e-12),'.-',label=key)
+    for j,c in enumerate(cands):
+        if c.get('selected'): ax.axvline(j,color='green',ls=':',lw=1)
+    ax.set_title('All score components (each scaled to its max)');ax.set_xlabel('candidate ID');ax.legend(fontsize=7)
+    title = title or f"Cell {r.get('cell_name', r.get('label', '?'))}: candidate diagnostics"
+    fig.suptitle(title,fontsize=11);fig.tight_layout(rect=(0,0,1,.95))
+    return fig
+

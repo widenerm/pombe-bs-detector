@@ -1,0 +1,81 @@
+package,video,frame,cell,error_px,pred_row,pred_col,gt_row,gt_col,confidence,needs_review,neighbor_hint,notes
+cr_v1,experiment_03202025_wt_ymd494__xy1,19,A,0.93,643.9,1069.7,643.0,1070.0,0.318,True,False,
+cr_v1,experiment_03202025_wt_ymd494__xy1,37,C,3.67,1375.2,1209.0,1372.5,1211.5,0.546,False,True,horizontal cell
+cr_v1,experiment_03202025_wt_ymd494__xy1,99,B1,3.88,1306.3,1331.8,1305.5,1328.0,0.662,False,True,
+cr_v1,experiment_03202025_wt_ymd494__xy1,115,B1,0.45,1327.5,1335.5,1327.5,1335.0,0.435,True,False,
+cr_v1,experiment_03202025_wt_ymd494__xy1,144,C0,3.06,1378.6,1242.7,1377.5,1245.5,0.351,True,False,faint BS
+cr_v1,experiment_03202025_wt_ymd494__xy1,152,S,1.86,701.0,1038.4,700.833,1036.5,0.838,False,True,
+cr_v1,experiment_03202025_wt_ymd494__xy1,172,E1,3.3,1414.0,1138.2,1411.0,1139.5,0.736,False,True,ring maturing
+cr_v1,experiment_03202025_wt_ymd494__xy1,197,S,2.7,657.2,1026.1,654.833,1024.833,0.666,False,True,
+cr_v1,experiment_03202025_wt_ymd494__xy1,209,E11,3.62,1495.7,1077.5,1492.5,1079.167,0.652,False,True,
+cr_v1,experiment_03202025_wt_ymd494__xy1,225,C11,17.05,1558.2,1402.3,1545.0,1391.5,0.454,True,False,
+cr_v1,experiment_03202025_wt_ymd494__xy1,232,AL,1.06,1535.8,1257.3,1534.833,1257.833,0.705,False,False,
+cr_v1,experiment_03272025_wt_ymd494__xy1,56,A0,2.19,554.4,1126.4,555.0,1128.5,0.504,False,True,
+cr_v1,experiment_03272025_wt_ymd494__xy1,95,E1,2.83,1565.9,1057.2,1565.5,1060.0,0.652,False,True,
+cr_v1,experiment_03272025_wt_ymd494__xy1,109,C11,13.91,726.7,1496.1,725.5,1510.0,0.548,False,True,faint BS
+cr_v1,experiment_03272025_wt_ymd494__xy1,132,W1,7.75,570.8,1142.6,563.5,1140.0,0.608,False,False,lumpy bumby
+cr_v1,experiment_03272025_wt_ymd494__xy1,159,G0,8.97,1482.8,1817.1,1491.5,1815.0,0.579,False,True,
+cr_v1,experiment_03272025_wt_ymd494__xy1,176,E1,3.5,1609.8,1031.2,1607.167,1033.5,0.673,False,True,
+cr_v1,experiment_03272025_wt_ymd494__xy1,209,AF0,3.99,639.4,1494.4,635.5,1493.5,0.371,True,False,ring maturing
+cr_v1,experiment_03272025_wt_ymd494__xy1,227,AG10,65.25,550.1,1333.3,492.0,1363.0,0.713,False,False,used older BS / faint BS
+cr_v1,experiment_03272025_wt_ymd494__xy2,55,C0,1.67,1361.3,1404.5,1362.0,1406.0,0.633,False,True,
+cr_v1,experiment_03272025_wt_ymd494__xy2,91,C10,62.42,1393.0,1338.0,1448.5,1309.5,0.383,True,False,
+cr_v1,experiment_03272025_wt_ymd494__xy2,100,H0,62.29,1325.4,1449.9,1342.5,1390.0,0.607,False,False,
+cr_v1,experiment_03272025_wt_ymd494__xy2,122,E,4.69,622.1,939.6,623.0,935.0,0.653,False,False,
+cr_v1,experiment_03272025_wt_ymd494__xy2,127,C10,2.85,1428.1,1280.8,1425.5,1282.0,0.62,False,True,
+cr_v1,experiment_03272025_wt_ymd494__xy2,151,H0,8.62,1354.7,1428.0,1347.0,1432.0,0.566,False,False,
+cr_v1,experiment_03272025_wt_ymd494__xy2,169,H1,2.55,1304.3,1477.3,1305.5,1475.0,0.653,False,True,septum forming
+cr_v1,experiment_03272025_wt_ymd494__xy3,24,C0,7.18,474.4,1709.1,481.5,1708.5,0.761,False,True,
+cr_v1,experiment_03272025_wt_ymd494__xy3,40,C1,3.46,428.7,1708.2,426.5,1705.5,0.73,False,True,
+cr_v1,experiment_03272025_wt_ymd494__xy3,54,B0,3.46,332.0,996.6,335.5,996.5,0.568,False,True,
+cr_v1,experiment_03272025_wt_ymd494__xy3,111,D,1.73,889.1,1824.5,890.0,1826.0,0.634,False,True,
+cr_v1,experiment_03272025_wt_ymd494__xy3,118,F1,3.6,2212.7,1787.9,2213.0,1791.5,0.378,True,True,horizontal cell
+cr_v1,experiment_03272025_wt_ymd494__xy3,133,F11,1.81,2207.0,1721.2,2207.0,1723.0,0.578,False,True,horizontal cell
+cr_v1,experiment_03272025_wt_ymd494__xy3,134,P,4.72,93.7,534.0,98.0,536.0,0.469,True,True,faint BS
+cr_v1,experiment_03272025_wt_ymd494__xy3,143,F10,4.58,2208.3,1763.7,2204.0,1762.0,0.541,False,True,faint BS
+cr_v1,experiment_03272025_wt_ymd494__xy3,143,N,0.95,390.6,997.8,390.0,997.0,0.691,False,True,
+cr_v1,experiment_03272025_wt_ymd494__xy3,165,R,5.96,2085.2,1888.7,2091.0,1890.0,0.578,False,True,
+cr_v1,experiment_03272025_wt_ymd494__xy3,166,E1,1.77,1143.2,1872.3,1145.0,1872.0,0.557,False,True,
+cr_v1,experiment_03272025_wt_ymd494__xy3,170,F10,6.73,2201.8,1795.7,2201.0,1789.0,0.71,False,True,horizontal cell
+cr_v1,experiment_03272025_wt_ymd494__xy3,174,E0,134.11,944.1,1915.2,1072.0,1875.0,0.222,True,False,
+cr_v1,experiment_03272025_wt_ymd494__xy3,228,E01,2.98,1012.8,1923.0,1010.0,1922.0,0.84,False,True,
+cr_v2,experiment_03202025_wt_ymd494__xy1,74,E,3.83,1402.7,1179.4,1404.0,1183.0,0.532,False,True,
+cr_v2,experiment_03202025_wt_ymd494__xy1,80,F,1.63,612.8,1159.0,613.5,1157.5,0.611,False,True,
+cr_v2,experiment_03202025_wt_ymd494__xy1,102,C0,1.06,1358.9,1281.4,1358.0,1282.0,0.915,False,False,
+cr_v2,experiment_03202025_wt_ymd494__xy1,127,N,3.26,1421.3,1446.4,1423.5,1444.0,0.745,False,False,LOOK
+cr_v2,experiment_03202025_wt_ymd494__xy1,129,N,4.08,1421.8,1447.6,1425.0,1445.0,0.732,False,False,LOOK
+cr_v2,experiment_03202025_wt_ymd494__xy1,174,AC,9.0,1440.6,1205.3,1443.0,1214.0,0.455,True,True,
+cr_v2,experiment_03202025_wt_ymd494__xy1,182,B11,11.52,1293.6,1433.3,1285.5,1441.5,0.608,False,True,
+cr_v2,experiment_03202025_wt_ymd494__xy1,198,E10,2.82,1467.0,1100.5,1465.0,1102.5,0.555,False,False,
+cr_v2,experiment_03202025_wt_ymd494__xy1,201,S,3.25,656.2,1023.7,653.0,1024.5,0.711,False,True,
+cr_v2,experiment_03272025_wt_ymd494__xy1,15,E,1.04,1475.0,1057.1,1474.0,1057.0,0.253,True,False,
+cr_v2,experiment_03272025_wt_ymd494__xy1,44,F0,2.07,1552.3,556.0,1553.0,558.0,0.6,False,True,
+cr_v2,experiment_03272025_wt_ymd494__xy1,77,G,97.59,1602.5,1803.6,1506.0,1818.0,0.352,True,False,Lumpy Bumpy; Septum maturing; IDK
+cr_v2,experiment_03272025_wt_ymd494__xy1,125,Z,1.65,450.9,1106.8,452.5,1106.5,0.41,True,False,
+cr_v2,experiment_03272025_wt_ymd494__xy1,141,AC,1.37,1562.9,1041.9,1561.5,1042.0,0.622,False,True,Lumpy bumpy
+cr_v2,experiment_03272025_wt_ymd494__xy1,149,C101,10.92,651.6,1309.4,646.0,1300.0,0.577,False,False,
+cr_v2,experiment_03272025_wt_ymd494__xy1,156,D,1.81,1385.7,1717.5,1384.0,1717.0,0.571,False,True,
+cr_v2,experiment_03272025_wt_ymd494__xy1,174,E01,8.9,1440.4,1093.2,1431.5,1092.5,0.495,True,True,
+cr_v2,experiment_03272025_wt_ymd494__xy1,185,AJ,25.47,574.1,1107.7,554.0,1092.0,0.426,True,True,septum maturing
+cr_v2,experiment_03272025_wt_ymd494__xy1,208,K,1.39,2158.8,1587.4,2160.0,1588.0,0.319,True,False,
+cr_v2,experiment_03272025_wt_ymd494__xy1,216,C101,3.18,677.1,1226.7,674.0,1227.5,0.59,False,False,
+cr_v2,experiment_03272025_wt_ymd494__xy1,221,S0,3.0,1528.8,597.5,1526.5,595.5,0.635,False,False,horizontal
+cr_v2,experiment_03272025_wt_ymd494__xy1,236,S1,3.41,1530.6,531.9,1534.0,532.0,0.87,False,False,horizontal
+cr_v2,experiment_03272025_wt_ymd494__xy2,21,C0,3.63,1377.4,1408.5,1381.0,1408.0,0.643,False,True,
+cr_v2,experiment_03272025_wt_ymd494__xy2,46,C1,1.71,1405.8,1361.3,1407.0,1362.5,0.545,False,True,
+cr_v2,experiment_03272025_wt_ymd494__xy2,54,C0,2.9,1363.4,1403.2,1366.0,1404.5,0.632,False,True,
+cr_v2,experiment_03272025_wt_ymd494__xy2,237,A11,5.77,521.7,1195.1,524.5,1190.0,0.744,False,True,
+cr_v2,experiment_03272025_wt_ymd494__xy2,237,V,5.12,1291.1,1461.9,1288.0,1466.0,0.464,True,False,
+cr_v2,experiment_03272025_wt_ymd494__xy3,58,B1,3.7,268.7,986.4,265.0,986.0,0.647,False,True,
+cr_v2,experiment_03272025_wt_ymd494__xy3,61,D,3.6,969.5,1858.4,966.0,1859.0,0.602,False,True,
+cr_v2,experiment_03272025_wt_ymd494__xy3,142,B10,2.96,223.8,973.3,222.0,971.0,0.692,False,True,
+cr_v2,experiment_03272025_wt_ymd494__xy3,146,F11,6.41,2202.4,1723.3,2201.5,1717.0,0.423,True,True,horizontal
+cr_v2,experiment_03272025_wt_ymd494__xy3,147,E0,5.65,1061.8,1874.1,1067.0,1872.0,0.377,True,False,
+cr_v2,experiment_03272025_wt_ymd494__xy3,151,F11,3.4,2201.7,1725.6,2203.0,1722.5,0.727,False,True,horizontal
+cr_v2,experiment_03272025_wt_ymd494__xy3,161,C01,3.13,550.1,1732.7,553.0,1734.0,0.598,False,True,
+cr_v2,experiment_03272025_wt_ymd494__xy3,171,E1,1.55,1143.6,1872.8,1145.167,1872.833,0.624,False,True,
+cr_v2,experiment_03272025_wt_ymd494__xy3,212,AR,10.53,1064.7,1799.2,1075.0,1797.0,0.848,False,True,
+cr_v2,experiment_03272025_wt_ymd494__xy3,219,U,4.37,2107.5,1766.8,2111.5,1765.0,0.773,False,False,
+cr_v2,experiment_03272025_wt_ymd494__xy3,221,AE1,2.12,456.8,1015.0,456.0,1017.0,0.605,False,True,
+cr_v2,experiment_03272025_wt_ymd494__xy3,225,B111,3.09,110.0,873.4,107.0,872.5,0.652,False,True,
+cr_v2,experiment_03272025_wt_ymd494__xy3,226,B0,4.84,320.8,959.8,316.0,960.0,0.63,False,False,

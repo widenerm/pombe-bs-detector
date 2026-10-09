@@ -40,6 +40,26 @@ from .geometry import compute_smoothed_curvature, compute_pca_axis
 PROMINENCE_WINDOW = 25
 
 
+def bounded_pole_prior(midpoints, pole_point=None, strength=0.2):
+    """Weak positional evidence, bounded to [1, 1 + strength].
+
+    Coordinates are (row, col). This cannot replace curvature evidence or
+    create candidates. The farthest candidate receives no bonus. Missing pole
+    information leaves all scores unchanged. Strength is not fitted to GT.
+    """
+    if not 0.0 <= strength <= 1.0:
+        raise ValueError('Pole-prior strength must be between 0 and 1')
+    points = np.asarray(midpoints, dtype=float).reshape(-1, 2)
+    if len(points) == 0 or pole_point is None:
+        return np.ones(len(points), dtype=float)
+    pole = np.asarray(pole_point, dtype=float)
+    if pole.shape != (2,) or not np.isfinite(points).all() or not np.isfinite(pole).all():
+        raise ValueError('Pole and candidate coordinates must be finite (row, col) points')
+    distances = np.linalg.norm(points - pole, axis=1)
+    proximity = np.clip(1.0 - distances / max(float(distances.max()), 1e-6), 0.0, 1.0)
+    return 1.0 + strength * proximity
+
+
 class BirthScarDetector:
 
     def __init__(self, config):
@@ -47,21 +67,27 @@ class BirthScarDetector:
 
     # ── Public ───────────────────────────────────────────────────────────────
 
-    def detect(self, contour, new_pole_point=None, search_mode='auto'):
+    def detect(self, contour, new_pole_point=None, search_mode='auto', image=None):
         """
         Detect the most recent birth scar on *contour*.
 
         Parameters
         ----------
         contour        : raw contour from skimage (N, 2)
-        new_pole_point : if provided, select the candidate closest to this point
+        new_pole_point : legacy: choose closest candidate; experimental: bounded bonus
         search_mode    : kept for API compatibility; full-cell is always used
+        image          : frame the contour was segmented from (same coordinates)
 
         Returns
         -------
         scar_pair  : (pt1, pt2) on original contour, or None
         debug_info : dict with curvature data, all candidates, and diagnostics
         """
+        mode = getattr(self.cfg, 'SCAR_DETECTOR_MODE', 'legacy')
+        if mode in ('profile', 'bilateral'):
+            return self._detect_profile(contour, new_pole_point, image, mode)
+        if mode not in ('legacy', 'experimental'):
+            raise ValueError(f'Unknown SCAR_DETECTOR_MODE: {mode}')
         smooth_pts, kappa = compute_smoothed_curvature(
             contour, self.cfg.SMOOTH_FACTOR, self.cfg.N_CONTOUR_POINTS)
         center, axis = compute_pca_axis(smooth_pts)
@@ -113,30 +139,78 @@ class BirthScarDetector:
         for c in all_cands:
             c['match_type'] = 'windowed'
 
-        debug_info['scar_candidates'] = [
-            {'points': c['points'], 'score': c['score'], 'match_type': c['match_type'],
-             'window_center': c.get('window_center'),
-             'window_curvature': c.get('window_curvature'),
-             'angle_weight': c.get('angle_weight'),
-             'width': c.get('width'),
-             'width_weight': c.get('width_weight'),
-             'recency_weight': c.get('recency_weight')}
-            for c in all_cands
-        ]
+        debug_info['scar_candidates'] = all_cands
+        debug_info['curvature_excess'] = self._local_curvature_excess(kappa)
+        debug_info['curvature_baseline'] = self._local_curvature_baseline(kappa)
+        debug_info['pole_hint'] = new_pole_point
 
         if not all_cands:
             debug_info['error'] = 'no_valid_windowed_candidates'
             return None, debug_info
 
         best = self._select_best_candidate(all_cands, new_pole_point)
+        for candidate_id, candidate in enumerate(all_cands):
+            candidate['candidate_id'] = candidate_id
+            candidate['selected'] = candidate is best
+        debug_info['detector_mode'] = mode
+        debug_info['selection_rule'] = (
+            'score × bounded pole bonus; width diagnostic only' if mode == 'experimental'
+            else ('nearest hinted pole' if new_pole_point is not None else 'maximum score'))
 
         debug_info.update(
             match_type = best['match_type'],
             best_pair  = best['indices'],
             best_score = best['score'],
+            best_selection_score = best.get('selection_score', best['score']),
         )
 
         return self._map_to_original(best['points'], contour), debug_info
+
+    def _detect_profile(self, contour, new_pole_point, image, mode='profile'):
+        """Axial cross-section localizers (see scar_profile.py): 'profile'
+        (linear named terms) or 'bilateral' (windowed membrane curvature on
+        both flanks). Returns exact cross-section endpoints so the midpoint
+        is not shifted by snapping."""
+        from .scar_profile import (profile_candidates, bilateral_candidates,
+                                   confidence, bilateral_confidence)
+        generate = bilateral_candidates if mode == 'bilateral' else profile_candidates
+        cands, info = generate(contour, image, new_pole_point, self.cfg)
+        debug_info = dict(detector_mode=mode, scar_candidates=cands, pole_hint=new_pole_point,
+                          selection_rule=f'maximum {mode} score', **info)
+        if not cands:
+            debug_info['error'] = 'no_profile_candidates'
+            return None, debug_info
+        best = max(cands, key=lambda c: c['score'])
+        for i, c in enumerate(cands):
+            c['candidate_id'] = i
+            c['selected'] = c is best
+            c['selection_score'] = c['score']
+        if mode == 'bilateral':
+            conf = bilateral_confidence(cands, best, info['mid_width'], self.cfg.SCAR_BILATERAL_SEPARATION_W,
+                                        info['hint_end'] is not None)
+            flag = self.cfg.SCAR_BILATERAL_CONFIDENCE_FLAG
+        else:
+            conf = confidence(cands, best, self.cfg.SCAR_CONFIDENCE_RADIUS)
+            flag = self.cfg.SCAR_CONFIDENCE_FLAG
+        # The temporal stabilizer votes over candidate positions, so give it
+        # only the distinct score peaks; the dense profile stays for plots.
+        peaks = [c for c in cands
+                 if all(c['score'] >= o['score'] for o in cands
+                        if o['end'] == c['end'] and abs(o['distance_px'] - c['distance_px']) <= 5)]
+        peaks = sorted(peaks, key=lambda c: -c['score'])[:5]
+        if not any(c is best for c in peaks):
+            peaks.insert(0, best)
+        debug_info.update(profile_candidates=cands, scar_candidates=peaks)
+        # Fields the existing curvature plots expect.
+        sp = info['smooth_pts']
+        debug_info.update(peaks=self._find_peaks(info['kappa']),
+                          best_pair=tuple(int(np.argmin(np.linalg.norm(sp - pt, axis=1)))
+                                          for pt in best['points']))
+        debug_info.update(best_score=best['score'], best_selection_score=best['score'],
+                          match_type=mode, scar_distance_px=best['distance_px'],
+                          scar_terms=best['terms'], scar_confidence=conf,
+                          scar_needs_review=conf < flag)
+        return (np.asarray(best['points'][0]), np.asarray(best['points'][1])), debug_info
 
     # ── Private helpers ──────────────────────────────────────────────────────
 
@@ -172,17 +246,22 @@ class BirthScarDetector:
             return 0.0
         return 1.0 - float(np.abs(np.dot(scar_vec / norm, axis)))
 
+    def _local_curvature_baseline(self, kappa):
+        """Circular median; explicit for diagnostics and density-controlled ablations."""
+        n = len(kappa)
+        radius = int(getattr(self.cfg, 'SCAR_BASELINE_SAMPLES', PROMINENCE_WINDOW))
+        if radius < 1:
+            raise ValueError('SCAR_BASELINE_SAMPLES must be positive')
+        baseline = np.zeros(n, dtype=float)
+        for idx in range(n):
+            offsets = [(idx + d) % n for d in range(-radius, radius + 1) if d != 0]
+            baseline[idx] = float(np.median(kappa[offsets]))
+        return baseline
+
     def _local_curvature_excess(self, kappa):
         """Return positive curvature above a circular local median baseline."""
-        n = len(kappa)
-        excess = np.zeros(n, dtype=float)
-        for idx in range(n):
-            offsets = [(idx + d) % n for d in range(-PROMINENCE_WINDOW,
-                                                       PROMINENCE_WINDOW + 1)
-                       if d != 0]
-            baseline = float(np.median(kappa[offsets]))
-            excess[idx] = max(0.0, float(kappa[idx]) - baseline)
-        return excess
+        return np.maximum(0.0, np.asarray(kappa) - self._local_curvature_baseline(kappa))
+
 
     def _score(self, i1, i2, kappa, smooth_pts, axis, long_norm=None):
         """
@@ -221,7 +300,7 @@ class BirthScarDetector:
         # Use a modest number of overlapping windows.  This gives the
         # stabilizer several nearby alternatives without emitting one
         # candidate for every contour sample.
-        centers = np.linspace(cap, 1.0 - cap, max(12, n // 12))
+        centers = np.linspace(cap, 1.0 - cap, (getattr(self.cfg, 'SCAR_N_WINDOWS', None) or max(12, n // 12)))
         for target in centers:
             eligible = ((long_norm >= cap) & (long_norm <= 1.0 - cap))
             near = eligible & (np.abs(long_norm - target) <= half_window)
@@ -243,22 +322,27 @@ class BirthScarDetector:
                 side_indices.append(int(members[np.argmax(excess[members])]))
 
             window_curvature = float(side_scores[0] + side_scores[1])
+            window_record = {
+                'center': float(target),
+                'curvature_sum': window_curvature,
+                'side_scores': tuple(float(s) for s in side_scores),
+                'status': 'candidate',
+            }
             if profile_out is not None:
-                profile_out.append({
-                    'center': float(target),
-                    'curvature_sum': window_curvature,
-                    'side_scores': tuple(float(s) for s in side_scores),
-                })
+                profile_out.append(window_record)
 
             if side_indices[0] is None or side_indices[1] is None:
+                window_record['status'] = 'missing opposite-side samples'
                 continue
             p1, p2 = side_indices
             if abs(long_norm[p1] - long_norm[p2]) > max_offset:
+                window_record['status'] = 'endpoint offset rejected'
                 continue
             valid, width = self._is_valid_scar_vector(
                 smooth_pts[p1], smooth_pts[p2], center, axis, normal_vec,
                 0.0, enforce_angle=False)
             if not valid:
+                window_record['status'] = 'invalid cross-cell vector'
                 continue
 
             scar_vec = smooth_pts[p2] - smooth_pts[p1]
@@ -276,14 +360,19 @@ class BirthScarDetector:
             width_ratio = width / max(float(reference_width), 1e-6)
             # Width is informative, but tapered near-pole scars must not be
             # rejected merely because they are narrower than mid-cell width.
-            width_weight = width_floor + (1.0 - width_floor) * min(width_ratio, 1.0)
+            legacy_width_weight = width_floor + (1.0 - width_floor) * min(width_ratio, 1.0)
+            width_weight = (1.0 if getattr(self.cfg, 'SCAR_DETECTOR_MODE', 'legacy') == 'experimental'
+                            else legacy_width_weight)
             score = (window_curvature * angle_weight *
                      recency_weight * width_weight)
             # A geometrically valid cross-section is not automatically a
             # scar.  In particular, a smooth scar-free rod should not yield
             # an arbitrary zero-score candidate after cap suppression.
+            window_record['score'] = float(score)
             if score <= 1e-10:
+                window_record['status'] = 'no positive score'
                 continue
+            window_record['candidate_id'] = len(candidates)
             candidates.append(dict(
                 indices=(p1, p2),
                 points=(smooth_pts[p1], smooth_pts[p2]),
@@ -293,6 +382,8 @@ class BirthScarDetector:
                 angle_weight=float(angle_weight),
                 width=float(width),
                 width_weight=float(width_weight),
+                width_ratio=float(width_ratio),
+                legacy_width_weight=float(legacy_width_weight),
                 recency_weight=float(recency_weight),
             ))
         return candidates
@@ -386,19 +477,35 @@ class BirthScarDetector:
         """
         Select the best candidate.
 
-        With a new-pole hint, spatial proximity remains authoritative. Without
-        one, the highest windowed score wins.
+        Legacy uses authoritative proximity when a pole hint exists. The opt-in
+        experimental mode uses a bounded multiplicative hint and never bypasses
+        the score. Without a hint, the highest windowed score wins.
         """
         def midpoint(c):
             return (np.array(c['points'][0]) + np.array(c['points'][1])) / 2.0
 
+        if getattr(self.cfg, 'SCAR_DETECTOR_MODE', 'legacy') == 'experimental':
+            if not candidates:
+                raise RuntimeError('_select_best_candidate called with no candidates')
+            weights = bounded_pole_prior(
+                [midpoint(c) for c in candidates], new_pole_point,
+                strength=float(getattr(self.cfg, 'SCAR_HINT_STRENGTH', 0.2)))
+            for c, weight in zip(candidates, weights):
+                c['hint_weight'] = float(weight)
+                c['selection_score'] = float(c['score'] * weight)
+            return max(candidates, key=lambda c: c['selection_score'])
+
         if new_pole_point is not None:
             np_arr    = np.array(new_pole_point)
             if candidates:
-                return min(candidates,
-                           key=lambda c: float(np.linalg.norm(midpoint(c) - np_arr)))
+                for c in candidates:
+                    c['hint_distance_px'] = float(np.linalg.norm(midpoint(c) - np_arr))
+                    c['selection_score'] = -c['hint_distance_px']
+                return max(candidates, key=lambda c: c['selection_score'])
         else:
             if candidates:
+                for c in candidates:
+                    c['selection_score'] = c['score']
                 return max(candidates, key=lambda x: x['score'])
 
         raise RuntimeError('_select_best_candidate called with no candidates')

@@ -85,7 +85,7 @@ class CellProcessor:
 
         # ── Step 2 : birth scar detection (single full-cell pass) ────────────
         scar_pair, debug_info = self.detector.detect(
-            contour, new_pole_point=tentative_new_pole)
+            contour, new_pole_point=tentative_new_pole, image=frame)
 
         # ── Step 3 : final pole assignment ───────────────────────────────────
         scar_midpoint = (scar_pair[0] + scar_pair[1]) / 2 if scar_pair is not None else None
@@ -143,6 +143,11 @@ class CellProcessor:
                 'new_end_length': new_len,
                 'old_end_length': old_len,
             })
+            # The scar should sit in the new-end compartment. If it is nearer
+            # the assigned old pole, the scar and pole evidence disagree.
+            debug_info['scar_pole_conflict'] = bool(new_len > old_len)
+            if debug_info['scar_pole_conflict'] and 'scar_needs_review' in debug_info:
+                debug_info['scar_needs_review'] = True
         else:
             result.update({
                 'scar_detected':  False,
