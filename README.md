@@ -254,15 +254,12 @@ The [audit](validation/reports/scar_v2/AUDIT.md) documents the comparison design
 Raw data, segmentation caches and gallery images stay in ignored run directories.
 
 For Google Colab, use
-[the dedicated Colab notebook](notebooks/BS_Detector_Validation_Colab.ipynb).
-Build its companion code-and-mask bundle from the current working tree with
-`python validation/build_colab_handoff.py`. The ZIP and a notebook copy are saved
-under ignored `validation/runs/scar_v2/colab/`; no H5 files, TIFFs, PNGs or model
-weights are bundled. Rebuild after code changes so the notebook's bundle hash
-matches. Upload both files to Colab, select a GPU runtime, mount Drive, and set
-the H5 folder in the notebook. All four videos run in one batch and masks and
-results persist in Drive. Compatible bfloat16 GPUs can reuse the saved Mac masks;
-other GPUs use a separate float32 cache. Device differences are recorded and
-model hashes, precision, package releases and inference settings remain checked.
-The notebook downloads a small review ZIP after producing baseline metrics,
-targeted ablations, the experimental comparison, and complete failure galleries.
+[the validation Colab notebook](notebooks/BS_Detector_Validation_Colab.ipynb).
+It clones the repository, segments both of Carmen's packets on the Colab GPU
+(masks are cached in Drive), and compares the profile, bilateral and legacy
+detectors on all 80 annotated cells: an accuracy table, a gallery of every cell
+with the annotation next to the prediction, the list of disagreements with the
+annotator's notes, and a per-cell score inspector. Upload
+`validation/h5_for_drive/carmen_package_1/` and `carmen_package_2/` to
+`My Drive/pombe_validation/` (or edit `DATA_DIR`) and choose a GPU runtime.
+`validation/build_colab_handoff.py` still builds the older v2 audit bundle.

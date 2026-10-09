@@ -7,8 +7,12 @@ flagged, never silently resolved. The record stores everything the detector
 sees in production (contour, frame crop, neighbor-derived pole hint) plus the
 ground truth, so detector variants can be scored without re-segmenting.
 
-    python -m validation.scar_cells --cache validation/runs/scar_v2/cache_cuda \
-        --out validation/runs/scar_v3/cells_cuda.pkl
+    python -m validation.scar_cells --cache validation/runs/scar_v3/cache_h200_bf16 \
+        --out validation/runs/scar_v3/cells_h200.pkl
+
+On Colab, point --h5-root at the Drive folder holding carmen_package_1/ and
+carmen_package_2/ and add --segment-missing to run Cellpose on any frame
+without a cached mask (masks are cached, so later runs are fast).
 """
 import argparse
 import csv
@@ -35,14 +39,22 @@ PACKAGES = {
               REPO / 'validation/package_for_carmen_2/ground_truth_template_cr_v2.csv'),
 }
 CROP_MARGIN = 40
+ANCHORS_CSV = REPO / 'validation/reports/scar_v3/cell_anchors.csv'
+PINNED_MODEL_SHA256 = 'e1440429eb384f95afe32bcba6510f90d518eaedc917ede549bed6804004abe2'
 
 
 def _point(text):
     return np.array(json.loads(text), dtype=float)
 
 
-def historical_anchors():
-    """(video, frame, cell) -> midpoint of the historical pole endpoints (row, col)."""
+def historical_anchors(path=ANCHORS_CSV):
+    """(video, frame, cell) -> midpoint of the historical pole endpoints (row, col).
+
+    Read from the committed anchors CSV; falls back to the original (git-ignored)
+    historical measurement tables if it is absent."""
+    if Path(path).exists():
+        return {(r['video_id'], int(r['frame']), r['cell_name']):
+                np.array([float(r['anchor_y']), float(r['anchor_x'])]) for r in csv.DictReader(open(path))}
     anchors = {}
     for path in sorted(glob.glob(str(REPO / 'validation/runs/experiment_*/measure/*_bs_detector_measurements.csv'))):
         for r in csv.DictReader(open(path)):
@@ -56,6 +68,42 @@ def _label_at(labels, point):
     if not (0 <= y < labels.shape[0] and 0 <= x < labels.shape[1]):
         return 0
     return int(labels[y, x])
+
+
+def packages_under(h5_root):
+    """Same GT files, H5 packages read from another folder (e.g. Google Drive)."""
+    return {k: (Path(h5_root) / Path(h5).name, gt) for k, (h5, gt) in PACKAGES.items()}
+
+
+def segment_missing(cache_dir, packages=PACKAGES, precision='bfloat16'):
+    """Run Cellpose-SAM on every package frame that has no cached mask."""
+    from importlib.metadata import version
+    from cellpose import core, models
+    model = None
+    for h5_dir, _ in packages.values():
+        for h5 in sorted(Path(h5_dir).glob('*.h5')):
+            with h5py.File(h5) as f:
+                for i, number in enumerate(int(n) for n in f['frame_numbers'][:]):
+                    cache = Path(cache_dir) / h5.stem / f'{number:04d}.npz'
+                    if cache.exists():
+                        continue
+                    if model is None:
+                        model = models.CellposeModel(gpu=core.use_gpu(), use_bfloat16=precision == 'bfloat16')
+                        weights = Path(model.pretrained_model)
+                        prov = dict(cellpose=version('cellpose'), torch=version('torch'), model=str(weights),
+                                    model_sha256=hashlib.sha256(weights.read_bytes()).hexdigest(),
+                                    diameter=None, channels=[0, 0], batch_size=1,
+                                    device=str(model.device), dtype=precision)
+                        if prov['model_sha256'] != PINNED_MODEL_SHA256:
+                            raise ValueError('Cellpose weights differ from the validated cpsam model')
+                    image = f['frames'][i]
+                    labels, _, _ = model.eval(image, diameter=None, channels=[0, 0], batch_size=1)
+                    cache.parent.mkdir(parents=True, exist_ok=True)
+                    tmp = cache.with_suffix('.partial.npz')
+                    np.savez_compressed(tmp, labels=labels, image_sha256=hashlib.sha256(image.tobytes()).hexdigest(),
+                                        provenance=json.dumps(prov, sort_keys=True))
+                    tmp.replace(cache)
+                    print(f'segmented {h5.stem} frame {number}', flush=True)
 
 
 def build_cells(cache_dir, packages=PACKAGES, cfg=None):
@@ -125,8 +173,14 @@ def main():
     p = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     p.add_argument('--cache', required=True)
     p.add_argument('--out', required=True)
+    p.add_argument('--h5-root', default=None, help='folder with carmen_package_1/ and carmen_package_2/')
+    p.add_argument('--segment-missing', action='store_true')
+    p.add_argument('--precision', choices=['bfloat16', 'float32'], default='bfloat16')
     a = p.parse_args()
-    records = build_cells(a.cache)
+    packages = packages_under(a.h5_root) if a.h5_root else PACKAGES
+    if a.segment_missing:
+        segment_missing(a.cache, packages, a.precision)
+    records = build_cells(a.cache, packages)
     Path(a.out).parent.mkdir(parents=True, exist_ok=True)
     with open(a.out, 'wb') as f:
         pickle.dump(records, f)
