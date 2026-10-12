@@ -39,6 +39,7 @@ def export_csv(all_results, output_path, columns=None):
         'scar_detected', 'scar_source', 'scar_stable',
         'seg_quality', 'pole_method', 'pole_confidence',
         'scar_confidence', 'scar_needs_review', 'scar_pole_conflict',
+        'scar_midpoint', 'new_pole_point', 'old_pole_point',
     ]
     columns = columns or default_cols
 

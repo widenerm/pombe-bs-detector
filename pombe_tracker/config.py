@@ -197,4 +197,7 @@ class Config:
         'scar_confidence',  # profile mode: probability mass near the chosen scar
         'scar_needs_review',# profile mode: low confidence or scar/pole conflict
         'scar_pole_conflict', # scar nearer the assigned old pole than the new pole
+        'scar_midpoint',    # [row, col] of the scar midpoint (for matching manual tracks)
+        'new_pole_point',   # [row, col] of the new pole tip
+        'old_pole_point',   # [row, col] of the old pole tip
     ]

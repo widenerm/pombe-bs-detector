@@ -1,0 +1,2 @@
+movie,cell_id,scorer,frame_slider,frame_index,scar_x,scar_y,new_pole_x,new_pole_y,old_pole_x,old_pole_y,status,notes
+EXAMPLE_movie.nd2,c1,cr,12,11,1040.5,622.0,1031.0,598.0,1109.0,815.0,ok,scar faint
