@@ -1,0 +1,4 @@
+# Development / CI dependencies.
+# The evaluation harness itself needs only numpy + scipy (already in
+# requirements.txt), so the test suite runs without the heavy pipeline stack.
+pytest>=7.0
