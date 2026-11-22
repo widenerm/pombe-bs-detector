@@ -142,7 +142,7 @@ are in pixels at 0.0647 µm/px.
 ```
 pombe_tracker/       the library and the `bsd` command (cli.py, workflow.py)
 septin_curve_vis/    septin intensity vs curvature
-notebooks/           Colab notebooks: movies, septin, and the validation reviews
+notebooks/           Colab notebooks for movies and for septin stills
 docs/                user guide, septin guide, cluster recipe, validation summary
 validation/          annotation protocols, anonymized annotations, scripts and reports behind every number
 tests/               unit tests and an end-to-end regression on the sample movie
@@ -154,5 +154,5 @@ hpc/                 SLURM array job for segmentation
 
 If you use BS-Detector, please cite it using [CITATION.cff](CITATION.cff). MIT license.
 
-Developed by Xan Widener in the Das and Wei labs at Boston College. Thanks to the lab
+Developed by Michael “Xander” Widener in the Das and Wei labs at Boston College. Thanks to the lab
 members who annotated the validation data.
