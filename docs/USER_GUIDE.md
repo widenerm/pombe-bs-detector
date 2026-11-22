@@ -62,26 +62,36 @@ Or step by step. Each step skips what is already done, so if anything is interru
 run the same command again:
 
 ```bash
-bsd prepare my_movie.nd2 --out runs/my_movie   # read (and resample) the movie
+bsd prepare my_movie.nd2 --out runs/my_movie   # record the movie (resample only if needed)
 bsd segment runs/my_movie                      # Cellpose masks; the slow, GPU step
-bsd track   runs/my_movie                      # tracking, poles, scars
-bsd growth  runs/my_movie                      # growth curves
+bsd track   runs/my_movie                      # tracking, poles, scars; list of cells to check
+bsd growth  runs/my_movie                      # apply your corrections; growth curves
 ```
 
 `bsd segment` and `bsd track` also accept a folder of per-position run folders.
+
+**Figures** (frame overviews, growth curves) go to `RUN/figures/`. Use `--figures-dir DIR` to
+put them somewhere else, or `--no-figures` for tables only. The Colab notebook keeps them on
+the Colab machine and shows them, unless you tick *SAVE_FIGURES*.
 
 ## 5. What you get
 
 ```
 runs/my_movie/
-  run.json            the input file, pixel size, frame interval, software versions,
-                      Cellpose weights and device, and when each step ran
-  frames.h5           the frames as the pipeline saw them (only if converted or resampled)
-  masks/0000.npz ...  one Cellpose mask per frame, tied to its frame by a checksum
-  measurements.csv    one row per cell per frame
-  qc/                 five frame overviews and the lineage tree: look at these first
-  growth/             growth figures and tables (if the movie has complete cell cycles)
+  run.json                    the input file, pixel size, frame interval, software versions,
+                              Cellpose weights and device, and when each step ran
+  measurements.csv            the detector's output: one row per cell per frame (never edited)
+  review.csv                  one row per cell: which frames to check, and why (section 6)
+  corrections/edits.csv       your fixes (section 6); Fiji CSVs go in this folder too
+  measurements_corrected.csv  measurements with your fixes applied (only once there are fixes)
+  growth/                     growth tables (if the movie has complete cell cycles)
+  figures/                    frame overviews, lineage tree, growth curves (unless --no-figures)
+  working/masks/              one Cellpose mask per frame, tied to its frame by a checksum
+  working/frames.h5           only if the movie had to be resampled
 ```
+
+The movie itself is read in place: a copy is made only when it has to be resampled. Keep
+`working/` while you are still checking cells; `bsd show` and the fixes need the masks.
 
 ### measurements.csv
 
@@ -101,11 +111,10 @@ Lengths are in pixels and, in the `_um` columns, in µm; area is in px² and µm
 | `seg_quality` | `ok` or `septum_fragment` (cells clipped by the image edge are left out) |
 | `pole_method`, `pole_confidence` | how the new pole was decided: `lineage`, `scar_based`, `neighbor_proximity`, `neighbor_poles`, `morphology` |
 | `scar_midpoint`, `new_pole_point`, `old_pole_point` | `[row, col]` in pixels of the pipeline's frames |
+| `scar_end_1`, `scar_end_2`, `label` | the two scar endpoints, and the cell's number in that frame's mask (for drawing it) |
 
 **Whole-cell length is the most reliable number.** The two end lengths depend on where
-the scar is placed. Filter or check rows with `scar_needs_review = True`. In the movies
-analysed so far, a cell has anywhere from 1% to over 70% of its frames flagged, and the
-flag rate tracks how jumpy its end-length trace looks.
+the scar is placed. Section 6 covers checking and fixing them.
 
 ### growth/
 
@@ -115,17 +124,88 @@ never drops to under 75% of its length mid-cycle (which would mean a missed divi
 
 | File | Contents |
 |---|---|
-| `growth_since_birth.png/.pdf` | length minus length at birth, for the whole cell, old end and new end: mean ± SE across cycles, plus single cells |
-| `growth_curves.png/.pdf` | length through each cycle |
-| `growth_deltas.png/.pdf` | change per frame (noisy; read the running median) |
+| `figures/growth_since_birth.png/.pdf` | length minus length at birth, for the whole cell, old end and new end: mean ± SE across cycles, plus single cells |
+| `figures/growth_curves.png/.pdf` | length through each cycle |
+| `figures/growth_deltas.png/.pdf` | change per frame (noisy; read the running median) |
 | `growth_curves_summary.csv` | per cycle: `birth_length_um`, `division_length_um`, `cycle_min`, `elongation_um_per_h` (first 75% of the cycle), mean and SD of change per frame, frames dropped |
 | `growth_curves_data.csv` | every plotted point, with `kept` = false for frames dropped as segmentation glitches (more than 0.5 µm from the 7-frame running median) |
 
 `bsd growth` prints which cycles it rejected and why. A movie may have no complete
 cycles (too short, or cells leave the field). Then `measurements.csv` is still useful,
-but there are no growth figures.
+but there are no growth curves. Growth curves always use your corrections, if there are any.
 
-## 6. Compare with hand tracking
+## 6. Check and correct
+
+**Which cells to look at.** `bsd track` writes `review.csv` (`bsd review RUN` rewrites it and
+prints the top). It has one row per cell; cells used in the growth curves come first, then
+those with the most frames to check. A frame is flagged when:
+
+| Reason | Meaning |
+|---|---|
+| `unsure` | the detector's own flag: low confidence, or the scar is nearer the end it called old |
+| `jump` | whole-cell, new-end or old-end length more than 0.5 µm off the cell's 7-frame running median: the "crazy numbers", usually the scar mark jumping or a bad outline |
+| `off-axis` | new end + old end is more than 1.1 × the whole-cell length (scar far from the midline) |
+| `interpolated` | no scar found in this frame; the position was filled in from the frames around it |
+| `no scar`, `outline` | no scar at all; the segmentation was flagged (e.g. a septum fragment) |
+
+`why` counts the flagged frames by reason, `check_frames` lists them, and `x`, `y`, `at_frame`
+and `fiji_slice` say where to find the cell. Coordinates are in the movie's pixels; the Fiji
+slice is frame + 1. The detector's `unsure` flag fires often on noisy movies, so start with
+cells in the growth curves and with `jump` frames.
+
+**Look at a cell.**
+
+```bash
+bsd show runs/my_movie --cell A01                 # the frames to check (or evenly spaced)
+bsd show runs/my_movie --cell A01 --frames 40-60
+```
+
+This draws the cell's whole-cell, old-end and new-end lengths through time, with flagged
+frames shaded. Below that, it shows the cell at each chosen frame: outline (blue), birth scar
+(yellow line, white dot), new pole (green), old pole (magenta), with axes in movie pixels.
+In Colab this is step 6, shown in the notebook.
+
+**Fix it.** The detector's output (`measurements.csv`) is never changed. Fixes go into
+`corrections/`, and the next `bsd growth` applies them. It writes
+`measurements_corrected.csv`, with a `corrected` column saying what changed and where the
+fix came from, and redraws the growth curves. There are three ways to record a fix:
+
+1. **Command line:**
+
+   ```bash
+   bsd fix runs/my_movie --cell A01 --frames 52 --scar 812 1440        # scar is here (movie x, y)
+   bsd fix runs/my_movie --cell A01 --frames 40-45 --exclude --note "outline cut the cell in half"
+   bsd fix runs/my_movie --cell A01 --swap-poles                       # ends called the wrong way round
+   bsd fix runs/my_movie --cell A01 --frames 60 --lengths 2.1 7.9      # your own new/old end lengths (µm)
+   bsd fix runs/my_movie --cell A01 --checked                          # looked; the detector is right
+   ```
+
+2. **Colab:** step 6 of the notebook. Choose the cell, the frames and an action. For
+   *click the scar*, the cell is shown at each frame and you click the scar midpoint.
+
+3. **Fiji:** open the movie exactly as analysed (all frames, the same position, not cropped
+   or resampled) and go to the frame to fix. Run [`fiji/BS_check_cell.ijm`](../fiji/BS_check_cell.ijm),
+   type the BS-Detector cell name, and click the scar on each frame. Click the poles too
+   only if they are wrong. Save the CSV into the run's `corrections/` folder.
+
+Or edit `corrections/edits.csv` directly. Use one row per fix, with `cell_name`, `frames`
+(e.g. `52`, `40-60`, or empty for all frames), and any of:
+- `scar_x`, `scar_y`: the scar midpoint in movie pixels;
+- `new_end_length_um`, `old_end_length_um`;
+- `swap_poles`, `exclude`, `checked`: `yes` to apply;
+- `note`, `who`.
+
+**What each fix does:**
+- **A moved scar:** both end lengths are recomputed from it and the detector's poles, which
+  is how the detector measures them. If you also clicked the poles in Fiji, those are used,
+  and the whole-cell length becomes pole to pole.
+- **Typed lengths:** replace the detector's.
+- **Exclude:** takes the frames out of the growth curves.
+- **Swap:** exchanges the new and old ends.
+- **Checked:** changes nothing but removes the frames from `review.csv`.
+- **Two fixes for the same frame:** the later one wins.
+
+## 7. Compare with hand tracking
 
 The lab's hand-tracked growth workbook (one sheet per cell, named like
 `(ye) wt cell 2` or `(s) rgf1DEL gpd1DEL cell 5`, with old end, new end and whole cell
@@ -142,10 +222,10 @@ This adds hand-tracked means to `growth_since_birth` and writes
 or position each cell came from, so this compares populations of cells, not the same
 cells.
 
-## 7. Other strains, mutants and microscopes
+## 8. Other strains, mutants and microscopes
 
 - The scar detector's six weights were fitted on wild-type cells in YE. On other strains,
-  look at `qc/` and the `scar_needs_review` rate before trusting end lengths.
+  look at the frame overviews and `review.csv` before trusting end lengths.
 - For a strain where it does poorly, a few dozen hand-annotated cells are enough to refit
   the weights (`python -m validation.scar_fit`; see
   [validation/reports/scar_v3/REPORT.md](../validation/reports/scar_v3/REPORT.md)).
@@ -153,7 +233,7 @@ cells.
 - Size filters and tracking distances are in pixels at 0.0647 µm/px; resampling takes care
   of other pixel sizes.
 
-## 8. Troubleshooting
+## 9. Troubleshooting
 
 | Message | What to do |
 |---|---|
@@ -162,6 +242,7 @@ cells.
 | `weights ... are not the validated cpsam weights` | `pip install cellpose==4.0.9`; delete `~/.cellpose/models/cpsam` so it downloads again |
 | `no GPU: expect several minutes per frame` | use Colab or a cluster, or leave it running overnight |
 | `N frames have no saved mask` | `bsd segment` didn't finish; run it again |
+| `correction not applied: ...` | the cell name or frame in a fix doesn't exist; check `review.csv` for names |
 | `mask ... was made from a different image` | the movie changed after segmentation; use a new `--out` folder |
 | `no complete cell cycles` | normal for short movies; see the `rejected` lines for why |
 

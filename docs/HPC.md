@@ -1,7 +1,7 @@
 # Running BS-Detector on a SLURM cluster
 
 Segmentation is the only step that needs a GPU, and it splits cleanly across several:
-each array task segments its own block of frames into the same `masks/` folder. The
+each array task segments its own block of frames into the same `working/masks/` folder. The
 scripts in [`hpc/`](../hpc/) chain the four steps with job dependencies. The defaults
 (partitions `gpu` and `short`, module `python/3.13.5`) are for Northeastern's Explorer
 cluster; set the variables below for another cluster.

@@ -272,16 +272,13 @@ def analyze_pair(bf_path, fl_path, output, segmenter, cfg, args):
             background = float(np.percentile(fl, 10))
             intensity = intensity - background
             cell_id = f"{mask_key(bf_path, frame_idx)}_l{result['label']}"
-            overlay = output / "overlays" / f"{cell_id}.png"
-            profile = output / "profiles" / f"{cell_id}.png"
-            overlay.parent.mkdir(parents=True, exist_ok=True)
-            profile.parent.mkdir(parents=True, exist_ok=True)
-            crop_dir = output / "cell_crops"
-            crop_dir.mkdir(parents=True, exist_ok=True)
-            save_overlay(fl, points, curvature, overlay)
-            save_crop_composite(fl, points, curvature,
-                                crop_dir / f"{cell_id}.png")
-            save_profile(curvature, intensity, profile, cell_id)
+            figs = getattr(args, "figures_dir", output)
+            if figs is not None:
+                for sub in ("overlays", "profiles", "cell_crops"):
+                    (figs / sub).mkdir(parents=True, exist_ok=True)
+                save_overlay(fl, points, curvature, figs / "overlays" / f"{cell_id}.png")
+                save_crop_composite(fl, points, curvature, figs / "cell_crops" / f"{cell_id}.png")
+                save_profile(curvature, intensity, figs / "profiles" / f"{cell_id}.png", cell_id)
             frame_tracks.setdefault(frame_idx, []).append((points, curvature))
             for i, (point, kappa, fluor) in enumerate(zip(points, curvature, intensity)):
                 measurements.append({
@@ -307,12 +304,11 @@ def analyze_pair(bf_path, fl_path, output, segmenter, cfg, args):
                 "length_px": float(result["length"]),
                 "length_um": float(result["length"]) * um_per_px,
             })
-        frame_dir = output / "frame_overlays"
-        frame_dir.mkdir(parents=True, exist_ok=True)
+        figs = getattr(args, "figures_dir", output)
         tracks = frame_tracks.get(frame_idx, [])
-        if tracks:
-            save_frame_overlay(fl, tracks,
-                               frame_dir / f"{bf_path.stem}_f{frame_idx:04d}.png")
+        if tracks and figs is not None:
+            (figs / "frame_overlays").mkdir(parents=True, exist_ok=True)
+            save_frame_overlay(fl, tracks, figs / "frame_overlays" / f"{bf_path.stem}_f{frame_idx:04d}.png")
     return measurements, summaries
 
 
@@ -327,10 +323,14 @@ def write_csv(rows, path):
 
 
 def measure(input_dir: Path, output: Path, masks: Path | None = None, band_width=2.0, fluor_channel=0,
-            smooth_factor=40.0, contour_points=300, limit_pairs=None, log=print):
-    """Curvature and fluorescence along every kept cell's outline -> measurements.csv, cell_summary.csv."""
+            smooth_factor=40.0, contour_points=300, limit_pairs=None, figures_dir="output", log=print):
+    """Curvature and fluorescence along every kept cell's outline -> measurements.csv, cell_summary.csv.
+
+    Per-cell and per-field figures go to figures_dir (default: the output folder; None = no figures).
+    """
     import argparse
-    args = argparse.Namespace(band_width=band_width, fluor_channel=fluor_channel, masks=masks)
+    figs = Path(output) if figures_dir == "output" else (Path(figures_dir) if figures_dir else None)
+    args = argparse.Namespace(band_width=band_width, fluor_channel=fluor_channel, masks=masks, figures_dir=figs)
     cfg = Config()
     cfg.SMOOTH_FACTOR = smooth_factor
     cfg.N_CONTOUR_POINTS = contour_points

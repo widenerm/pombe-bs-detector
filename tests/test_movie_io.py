@@ -79,7 +79,7 @@ class MovieIO(unittest.TestCase):
             f.attrs['um_per_px'] = 0.0647
         run = prepare(src, self.d / 'run', log=lambda *_: None)
         self.assertFalse(run.info['frames']['copied'])
-        self.assertEqual(Run(self.d / 'run').frames_path, src.resolve())
+        self.assertEqual(Run(self.d / 'run').info['frames']['path'], str(src.resolve()))
         prepare(src, self.d / 'run', log=lambda *_: None)          # second call: nothing to do
         other = self.d / 'other.h5'
         with h5py.File(other, 'w') as f:

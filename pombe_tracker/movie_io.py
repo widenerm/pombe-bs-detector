@@ -41,6 +41,7 @@ class Movie:
     channel: object = None
     read: object = field(default=None, repr=False)
     close: object = field(default=lambda: None, repr=False)
+    um_assumed: bool = False
 
     def describe(self):
         return dict(path=str(self.path), format=self.format, n_frames=self.n_frames, shape=list(self.shape),
@@ -231,14 +232,12 @@ def _open_h5(path, position=None, channel=None, z=None):
     f = h5py.File(path, 'r')
     ds = f[h5_frames_key(f)]
     um = next((float(f.attrs[k]) for k in ('um_per_px', 'pixel_size_um') if k in f.attrs), None)
-    if um is None:
-        # H5 is the pipeline's own format; the lab's older H5 files carry no pixel size and are all
-        # Nikon Ti2 100x frames at 0.0647 um/px.
-        print(f'{Path(path).name} records no pixel size; assuming {PIPELINE_UM_PER_PX} um/px '
-              '(pass --pixel-size if that is wrong)')
-        um = PIPELINE_UM_PER_PX
+    # H5 is the pipeline's own format; the lab's older H5 files carry no pixel size and are all
+    # Nikon Ti2 100x frames at 0.0647 um/px.
+    assumed = um is None
     fm = float(f.attrs['frame_minutes']) if 'frame_minutes' in f.attrs else None
-    return Movie(Path(path), 'h5', ds.shape[0], ds.shape[1:], um, fm, None, None, lambda i: ds[i], f.close)
+    return Movie(Path(path), 'h5', ds.shape[0], ds.shape[1:], PIPELINE_UM_PER_PX if assumed else um, fm, None, None,
+                 lambda i: ds[i], f.close, um_assumed=assumed)
 
 
 OPENERS = {'.nd2': _open_nd2, '.sldy': _open_sldy, '.dir': _open_sldy, '.tif': _open_tif, '.tiff': _open_tif,
@@ -256,6 +255,8 @@ def open_movie(path, position=None, channel=None, z=None, um_per_px=None, frame_
     m = opener(path, position, channel, z)
     if um_per_px is not None:
         m.um_per_px = float(um_per_px)
+    elif m.um_assumed:
+        print(f'{path.name} records no pixel size; assuming {m.um_per_px} um/px (pass --pixel-size if that is wrong)')
     if frame_minutes is not None:
         m.frame_minutes = float(frame_minutes)
     return m

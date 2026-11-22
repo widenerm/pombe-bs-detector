@@ -97,7 +97,7 @@ def select_cells(summary: pd.DataFrame, exclude: Path | None = None, min_length_
 
 def analyze(measurements: pd.DataFrame, summary: pd.DataFrame, out: Path, qc_threshold=0.10,
             primary_sigma=3.0, permutations=1000, title="Septin localization versus curvature",
-            notes=(), seed=20260910):
+            notes=(), seed=20260910, fig_dir="out"):
     """Every statistic, table, figure and statistics_report.md for the cells in `summary`, written to `out`.
 
     Returns the association summary table.
@@ -154,7 +154,10 @@ def analyze(measurements: pd.DataFrame, summary: pd.DataFrame, out: Path, qc_thr
            title="Smoothing sensitivity after curvature QC")
     ax.legend(frameon=False)
     fig.tight_layout()
-    fig.savefig(out / "smoothing_sensitivity.png")
+    fig_dir = out if fig_dir == "out" else (Path(fig_dir) if fig_dir else None)
+    if fig_dir is not None:
+        fig_dir.mkdir(parents=True, exist_ok=True)
+        fig.savefig(fig_dir / "smoothing_sensitivity.png")
     plt.close(fig)
 
     grid = independent.pivot(index="curvature_sigma", columns="fluorescence_sigma",
@@ -171,7 +174,8 @@ def analyze(measurements: pd.DataFrame, summary: pd.DataFrame, out: Path, qc_thr
             ax.text(j, i, f"{grid.iloc[i, j]:.3f}", ha="center", va="center", fontsize=8)
     fig.colorbar(im, ax=ax, label="Mean within-cell Spearman correlation")
     fig.tight_layout()
-    fig.savefig(out / "independent_smoothing_sensitivity.png")
+    if fig_dir is not None:
+        fig.savefig(fig_dir / "independent_smoothing_sensitivity.png")
     plt.close(fig)
 
     # Primary analysis uses the selected smoothing width. Test each cell with
@@ -293,18 +297,19 @@ def analyze(measurements: pd.DataFrame, summary: pd.DataFrame, out: Path, qc_thr
 
 
 def run(results: Path, exclude=None, min_length_um=None, max_length_um=None, qc_threshold=0.10,
-        primary_sigma=3.0, permutations=1000, log=print):
+        primary_sigma=3.0, permutations=1000, log=print, figures_dir="out"):
     """Statistics for all cells in results/statistics/; with any filter, also for the kept cells in
     results/statistics_filtered/, plus results/statistics_comparison.md side by side."""
     measurements = pd.read_csv(results / "measurements.csv")
     summary = pd.read_csv(results / "cell_summary.csv")
     kw = dict(qc_threshold=qc_threshold, primary_sigma=primary_sigma, permutations=permutations)
-    everyone = analyze(measurements, summary, results / "statistics", **kw)
+    fd = lambda name: "out" if figures_dir == "out" else (Path(figures_dir) / name if figures_dir else None)
+    everyone = analyze(measurements, summary, results / "statistics", fig_dir=fd("statistics"), **kw)
     log((results / "statistics" / "statistics_report.md").read_text().split("## Positive")[0].strip())
     if exclude is None and min_length_um is None and max_length_um is None:
         return everyone, None
     kept, notes = select_cells(summary, exclude, min_length_um, max_length_um)
-    filtered = analyze(measurements, kept, results / "statistics_filtered",
+    filtered = analyze(measurements, kept, results / "statistics_filtered", fig_dir=fd("statistics_filtered"),
                        title="Septin localization versus curvature (filtered cells)", notes=notes, **kw)
     cols = ["metric", "n_clean_cells", "mean_within_cell_spearman", "mean_ci_low", "mean_ci_high",
             "circular_shift_permutation_p"]
