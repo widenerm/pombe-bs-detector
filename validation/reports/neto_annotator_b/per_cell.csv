@@ -1,0 +1,7 @@
+cell,frames,first_frame,last_frame,ended,matched,same_pole_labels,scar_within_5px,scar_compared,scar_median_px,new_len_mae_px,new_len_bias_px,neto_annotated,neto_detector,neto_difference,growth_annotated,growth_detector
+c1,29,14,98,divided,29,29,20,29,3.82,3.44,-1.85,106.0,76.0,-30.0,0.268,0.197
+c2,28,14,95,divided,27,27,23,27,1.72,2.41,0.05,34.0,58.0,24.0,0.278,0.245
+c3,35,19,121,divided,35,35,27,35,3.98,4.17,3.97,104.0,122.0,18.0,0.175,0.209
+c4,30,106,193,divided,29,27,16,29,4.63,12.96,12.42,242.0,224.0,-18.0,0.254,0.199
+c5,31,129,219,divided,29,29,19,29,3.61,4.11,-1.38,270.0,288.0,18.0,0.297,0.229
+c6,31,129,219,divided,30,30,16,30,4.66,7.63,7.63,264.0,270.0,6.0,0.074,0.085

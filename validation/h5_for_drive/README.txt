@@ -2,7 +2,7 @@ Google Drive upload instructions
 
 Upload one package folder's contents to a Drive folder such as:
 
-  My Drive/pombe_validation/carmen_package_1/
+  My Drive/pombe_validation/dev1/
 
 Each H5 contains a sparse set of annotated frames for one video. The H5
 dataset is named "frames" and the original movie frame indices are stored in

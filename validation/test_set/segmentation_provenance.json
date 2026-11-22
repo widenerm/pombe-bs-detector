@@ -1,0 +1,352 @@
+{
+ "03142025_wt_ymd494_xy1/127": {
+  "batch_size": 1,
+  "cellpose": "4.0.9",
+  "channels": [
+   0,
+   0
+  ],
+  "device": "mps",
+  "diameter": null,
+  "dtype": "float32",
+  "model": "~/.cellpose/models/cpsam",
+  "model_sha256": "e1440429eb384f95afe32bcba6510f90d518eaedc917ede549bed6804004abe2",
+  "torch": "2.10.0"
+ },
+ "03142025_wt_ymd494_xy1/227": {
+  "batch_size": 1,
+  "cellpose": "4.0.9",
+  "channels": [
+   0,
+   0
+  ],
+  "device": "mps",
+  "diameter": null,
+  "dtype": "float32",
+  "model": "~/.cellpose/models/cpsam",
+  "model_sha256": "e1440429eb384f95afe32bcba6510f90d518eaedc917ede549bed6804004abe2",
+  "torch": "2.10.0"
+ },
+ "03142025_wt_ymd494_xy1/327": {
+  "batch_size": 1,
+  "cellpose": "4.0.9",
+  "channels": [
+   0,
+   0
+  ],
+  "device": "mps",
+  "diameter": null,
+  "dtype": "float32",
+  "model": "~/.cellpose/models/cpsam",
+  "model_sha256": "e1440429eb384f95afe32bcba6510f90d518eaedc917ede549bed6804004abe2",
+  "torch": "2.10.0"
+ },
+ "03142025_wt_ymd494_xy2/155": {
+  "batch_size": 1,
+  "cellpose": "4.0.9",
+  "channels": [
+   0,
+   0
+  ],
+  "device": "mps",
+  "diameter": null,
+  "dtype": "float32",
+  "model": "~/.cellpose/models/cpsam",
+  "model_sha256": "e1440429eb384f95afe32bcba6510f90d518eaedc917ede549bed6804004abe2",
+  "torch": "2.10.0"
+ },
+ "03142025_wt_ymd494_xy2/255": {
+  "batch_size": 1,
+  "cellpose": "4.0.9",
+  "channels": [
+   0,
+   0
+  ],
+  "device": "mps",
+  "diameter": null,
+  "dtype": "float32",
+  "model": "~/.cellpose/models/cpsam",
+  "model_sha256": "e1440429eb384f95afe32bcba6510f90d518eaedc917ede549bed6804004abe2",
+  "torch": "2.10.0"
+ },
+ "03142025_wt_ymd494_xy2/355": {
+  "batch_size": 1,
+  "cellpose": "4.0.9",
+  "channels": [
+   0,
+   0
+  ],
+  "device": "mps",
+  "diameter": null,
+  "dtype": "float32",
+  "model": "~/.cellpose/models/cpsam",
+  "model_sha256": "e1440429eb384f95afe32bcba6510f90d518eaedc917ede549bed6804004abe2",
+  "torch": "2.10.0"
+ },
+ "03142025_wt_ymd494_xy2/55": {
+  "batch_size": 1,
+  "cellpose": "4.0.9",
+  "channels": [
+   0,
+   0
+  ],
+  "device": "mps",
+  "diameter": null,
+  "dtype": "float32",
+  "model": "~/.cellpose/models/cpsam",
+  "model_sha256": "e1440429eb384f95afe32bcba6510f90d518eaedc917ede549bed6804004abe2",
+  "torch": "2.10.0"
+ },
+ "03142025_wt_ymd494_xy3/132": {
+  "batch_size": 1,
+  "cellpose": "4.0.9",
+  "channels": [
+   0,
+   0
+  ],
+  "device": "mps",
+  "diameter": null,
+  "dtype": "float32",
+  "model": "~/.cellpose/models/cpsam",
+  "model_sha256": "e1440429eb384f95afe32bcba6510f90d518eaedc917ede549bed6804004abe2",
+  "torch": "2.10.0"
+ },
+ "03142025_wt_ymd494_xy3/232": {
+  "batch_size": 1,
+  "cellpose": "4.0.9",
+  "channels": [
+   0,
+   0
+  ],
+  "device": "mps",
+  "diameter": null,
+  "dtype": "float32",
+  "model": "~/.cellpose/models/cpsam",
+  "model_sha256": "e1440429eb384f95afe32bcba6510f90d518eaedc917ede549bed6804004abe2",
+  "torch": "2.10.0"
+ },
+ "03142025_wt_ymd494_xy3/32": {
+  "batch_size": 1,
+  "cellpose": "4.0.9",
+  "channels": [
+   0,
+   0
+  ],
+  "device": "mps",
+  "diameter": null,
+  "dtype": "float32",
+  "model": "~/.cellpose/models/cpsam",
+  "model_sha256": "e1440429eb384f95afe32bcba6510f90d518eaedc917ede549bed6804004abe2",
+  "torch": "2.10.0"
+ },
+ "03142025_wt_ymd494_xy3/332": {
+  "batch_size": 1,
+  "cellpose": "4.0.9",
+  "channels": [
+   0,
+   0
+  ],
+  "device": "mps",
+  "diameter": null,
+  "dtype": "float32",
+  "model": "~/.cellpose/models/cpsam",
+  "model_sha256": "e1440429eb384f95afe32bcba6510f90d518eaedc917ede549bed6804004abe2",
+  "torch": "2.10.0"
+ },
+ "03142025_wt_ymd494_xy4/155": {
+  "batch_size": 1,
+  "cellpose": "4.0.9",
+  "channels": [
+   0,
+   0
+  ],
+  "device": "mps",
+  "diameter": null,
+  "dtype": "float32",
+  "model": "~/.cellpose/models/cpsam",
+  "model_sha256": "e1440429eb384f95afe32bcba6510f90d518eaedc917ede549bed6804004abe2",
+  "torch": "2.10.0"
+ },
+ "03142025_wt_ymd494_xy4/255": {
+  "batch_size": 1,
+  "cellpose": "4.0.9",
+  "channels": [
+   0,
+   0
+  ],
+  "device": "mps",
+  "diameter": null,
+  "dtype": "float32",
+  "model": "~/.cellpose/models/cpsam",
+  "model_sha256": "e1440429eb384f95afe32bcba6510f90d518eaedc917ede549bed6804004abe2",
+  "torch": "2.10.0"
+ },
+ "03142025_wt_ymd494_xy4/355": {
+  "batch_size": 1,
+  "cellpose": "4.0.9",
+  "channels": [
+   0,
+   0
+  ],
+  "device": "mps",
+  "diameter": null,
+  "dtype": "float32",
+  "model": "~/.cellpose/models/cpsam",
+  "model_sha256": "e1440429eb384f95afe32bcba6510f90d518eaedc917ede549bed6804004abe2",
+  "torch": "2.10.0"
+ },
+ "03142025_wt_ymd494_xy4/55": {
+  "batch_size": 1,
+  "cellpose": "4.0.9",
+  "channels": [
+   0,
+   0
+  ],
+  "device": "mps",
+  "diameter": null,
+  "dtype": "float32",
+  "model": "~/.cellpose/models/cpsam",
+  "model_sha256": "e1440429eb384f95afe32bcba6510f90d518eaedc917ede549bed6804004abe2",
+  "torch": "2.10.0"
+ },
+ "03192025_wt_494_xy1/146": {
+  "batch_size": 1,
+  "cellpose": "4.0.9",
+  "channels": [
+   0,
+   0
+  ],
+  "device": "mps",
+  "diameter": null,
+  "dtype": "float32",
+  "model": "~/.cellpose/models/cpsam",
+  "model_sha256": "e1440429eb384f95afe32bcba6510f90d518eaedc917ede549bed6804004abe2",
+  "torch": "2.10.0"
+ },
+ "03192025_wt_494_xy1/46": {
+  "batch_size": 1,
+  "cellpose": "4.0.9",
+  "channels": [
+   0,
+   0
+  ],
+  "device": "mps",
+  "diameter": null,
+  "dtype": "float32",
+  "model": "~/.cellpose/models/cpsam",
+  "model_sha256": "e1440429eb384f95afe32bcba6510f90d518eaedc917ede549bed6804004abe2",
+  "torch": "2.10.0"
+ },
+ "03192025_wt_494_xy2/135": {
+  "batch_size": 1,
+  "cellpose": "4.0.9",
+  "channels": [
+   0,
+   0
+  ],
+  "device": "mps",
+  "diameter": null,
+  "dtype": "float32",
+  "model": "~/.cellpose/models/cpsam",
+  "model_sha256": "e1440429eb384f95afe32bcba6510f90d518eaedc917ede549bed6804004abe2",
+  "torch": "2.10.0"
+ },
+ "03192025_wt_494_xy2/235": {
+  "batch_size": 1,
+  "cellpose": "4.0.9",
+  "channels": [
+   0,
+   0
+  ],
+  "device": "mps",
+  "diameter": null,
+  "dtype": "float32",
+  "model": "~/.cellpose/models/cpsam",
+  "model_sha256": "e1440429eb384f95afe32bcba6510f90d518eaedc917ede549bed6804004abe2",
+  "torch": "2.10.0"
+ },
+ "03192025_wt_494_xy2/35": {
+  "batch_size": 1,
+  "cellpose": "4.0.9",
+  "channels": [
+   0,
+   0
+  ],
+  "device": "mps",
+  "diameter": null,
+  "dtype": "float32",
+  "model": "~/.cellpose/models/cpsam",
+  "model_sha256": "e1440429eb384f95afe32bcba6510f90d518eaedc917ede549bed6804004abe2",
+  "torch": "2.10.0"
+ },
+ "03192025_wt_494_xy3/135": {
+  "batch_size": 1,
+  "cellpose": "4.0.9",
+  "channels": [
+   0,
+   0
+  ],
+  "device": "mps",
+  "diameter": null,
+  "dtype": "float32",
+  "model": "~/.cellpose/models/cpsam",
+  "model_sha256": "e1440429eb384f95afe32bcba6510f90d518eaedc917ede549bed6804004abe2",
+  "torch": "2.10.0"
+ },
+ "03192025_wt_494_xy3/235": {
+  "batch_size": 1,
+  "cellpose": "4.0.9",
+  "channels": [
+   0,
+   0
+  ],
+  "device": "mps",
+  "diameter": null,
+  "dtype": "float32",
+  "model": "~/.cellpose/models/cpsam",
+  "model_sha256": "e1440429eb384f95afe32bcba6510f90d518eaedc917ede549bed6804004abe2",
+  "torch": "2.10.0"
+ },
+ "03192025_wt_494_xy3/35": {
+  "batch_size": 1,
+  "cellpose": "4.0.9",
+  "channels": [
+   0,
+   0
+  ],
+  "device": "mps",
+  "diameter": null,
+  "dtype": "float32",
+  "model": "~/.cellpose/models/cpsam",
+  "model_sha256": "e1440429eb384f95afe32bcba6510f90d518eaedc917ede549bed6804004abe2",
+  "torch": "2.10.0"
+ },
+ "03192025_wt_494_xy4/159": {
+  "batch_size": 1,
+  "cellpose": "4.0.9",
+  "channels": [
+   0,
+   0
+  ],
+  "device": "mps",
+  "diameter": null,
+  "dtype": "float32",
+  "model": "~/.cellpose/models/cpsam",
+  "model_sha256": "e1440429eb384f95afe32bcba6510f90d518eaedc917ede549bed6804004abe2",
+  "torch": "2.10.0"
+ },
+ "03192025_wt_494_xy4/59": {
+  "batch_size": 1,
+  "cellpose": "4.0.9",
+  "channels": [
+   0,
+   0
+  ],
+  "device": "mps",
+  "diameter": null,
+  "dtype": "float32",
+  "model": "~/.cellpose/models/cpsam",
+  "model_sha256": "e1440429eb384f95afe32bcba6510f90d518eaedc917ede549bed6804004abe2",
+  "torch": "2.10.0"
+ }
+}

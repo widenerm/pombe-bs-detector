@@ -1,6 +1,6 @@
 """
 visualize_results.py  –  Generate performance metric plots and scar overlay
-examples for the BS-Detector vs. Carmen ground-truth comparison.
+examples for the BS-Detector vs. Annotator A ground-truth comparison.
 
 Outputs (all written to --out dir):
   metrics_dashboard.png   - CDF, histograms, Bland-Altman, pole identity
@@ -79,7 +79,7 @@ def load_det_csvs(paths):
 BG      = '#0f1117'
 PANEL   = '#1a1d27'
 ACCENT  = '#4f8ef7'   # detector blue
-GT_COL  = '#f7c44f'   # Carmen gold
+GT_COL  = '#f7c44f'   # Annotator A gold
 ERR_COL = '#e05c5c'   # error red
 TEXT    = '#e8eaf0'
 GRID    = '#2a2d3a'
@@ -116,7 +116,7 @@ def plot_metrics_dashboard(rows):
     n_agree      = sum(1 for v in pole_agree if v.lower() == 'true')
 
     fig = plt.figure(figsize=(16, 10), facecolor=BG)
-    fig.suptitle('BS-Detector Performance vs. Carmen Ground Truth  (n=40 cells)',
+    fig.suptitle('BS-Detector Performance vs. Annotator A Ground Truth  (n=40 cells)',
                  color=TEXT, fontsize=13, fontweight='bold', y=0.98)
 
     gs = gridspec.GridSpec(2, 4, figure=fig, hspace=0.45, wspace=0.38)
@@ -252,7 +252,7 @@ def plot_scar_overlays(comparison_rows, gt_lookup, det_lookup, raw_frame_dir, ru
     tier_labels = ['Good', 'Good', 'Median', 'Median', 'Bad', 'Bad']
 
     fig, axes = plt.subplots(2, 3, figsize=(15, 9), facecolor=BG)
-    fig.suptitle('Scar Localization Examples: Detector (blue ×) vs. Carmen GT (gold ●)',
+    fig.suptitle('Scar Localization Examples: Detector (blue ×) vs. Annotator A GT (gold ●)',
                  color=TEXT, fontsize=12, fontweight='bold', y=0.99)
 
     for ax, row, tier in zip(axes.flat, examples, tier_labels):
@@ -315,7 +315,7 @@ def plot_scar_overlays(comparison_rows, gt_lookup, det_lookup, raw_frame_dir, ru
         if gt_x is not None and gt_y is not None:
             ax.scatter([gt_x - c0], [gt_y - r0],
                        marker='o', s=80, color=GT_COL, zorder=6,
-                       edgecolors='white', linewidths=0.8, label='Carmen GT')
+                       edgecolors='white', linewidths=0.8, label='Annotator A GT')
             # error line
             ax.plot([det_c - c0, gt_x - c0], [det_r - r0, gt_y - r0],
                     color=ERR_COL, linewidth=1.2, linestyle='--', alpha=0.7, zorder=4)
@@ -332,7 +332,7 @@ def plot_scar_overlays(comparison_rows, gt_lookup, det_lookup, raw_frame_dir, ru
     # shared legend
     handles = [
         mpatches.Patch(color=ACCENT,   label='Detector scar (×)'),
-        mpatches.Patch(color=GT_COL,   label='Carmen GT scar (●)'),
+        mpatches.Patch(color=GT_COL,   label='Annotator A GT scar (●)'),
         mpatches.Patch(color=ERR_COL,  label='Error line'),
     ]
     fig.legend(handles=handles, loc='lower center', ncol=3,
@@ -389,7 +389,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
 </head>
 <body>
 <h1>BS-Detector Validation Report</h1>
-<p class="sub">Ground truth: Carmen (cr), 40 cells, 4 videos &nbsp;|&nbsp; 2025-03 experiments</p>
+<p class="sub">Ground truth: Annotator A (A), 40 cells, 4 videos &nbsp;|&nbsp; 2025-03 experiments</p>
 
 <div class="stat-row">
   <div class="stat good">
@@ -423,7 +423,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
     <span id="thresh-lbl" style="min-width:60px;font-weight:700;color:var(--accent)">25 px</span>
     <div class="result-badge" id="badge">??%  of cells</div>
   </div>
-  <div style="color:#888;font-size:11px">Move the slider to set a pixel tolerance. The badge shows what fraction of the 40 cells had their scar detected within that distance of Carmen's label.</div>
+  <div style="color:#888;font-size:11px">Move the slider to set a pixel tolerance. The badge shows what fraction of the 40 cells had their scar detected within that distance of Annotator A's label.</div>
 </div>
 
 <h2>Performance Metrics Dashboard</h2>
@@ -440,7 +440,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
   </div>
   <div class="note-card bad">
     <b>xy2 fr151 H0 (67.4 px) — pole flip</b><br>
-    One of the 3 pole identity errors. Scar found ~68 px off Carmen's placement, and the detector inverted which end is new vs. old.
+    One of the 3 pole identity errors. Scar found ~68 px off Annotator A's placement, and the detector inverted which end is new vs. old.
   </div>
   <div class="note-card bad">
     <b>xy3 fr174 E0 (70.4 px)</b><br>
