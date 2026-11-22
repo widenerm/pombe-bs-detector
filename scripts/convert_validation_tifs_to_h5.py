@@ -9,12 +9,12 @@ their original frame values.
 Examples
 --------
 python scripts/convert_validation_tifs_to_h5.py \
-    validation/package_for_carmen \
-    --output validation/h5_for_drive/package_for_carmen
+    validation/packets/dev1 \
+    --output validation/h5_for_drive/dev1
 
 python scripts/convert_validation_tifs_to_h5.py \
-    validation/carmen_validation_package_2.zip \
-    --output validation/h5_for_drive/package_for_carmen_2
+    validation/dev2_packet.zip \
+    --output validation/h5_for_drive/dev2
 """
 import argparse
 import csv

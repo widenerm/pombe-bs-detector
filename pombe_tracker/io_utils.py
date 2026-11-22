@@ -20,7 +20,19 @@ def load_h5_data(h5_path, dataset_key):
     return data
 
 
-def export_csv(all_results, output_path, columns=None):
+# Pixel-unit columns that get a µm copy when a pixel size is given.
+LENGTH_COLUMNS = ('length', 'width_centroid', 'width_scar',
+                  'new_end_length', 'old_end_length')
+
+
+def _scaled(val, factor):
+    """val × factor for numbers; None for missing or non-numeric values."""
+    if isinstance(val, (int, float)) and not isinstance(val, bool) and np.isfinite(val):
+        return round(val * factor, 4)
+    return None
+
+
+def export_csv(all_results, output_path, columns=None, pixel_size_um=None):
     """
     Write per-frame, per-cell measurements to a CSV file.
 
@@ -29,15 +41,20 @@ def export_csv(all_results, output_path, columns=None):
 
     Parameters
     ----------
-    all_results : list returned by run_pipeline (after stabilize_scars)
-    output_path : destination file path (.csv)
-    columns     : list of column names; if None, uses a sensible default set
+    all_results   : list returned by run_pipeline (after stabilize_scars)
+    output_path   : destination file path (.csv)
+    columns       : list of column names; if None, uses a sensible default set
+    pixel_size_um : µm per pixel (e.g. Config.PIXEL_SIZE_UM).  If given, each
+                    length column gets a '<name>_um' copy and 'area' gets
+                    'area_um2', placed right after the pixel column.
     """
     default_cols = [
         'cell_name', 'frame', 'length', 'width_centroid', 'width_scar',
         'new_end_length', 'old_end_length', 'area',
         'scar_detected', 'scar_source', 'scar_stable',
         'seg_quality', 'pole_method', 'pole_confidence',
+        'scar_confidence', 'scar_needs_review', 'scar_pole_conflict',
+        'scar_midpoint', 'new_pole_point', 'old_pole_point',
     ]
     columns = columns or default_cols
 
@@ -76,6 +93,13 @@ def export_csv(all_results, output_path, columns=None):
 
                 row[col] = val
 
+            if pixel_size_um:
+                for col in columns:
+                    if col in LENGTH_COLUMNS:
+                        row[col + '_um'] = _scaled(row[col], pixel_size_um)
+                    elif col == 'area':
+                        row['area_um2'] = _scaled(row[col], pixel_size_um ** 2)
+
             row.setdefault('frame', fidx)
             rows.append(row)
 
@@ -86,7 +110,14 @@ def export_csv(all_results, output_path, columns=None):
     if n_excluded:
         print(f"  Excluded {n_excluded} border_clip cell(s) from CSV.")
 
-    all_keys = list(dict.fromkeys(['frame'] + columns))
+    out_cols = []
+    for col in columns:
+        out_cols.append(col)
+        if pixel_size_um and col in LENGTH_COLUMNS:
+            out_cols.append(col + '_um')
+        elif pixel_size_um and col == 'area':
+            out_cols.append('area_um2')
+    all_keys = list(dict.fromkeys(['frame'] + out_cols))
 
     with open(output_path, 'w', newline='') as f:
         writer = csv.DictWriter(f, fieldnames=all_keys, extrasaction='ignore')

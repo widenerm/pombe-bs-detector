@@ -1,0 +1,41 @@
+video_id,raw_frame_file,image_file,frame,cell_name,scorer_initials,gt_area_px2,gt_scar_mid_x_px,gt_scar_mid_y_px,gt_poleA_length_px,gt_poleB_length_px,gt_new_pole_guess,notes
+experiment_03202025_wt_ymd494__xy1,experiment_03202025_wt_ymd494__xy1_frame0019_raw.tif,experiment_03202025_wt_ymd494__xy1_frame0019_blinded.png,19,A,B,13937,1073.833,640.167,183.371,51.735,B,
+experiment_03202025_wt_ymd494__xy1,experiment_03202025_wt_ymd494__xy1_frame0037_raw.tif,experiment_03202025_wt_ymd494__xy1_frame0037_blinded.png,37,C,B,9403,1210,1374.75,41.22,123.532,A,"horizontal, A on left"
+experiment_03202025_wt_ymd494__xy1,experiment_03202025_wt_ymd494__xy1_frame0099_raw.tif,experiment_03202025_wt_ymd494__xy1_frame0099_blinded.png,99,B1,B,8052,1331,1307.75,109.103,32.328,B,"horizontal, B on left"
+experiment_03202025_wt_ymd494__xy1,experiment_03202025_wt_ymd494__xy1_frame0115_raw.tif,experiment_03202025_wt_ymd494__xy1_frame0115_blinded.png,115,B1,B,9209,1342.75,1324.5,121.005,42.615,B,
+experiment_03202025_wt_ymd494__xy1,experiment_03202025_wt_ymd494__xy1_frame0144_raw.tif,experiment_03202025_wt_ymd494__xy1_frame0144_blinded.png,144,C0,B,9541,,,,,B,scar obscured by neighboring cells
+experiment_03202025_wt_ymd494__xy1,experiment_03202025_wt_ymd494__xy1_frame0152_raw.tif,experiment_03202025_wt_ymd494__xy1_frame0152_blinded.png,152,S,B,8409,1036.25,699.75,26.405,116.74,A,
+experiment_03202025_wt_ymd494__xy1,experiment_03202025_wt_ymd494__xy1_frame0172_raw.tif,experiment_03202025_wt_ymd494__xy1_frame0172_blinded.png,172,E1,B,12180,1138,1412.5,33.4,178.693,A,
+experiment_03202025_wt_ymd494__xy1,experiment_03202025_wt_ymd494__xy1_frame0197_raw.tif,experiment_03202025_wt_ymd494__xy1_frame0197_blinded.png,197,S,B,12288,1021.833,655.833,39.504,163.439,A,
+experiment_03202025_wt_ymd494__xy1,experiment_03202025_wt_ymd494__xy1_frame0209_raw.tif,experiment_03202025_wt_ymd494__xy1_frame0209_blinded.png,209,E11,B,8590,1077.75,1494,21.761,131.713,A,
+experiment_03202025_wt_ymd494__xy1,experiment_03202025_wt_ymd494__xy1_frame0225_raw.tif,experiment_03202025_wt_ymd494__xy1_frame0225_blinded.png,225,C11,B,9432,1392,1547.25,30.457,136.076,A,
+experiment_03202025_wt_ymd494__xy1,experiment_03202025_wt_ymd494__xy1_frame0232_raw.tif,experiment_03202025_wt_ymd494__xy1_frame0232_blinded.png,232,AL,B,9223,1254.75,1533.5,24.892,138.169,A,
+experiment_03272025_wt_ymd494__xy1,experiment_03272025_wt_ymd494__xy1_frame0056_raw.tif,experiment_03272025_wt_ymd494__xy1_frame0056_blinded.png,56,A0,B,10846,1127.75,558.75,48.075,133.563,A,
+experiment_03272025_wt_ymd494__xy1,experiment_03272025_wt_ymd494__xy1_frame0095_raw.tif,experiment_03272025_wt_ymd494__xy1_frame0095_blinded.png,95,E1,B,12082,1055.5,1567.5,45.02,153.847,A,
+experiment_03272025_wt_ymd494__xy1,experiment_03272025_wt_ymd494__xy1_frame0109_raw.tif,experiment_03272025_wt_ymd494__xy1_frame0109_blinded.png,109,C11,B,12044,1511,730.5,43.939,159.35,A,pole A out of focus
+experiment_03272025_wt_ymd494__xy1,experiment_03272025_wt_ymd494__xy1_frame0132_raw.tif,experiment_03272025_wt_ymd494__xy1_frame0132_blinded.png,132,W1,B,9685,1140.25,566.5,130.815,29.876,B,
+experiment_03272025_wt_ymd494__xy1,experiment_03272025_wt_ymd494__xy1_frame0159_raw.tif,experiment_03272025_wt_ymd494__xy1_frame0159_blinded.png,159,G0,B,10188,1813.75,1491,131.042,30.287,B,pole B out of focus
+experiment_03272025_wt_ymd494__xy1,experiment_03272025_wt_ymd494__xy1_frame0176_raw.tif,experiment_03272025_wt_ymd494__xy1_frame0176_blinded.png,176,E1,B,11479,1029.75,1607.25,36.045,154.849,A,
+experiment_03272025_wt_ymd494__xy1,experiment_03272025_wt_ymd494__xy1_frame0209_raw.tif,experiment_03272025_wt_ymd494__xy1_frame0209_blinded.png,209,AF0,B,11149,1492.5,639,137.035,53.945,B,
+experiment_03272025_wt_ymd494__xy1,experiment_03272025_wt_ymd494__xy1_frame0227_raw.tif,experiment_03272025_wt_ymd494__xy1_frame0227_blinded.png,227,AG10,B,6088,,,,,B,birth scar obscured by neighboring cells
+experiment_03272025_wt_ymd494__xy2,experiment_03272025_wt_ymd494__xy2_frame0055_raw.tif,experiment_03272025_wt_ymd494__xy2_frame0055_blinded.png,55,C0,B,11136,1405.5,1361.25,156.606,33.987,B,
+experiment_03272025_wt_ymd494__xy2,experiment_03272025_wt_ymd494__xy2_frame0091_raw.tif,experiment_03272025_wt_ymd494__xy2_frame0091_blinded.png,91,C10,B,6862,1308.75,1444.25,97.295,23.585,B,pole A out of focus
+experiment_03272025_wt_ymd494__xy2,experiment_03272025_wt_ymd494__xy2_frame0100_raw.tif,experiment_03272025_wt_ymd494__xy2_frame0100_blinded.png,100,H0,B,7147,1445.5,1326.75,25.212,101.196,A,
+experiment_03272025_wt_ymd494__xy2,experiment_03272025_wt_ymd494__xy2_frame0122_raw.tif,experiment_03272025_wt_ymd494__xy2_frame0122_blinded.png,122,E,B,10396,939,622.25,146.562,30.378,B,
+experiment_03272025_wt_ymd494__xy2,experiment_03272025_wt_ymd494__xy2_frame0127_raw.tif,experiment_03272025_wt_ymd494__xy2_frame0127_blinded.png,127,C10,B,8952,1283.75,1423.5,125.521,34.926,B,pole A out of focus
+experiment_03272025_wt_ymd494__xy2,experiment_03272025_wt_ymd494__xy2_frame0151_raw.tif,experiment_03272025_wt_ymd494__xy2_frame0151_blinded.png,151,H0,B,10463,1428.75,1353,29.422,154.561,A,
+experiment_03272025_wt_ymd494__xy2,experiment_03272025_wt_ymd494__xy2_frame0169_raw.tif,experiment_03272025_wt_ymd494__xy2_frame0169_blinded.png,169,H1,B,12577,1477.833,1304.167,166.983,44.876,B,pole B out of focus
+experiment_03272025_wt_ymd494__xy3,experiment_03272025_wt_ymd494__xy3_frame0024_raw.tif,experiment_03272025_wt_ymd494__xy3_frame0024_blinded.png,24,C0,B,7159,1708.5,477.25,24.831,95.345,A,
+experiment_03272025_wt_ymd494__xy3,experiment_03272025_wt_ymd494__xy3_frame0040_raw.tif,experiment_03272025_wt_ymd494__xy3_frame0040_blinded.png,40,C1,B,7299,1706,428.75,103.699,25.622,B,
+experiment_03272025_wt_ymd494__xy3,experiment_03272025_wt_ymd494__xy3_frame0054_raw.tif,experiment_03272025_wt_ymd494__xy3_frame0054_blinded.png,54,B0,B,9763,995.5,333.75,34.254,136.999,A,
+experiment_03272025_wt_ymd494__xy3,experiment_03272025_wt_ymd494__xy3_frame0111_raw.tif,experiment_03272025_wt_ymd494__xy3_frame0111_blinded.png,111,D,B,8278,1823.5,889.25,125.754,20.641,B,
+experiment_03272025_wt_ymd494__xy3,experiment_03272025_wt_ymd494__xy3_frame0118_raw.tif,experiment_03272025_wt_ymd494__xy3_frame0118_blinded.png,118,F1,B,13308,1781.833,2214.167,60.631,160.068,A,"horizontal, A on right"
+experiment_03272025_wt_ymd494__xy3,experiment_03272025_wt_ymd494__xy3_frame0133_raw.tif,experiment_03272025_wt_ymd494__xy3_frame0133_blinded.png,133,F11,B,8292,1724.5,2207.75,119.551,18.007,B,"horizontal, A on left"
+experiment_03272025_wt_ymd494__xy3,experiment_03272025_wt_ymd494__xy3_frame0134_raw.tif,experiment_03272025_wt_ymd494__xy3_frame0134_blinded.png,134,P,B,7037,536.75,100.25,26.27,101.533,A,out of focus
+experiment_03272025_wt_ymd494__xy3,experiment_03272025_wt_ymd494__xy3_frame0143_raw.tif,experiment_03272025_wt_ymd494__xy3_frame0143_blinded.png,143,F10,B,8041,1763.5,2206.5,22.419,120.005,A,scar only visible on one side
+experiment_03272025_wt_ymd494__xy3,experiment_03272025_wt_ymd494__xy3_frame0143_raw.tif,experiment_03272025_wt_ymd494__xy3_frame0143_blinded.png,143,N,B,9720,995,392.25,31.226,135.602,A,
+experiment_03272025_wt_ymd494__xy3,experiment_03272025_wt_ymd494__xy3_frame0165_raw.tif,experiment_03272025_wt_ymd494__xy3_frame0165_blinded.png,165,R,B,8560,1889,2086,120.14,27.966,B,
+experiment_03272025_wt_ymd494__xy3,experiment_03272025_wt_ymd494__xy3_frame0166_raw.tif,experiment_03272025_wt_ymd494__xy3_frame0166_blinded.png,166,E1,B,12908,1869.5,1142.75,53.648,172.722,A,
+experiment_03272025_wt_ymd494__xy3,experiment_03272025_wt_ymd494__xy3_frame0170_raw.tif,experiment_03272025_wt_ymd494__xy3_frame0170_blinded.png,170,F10,B,10737,1840.75,2202,84.197,95.131,A,"closest birth scar obscured, used middle birth scar"
+experiment_03272025_wt_ymd494__xy3,experiment_03272025_wt_ymd494__xy3_frame0174_raw.tif,experiment_03272025_wt_ymd494__xy3_frame0174_blinded.png,174,E0,B,12529,1880.5,1047.833,154.67,62.83,B,pole B out of focus
+experiment_03272025_wt_ymd494__xy3,experiment_03272025_wt_ymd494__xy3_frame0228_raw.tif,experiment_03272025_wt_ymd494__xy3_frame0228_blinded.png,228,E01,B,10563,1920.5,1011.5,146.912,31.121,B,

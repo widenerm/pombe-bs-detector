@@ -1,0 +1,20 @@
+cff-version: 1.2.0
+message: "If you use BS-Detector, please cite it as below."
+title: "BS-Detector: birth scars, pole identity and polar growth of fission yeast from brightfield time-lapse movies"
+type: software
+authors:
+  - family-names: Widener
+    given-names: Xan
+    affiliation: "Boston College"
+version: 1.0.0
+date-released: 2026-11-21
+license: MIT
+repository-code: "https://github.com/widenerm/pombe-bs-detector"
+keywords:
+  - Schizosaccharomyces pombe
+  - fission yeast
+  - birth scar
+  - polarized growth
+  - NETO
+  - cell tracking
+  - microscopy

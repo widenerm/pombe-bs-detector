@@ -1,0 +1,32 @@
+[
+ {
+  "batch_size": 1,
+  "cellpose": "4.0.9",
+  "channels": [
+   0,
+   0
+  ],
+  "device": "cuda:0",
+  "diameter": null,
+  "dtype": "float32",
+  "gpu_name": "NVIDIA RTX A5000",
+  "model": "cpsam",
+  "model_sha256": "e1440429eb384f95afe32bcba6510f90d518eaedc917ede549bed6804004abe2",
+  "torch": "2.10.0+cu126"
+ },
+ {
+  "batch_size": 1,
+  "cellpose": "4.0.9",
+  "channels": [
+   0,
+   0
+  ],
+  "device": "cuda:0",
+  "diameter": null,
+  "dtype": "float32",
+  "gpu_name": "Tesla P100-PCIE-12GB",
+  "model": "cpsam",
+  "model_sha256": "e1440429eb384f95afe32bcba6510f90d518eaedc917ede549bed6804004abe2",
+  "torch": "2.10.0+cu126"
+ }
+]

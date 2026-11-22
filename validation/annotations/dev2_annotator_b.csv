@@ -1,0 +1,41 @@
+video_id,raw_frame_file,image_file,frame,cell_name,scorer_initials,gt_area_px2,gt_scar_mid_x_px,gt_scar_mid_y_px,gt_poleA_length_px,gt_poleB_length_px,gt_new_pole_guess,notes
+experiment_03202025_wt_ymd494__xy1,experiment_03202025_wt_ymd494__xy1_frame0074_raw.tif,experiment_03202025_wt_ymd494__xy1_frame0074_blinded.png,74,E,B,12283,1180.25,1400.75,39.863,177.378,A,
+experiment_03202025_wt_ymd494__xy1,experiment_03202025_wt_ymd494__xy1_frame0080_raw.tif,experiment_03202025_wt_ymd494__xy1_frame0080_blinded.png,80,F,B,10163,1159.75,611,147.386,29.296,B,
+experiment_03202025_wt_ymd494__xy1,experiment_03202025_wt_ymd494__xy1_frame0102_raw.tif,experiment_03202025_wt_ymd494__xy1_frame0102_blinded.png,102,C0,B,6813,1277.5,1359.75,106.492,20.012,B,
+experiment_03202025_wt_ymd494__xy1,experiment_03202025_wt_ymd494__xy1_frame0127_raw.tif,experiment_03202025_wt_ymd494__xy1_frame0127_blinded.png,127,N,B,8849,1445,1421.75,134.905,24.382,B,pole A out of focus
+experiment_03202025_wt_ymd494__xy1,experiment_03202025_wt_ymd494__xy1_frame0129_raw.tif,experiment_03202025_wt_ymd494__xy1_frame0129_blinded.png,129,N,B,9210,1445.25,1422.75,139.647,23.818,B,pole A out of focus
+experiment_03202025_wt_ymd494__xy1,experiment_03202025_wt_ymd494__xy1_frame0174_raw.tif,experiment_03202025_wt_ymd494__xy1_frame0174_blinded.png,174,AC,B,11863,1208.167,1440.167,46.078,168.716,A,pole A out of focus
+experiment_03202025_wt_ymd494__xy1,experiment_03202025_wt_ymd494__xy1_frame0182_raw.tif,experiment_03202025_wt_ymd494__xy1_frame0182_blinded.png,182,B11,B,7253,1439.75,1287.5,104.35,25.28,B,
+experiment_03202025_wt_ymd494__xy1,experiment_03202025_wt_ymd494__xy1_frame0198_raw.tif,experiment_03202025_wt_ymd494__xy1_frame0198_blinded.png,198,E10,B,7442,1100,1465.5,112.368,18.951,B,
+experiment_03202025_wt_ymd494__xy1,experiment_03202025_wt_ymd494__xy1_frame0201_raw.tif,experiment_03202025_wt_ymd494__xy1_frame0201_blinded.png,201,S,B,13077,1020.75,654.5,41.645,167.177,A,
+experiment_03272025_wt_ymd494__xy1,experiment_03272025_wt_ymd494__xy1_frame0015_raw.tif,experiment_03272025_wt_ymd494__xy1_frame0015_blinded.png,15,E,B,12396,1055.167,1475.833,40.689,165.705,A,
+experiment_03272025_wt_ymd494__xy1,experiment_03272025_wt_ymd494__xy1_frame0044_raw.tif,experiment_03272025_wt_ymd494__xy1_frame0044_blinded.png,44,F0,B,10401,556,1549.75,146.819,26.751,B,
+experiment_03272025_wt_ymd494__xy1,experiment_03272025_wt_ymd494__xy1_frame0077_raw.tif,experiment_03272025_wt_ymd494__xy1_frame0077_blinded.png,77,G,B,11763,1814.167,1509.167,60.953,136.457,A,
+experiment_03272025_wt_ymd494__xy1,experiment_03272025_wt_ymd494__xy1_frame0125_raw.tif,experiment_03272025_wt_ymd494__xy1_frame0125_blinded.png,125,Z,B,6723,1103.75,449.75,17.553,106.459,A,
+experiment_03272025_wt_ymd494__xy1,experiment_03272025_wt_ymd494__xy1_frame0141_raw.tif,experiment_03272025_wt_ymd494__xy1_frame0141_blinded.png,141,AC,B,7899,1043,1560.75,109.71,26.255,B,
+experiment_03272025_wt_ymd494__xy1,experiment_03272025_wt_ymd494__xy1_frame0149_raw.tif,experiment_03272025_wt_ymd494__xy1_frame0149_blinded.png,149,C101,B,7299,,,,,B,scar unclear
+experiment_03272025_wt_ymd494__xy1,experiment_03272025_wt_ymd494__xy1_frame0156_raw.tif,experiment_03272025_wt_ymd494__xy1_frame0156_blinded.png,156,D,B,10377,1717,1382.75,138.466,33.302,B,
+experiment_03272025_wt_ymd494__xy1,experiment_03272025_wt_ymd494__xy1_frame0174_raw.tif,experiment_03272025_wt_ymd494__xy1_frame0174_blinded.png,174,E01,B,8799,1092,1440,124.76,25.179,B,
+experiment_03272025_wt_ymd494__xy1,experiment_03272025_wt_ymd494__xy1_frame0185_raw.tif,experiment_03272025_wt_ymd494__xy1_frame0185_blinded.png,185,AJ,B,14140,1088.833,555.5,178.968,56.257,B,
+experiment_03272025_wt_ymd494__xy1,experiment_03272025_wt_ymd494__xy1_frame0208_raw.tif,experiment_03272025_wt_ymd494__xy1_frame0208_blinded.png,208,K,B,10238,1587.5,2161.75,148.971,29.855,B,
+experiment_03272025_wt_ymd494__xy1,experiment_03272025_wt_ymd494__xy1_frame0216_raw.tif,experiment_03272025_wt_ymd494__xy1_frame0216_blinded.png,216,C101,B,12121,1224.5,677.75,153.247,62.623,B,
+experiment_03272025_wt_ymd494__xy1,experiment_03272025_wt_ymd494__xy1_frame0221_raw.tif,experiment_03272025_wt_ymd494__xy1_frame0221_blinded.png,221,S0,B,9301,595.25,1529,28.188,130.425,A,"horizontal, A on left"
+experiment_03272025_wt_ymd494__xy1,experiment_03272025_wt_ymd494__xy1_frame0236_raw.tif,experiment_03272025_wt_ymd494__xy1_frame0236_blinded.png,236,S1,B,11011,535.5,1532.833,157.551,36.632,B,
+experiment_03272025_wt_ymd494__xy2,experiment_03272025_wt_ymd494__xy2_frame0021_raw.tif,experiment_03272025_wt_ymd494__xy2_frame0021_blinded.png,21,C0,B,8569,1409.25,1374.75,120.73,27.8,B,
+experiment_03272025_wt_ymd494__xy2,experiment_03272025_wt_ymd494__xy2_frame0046_raw.tif,experiment_03272025_wt_ymd494__xy2_frame0046_blinded.png,46,C1,B,10581,1361.25,1403.5,34.004,148.14,A,
+experiment_03272025_wt_ymd494__xy2,experiment_03272025_wt_ymd494__xy2_frame0054_raw.tif,experiment_03272025_wt_ymd494__xy2_frame0054_blinded.png,54,C0,B,10878,1401.5,1365.25,160.51,30.439,B,
+experiment_03272025_wt_ymd494__xy2,experiment_03272025_wt_ymd494__xy2_frame0237_raw.tif,experiment_03272025_wt_ymd494__xy2_frame0237_blinded.png,237,A11,B,10687,1195.5,521,155.056,34.556,B,
+experiment_03272025_wt_ymd494__xy2,experiment_03272025_wt_ymd494__xy2_frame0237_raw.tif,experiment_03272025_wt_ymd494__xy2_frame0237_blinded.png,237,V,B,10212,1460,1289.25,45.918,138.922,A,pole A out of focus
+experiment_03272025_wt_ymd494__xy3,experiment_03272025_wt_ymd494__xy3_frame0058_raw.tif,experiment_03272025_wt_ymd494__xy3_frame0058_blinded.png,58,B1,B,11096,983.75,266.5,152.209,41.462,B,
+experiment_03272025_wt_ymd494__xy3,experiment_03272025_wt_ymd494__xy3_frame0061_raw.tif,experiment_03272025_wt_ymd494__xy3_frame0061_blinded.png,61,D,B,11666,1857.5,965.5,156.585,43.932,B,
+experiment_03272025_wt_ymd494__xy3,experiment_03272025_wt_ymd494__xy3_frame0142_raw.tif,experiment_03272025_wt_ymd494__xy3_frame0142_blinded.png,142,B10,B,9603,968,223.25,31.707,138.258,A,
+experiment_03272025_wt_ymd494__xy3,experiment_03272025_wt_ymd494__xy3_frame0146_raw.tif,experiment_03272025_wt_ymd494__xy3_frame0146_blinded.png,146,F11,B,9565,1721,2201.25,28.16,130.501,A,"horizontal, A on right"
+experiment_03272025_wt_ymd494__xy3,experiment_03272025_wt_ymd494__xy3_frame0147_raw.tif,experiment_03272025_wt_ymd494__xy3_frame0147_blinded.png,147,E0,B,10760,1875.5,1058.5,141.354,50.983,B,
+experiment_03272025_wt_ymd494__xy3,experiment_03272025_wt_ymd494__xy3_frame0151_raw.tif,experiment_03272025_wt_ymd494__xy3_frame0151_blinded.png,151,F11,B,10200,1724.75,2201.75,28.028,138.754,A,"horizontal, A on right"
+experiment_03272025_wt_ymd494__xy3,experiment_03272025_wt_ymd494__xy3_frame0161_raw.tif,experiment_03272025_wt_ymd494__xy3_frame0161_blinded.png,161,C01,B,10129,1732.5,546.5,25.35,152.224,A,
+experiment_03272025_wt_ymd494__xy3,experiment_03272025_wt_ymd494__xy3_frame0171_raw.tif,experiment_03272025_wt_ymd494__xy3_frame0171_blinded.png,171,E1,B,13043,1870.75,1144.5,52.85,172.958,A,
+experiment_03272025_wt_ymd494__xy3,experiment_03272025_wt_ymd494__xy3_frame0212_raw.tif,experiment_03272025_wt_ymd494__xy3_frame0212_blinded.png,212,AR,B,8271,1796.5,1067.5,27.406,117.926,A,
+experiment_03272025_wt_ymd494__xy3,experiment_03272025_wt_ymd494__xy3_frame0219_raw.tif,experiment_03272025_wt_ymd494__xy3_frame0219_blinded.png,219,U,B,7827,1768.5,2108.5,25.511,111.545,A,
+experiment_03272025_wt_ymd494__xy3,experiment_03272025_wt_ymd494__xy3_frame0221_raw.tif,experiment_03272025_wt_ymd494__xy3_frame0221_blinded.png,221,AE1,B,8662,1013.833,454.5,23.087,128.777,A,
+experiment_03272025_wt_ymd494__xy3,experiment_03272025_wt_ymd494__xy3_frame0225_raw.tif,experiment_03272025_wt_ymd494__xy3_frame0225_blinded.png,225,B111,B,9228,871,107.75,138.522,25.819,B,
+experiment_03272025_wt_ymd494__xy3,experiment_03272025_wt_ymd494__xy3_frame0226_raw.tif,experiment_03272025_wt_ymd494__xy3_frame0226_blinded.png,226,B0,B,14474,957.167,316.5,185.415,61.168,B,
