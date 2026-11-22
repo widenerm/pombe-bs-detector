@@ -1,8 +1,14 @@
 name: tests
 
+# Once per change: pull requests, and main after a merge. A newer push cancels an older run.
 on:
   push:
+    branches: [main]
   pull_request:
+
+concurrency:
+  group: tests-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   test:

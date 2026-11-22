@@ -9,7 +9,7 @@ description = "Birth scars, pole identity, lineages and growth curves of fission
 readme = "README.md"
 license = "MIT"
 license-files = ["LICENSE"]
-authors = [{ name = "Xan Widener" }]
+authors = [{ name = 'Michael "Xander" Widener' }]
 requires-python = ">=3.10"
 keywords = ["Schizosaccharomyces pombe", "fission yeast", "birth scar", "cell polarity", "microscopy", "cellpose"]
 classifiers = [
