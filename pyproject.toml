@@ -46,3 +46,4 @@ packages = ["pombe_tracker", "septin_curve_vis"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+pythonpath = ["."]          # tests also import the validation/ scripts
