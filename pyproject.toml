@@ -1,0 +1,48 @@
+[build-system]
+requires = ["setuptools>=64"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "bs-detector"
+version = "1.0.0"
+description = "Birth scars, pole identity, lineages and growth curves of fission yeast from brightfield time-lapse movies"
+readme = "README.md"
+license = { file = "LICENSE" }
+authors = [{ name = "Xan Widener" }]
+requires-python = ">=3.10"
+keywords = ["Schizosaccharomyces pombe", "fission yeast", "birth scar", "cell polarity", "microscopy", "cellpose"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Topic :: Scientific/Engineering :: Bio-Informatics",
+    "Topic :: Scientific/Engineering :: Image Recognition",
+]
+# cellpose is pinned: every validated number used Cellpose 4.0.9 with the cpsam
+# weights, and the segmenter checks the weights' sha256 before running.
+dependencies = [
+    "cellpose==4.0.9",
+    "numpy>=1.23",
+    "scipy>=1.9",
+    "scikit-image>=0.19",
+    "pandas>=1.5",
+    "h5py>=3.7",
+    "matplotlib>=3.6",
+    "tifffile>=2023.1",
+    "nd2>=0.10",
+    "openpyxl>=3.1",
+]
+
+[project.optional-dependencies]
+test = ["pytest>=7"]
+
+[project.scripts]
+bsd = "pombe_tracker.cli:main"
+
+[project.urls]
+Repository = "https://github.com/widenerm/pombe-bs-detector"
+
+[tool.setuptools]
+packages = ["pombe_tracker", "septin_curve_vis"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

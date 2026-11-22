@@ -109,7 +109,10 @@ def stabilize_scars(all_results, config):
             frame_cands.append(fc)
 
         # ── Find consensus position ───────────────────────────────────────────
-        all_positions = [fc['norm_pos'] for fcs in frame_cands for fc in fcs]
+        # One vote per frame (its selected scar). Voting with every candidate
+        # lets frames with many weak candidates outvote the actual detections.
+        all_positions = [p for p in (_normalized_scar_position(r) for r in results
+                                     if r['scar_detected']) if p is not None]
 
         if len(all_positions) < 2:
             for r in results:
@@ -257,16 +260,16 @@ def _normalized_position_from_midpoint(result, midpoint):
     def proj(pt):
         return float(np.dot(np.array(pt) - np.array(center), np.array(axis)))
 
-    p_ep1 = proj(ep1)
-    p_ep2 = proj(ep2)
-    p_mp  = proj(midpoint)
-
-    lo, hi = min(p_ep1, p_ep2), max(p_ep1, p_ep2)
-    span   = hi - lo
-    if span < 1e-6:
+    # Measured from the new pole (0) toward the old pole (1): the PCA axis
+    # sign is arbitrary per frame, so min/max projection is not comparable
+    # across frames.
+    p_new = proj(ep1)
+    p_old = proj(ep2)
+    span  = p_old - p_new
+    if abs(span) < 1e-6:
         return None
 
-    return float(np.clip((p_mp - lo) / span, 0.0, 1.0))
+    return float(np.clip((proj(midpoint) - p_new) / span, 0.0, 1.0))
 
 
 def _normalized_scar_position(result):
@@ -368,19 +371,24 @@ def _interpolate_frames(results, suspect_indices):
         if prev_i is None and next_i is None:
             continue
 
-        if prev_i is not None and next_i is not None:
-            t       = (i - prev_i) / (next_i - prev_i)
-            prev_mp = np.array(results[prev_i]['scar_midpoint'])
-            next_mp = np.array(results[next_i]['scar_midpoint'])
-            new_mp  = (1 - t) * prev_mp + t * next_mp
-        elif prev_i is not None:
-            new_mp = np.array(results[prev_i]['scar_midpoint'])
-        else:
-            new_mp = np.array(results[next_i]['scar_midpoint'])
-
+        # Interpolate the position measured from the new pole, then place it
+        # on this frame's own pole-to-pole line: cells move between frames,
+        # so absolute coordinates from other frames would land off the cell.
         dbg   = r.get('debug_info', {})
         np_pt = dbg.get('new_pole_point')
         op_pt = dbg.get('old_pole_point')
+        if np_pt is None or op_pt is None:
+            continue
+        neighbors = [j for j in (prev_i, next_i) if j is not None]
+        fracs = [_normalized_scar_position(results[j]) for j in neighbors]
+        if any(f is None for f in fracs):
+            continue
+        if len(fracs) == 2:
+            t    = (i - prev_i) / (next_i - prev_i)
+            frac = (1 - t) * fracs[0] + t * fracs[1]
+        else:
+            frac = fracs[0]
+        new_mp = np.array(np_pt) + frac * (np.array(op_pt) - np.array(np_pt))
 
         r['scar_midpoint'] = new_mp
         r['scar_detected'] = True

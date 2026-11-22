@@ -85,7 +85,7 @@ class CellProcessor:
 
         # ── Step 2 : birth scar detection (single full-cell pass) ────────────
         scar_pair, debug_info = self.detector.detect(
-            contour, new_pole_point=tentative_new_pole)
+            contour, new_pole_point=tentative_new_pole, image=frame)
 
         # ── Step 3 : final pole assignment ───────────────────────────────────
         scar_midpoint = (scar_pair[0] + scar_pair[1]) / 2 if scar_pair is not None else None
@@ -143,6 +143,11 @@ class CellProcessor:
                 'new_end_length': new_len,
                 'old_end_length': old_len,
             })
+            # The scar should sit in the new-end compartment. If it is nearer
+            # the assigned old pole, the scar and pole evidence disagree.
+            debug_info['scar_pole_conflict'] = bool(new_len > old_len)
+            if debug_info['scar_pole_conflict'] and 'scar_needs_review' in debug_info:
+                debug_info['scar_needs_review'] = True
         else:
             result.update({
                 'scar_detected':  False,
@@ -427,24 +432,27 @@ def process_frame(frame, segmenter, processor):
 
 # ── Top-level pipeline ────────────────────────────────────────────────────────
 
-def run_pipeline(frames, config, tracker=None):
+def run_pipeline(frames, config, tracker=None, segmenter=None):
     """
     Run the full detection + tracking pipeline on *frames*.
 
     Parameters
     ----------
-    frames  : list/array of 2-D images
-    config  : Config instance
-    tracker : optional pre-initialized CellTracker (for resuming)
+    frames    : list/array of 2-D images
+    config    : Config instance
+    tracker   : optional pre-initialized CellTracker (for resuming)
+    segmenter : optional object with .segment(image) -> label mask, e.g. one
+                that returns masks saved earlier; default runs Cellpose
 
     Returns
     -------
     all_results : list of  {'frame_idx', 'frame', 'cells'}  dicts
     """
-    from .segmentation import CellposeSegmenter
-    from .tracking     import CellTracker
+    from .tracking import CellTracker
 
-    segmenter = CellposeSegmenter(config)
+    if segmenter is None:
+        from .segmentation import CellposeSegmenter
+        segmenter = CellposeSegmenter(config)
     processor = CellProcessor(config)
     if tracker is None:
         tracker = CellTracker(config)

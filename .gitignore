@@ -55,3 +55,22 @@ Thumbs.db
 !docs/**/*.pdf
 # Large validation packages
 validation/*.zip
+# Septin masks/projections, results and the division-classifier labelling package
+# (derived from unpublished lab microscopy data, never commit)
+septin_curve_vis/derived/
+septin_curve_vis/*division_package*/
+septin_curve_vis/0*/
+septin_curve_vis/0*_results/
+septin_curve_vis/0*_test/
+
+# Figures referenced by validation reports
+!validation/reports/**/*.png
+
+# Preprint draft: private until the lab decides to share it
+paper/
+
+# bsd run folders, logs, local copies of talks
+runs/
+*.log
+docs/*.pptx
+docs/*Symposium*
