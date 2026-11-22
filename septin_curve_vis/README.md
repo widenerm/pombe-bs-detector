@@ -1,33 +1,13 @@
-# Septin curvature visualization
+# septin_curve_vis
 
-This workflow analyzes paired brightfield and fluorescence ND2 files. It
-segments cells from brightfield, fits the same periodic B-spline used by
-BS-Detector, computes signed curvature, and samples z-projected fluorescence
-along the same contour.
+Septin intensity vs outline curvature on paired brightfield/fluorescence ND2 stills.
+Run it with `bsd septin ...`; the full guide (inputs, outputs, statistics, cell
+filters, the contour benchmark and open questions) is [docs/SEPTIN.md](../docs/SEPTIN.md).
 
-## Run
-
-From the repository root:
-
-```bash
-python -m pip install -r requirements.txt
-python -m septin_curve_vis.run_analysis \
-  --input /Users/xwidener/Documents/pombe-bs-detector/septin_curve_vis/080724 \
-  --output /Users/xwidener/Documents/pombe-bs-detector/septin_curve_vis/080724_results
-```
-
-The input directory should contain the downloaded ND2 files. Files are sorted
-by their natural filename order and paired consecutively. Within each pair,
-the smaller file is treated as brightfield, matching the acquisition note.
-
-Outputs include:
-
-- `overlays/`: transparent PNG curvature overlays on the fluorescence image;
-- `profiles/`: diagnostic plots of curvature and fluorescence intensity;
-- `measurements.csv`: one row per contour sample;
-- `cell_summary.csv`: one row per analyzed cell/frame;
-- `projections/`: optional summed fluorescence TIFFs.
-
-The script processes one ND2 pair at a time, so the full 10 GB experiment is
-not loaded into memory. The exported overlay PNGs have the same pixel canvas
-as the source fluorescence image and can be placed directly over it.
+| Module | Step |
+|---|---|
+| `segment_fields.py` | one saved Cellpose segmentation for all fields (`bsd septin segment`) |
+| `run_analysis.py` | curvature and fluorescence along each outline (`bsd septin measure`) |
+| `analyze_statistics.py` | within-cell association tests and cell filters (`bsd septin stats`) |
+| `build_division_package.py` | dividing / not-dividing labelling package (brightfield + Sad1 only) |
+| `curvature_benchmark.py` | synthetic benchmark that chose the contour method |

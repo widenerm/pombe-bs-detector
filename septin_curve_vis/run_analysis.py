@@ -9,9 +9,11 @@ from __future__ import annotations
 
 import argparse
 import csv
+import hashlib
 import re
 from pathlib import Path
 
+import h5py
 import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib.colors import Normalize
@@ -88,6 +90,42 @@ def project_stack(stack, fluorescence: bool, channel: int = 0):
     if stack.ndim != 2:
         raise ValueError(f"Expected 2-D or 3-D image, got shape {stack.shape}")
     return stack.astype(np.float32, copy=False)
+
+
+def mask_key(bf_path: Path, frame_idx: int) -> str:
+    """Name of a frame's saved mask in the masks HDF5; also the cell_id prefix."""
+    return f"{bf_path.stem}_f{frame_idx:04d}"
+
+
+def image_sha256(image) -> str:
+    return hashlib.sha256(np.ascontiguousarray(image).tobytes()).hexdigest()
+
+
+def load_mask(masks_path: Path, bf_path: Path, frame_idx: int, bf):
+    """Label image saved by segment_fields.py, checked against this brightfield."""
+    key = mask_key(bf_path, frame_idx)
+    with h5py.File(masks_path, "r") as f:
+        if key not in f:
+            raise KeyError(f"No saved mask {key} in {masks_path}; run segment_fields.py")
+        if f[key].attrs["image_sha256"] != image_sha256(bf):
+            raise ValueError(f"Saved mask {key} was made from a different brightfield image")
+        return f[key][()]
+
+
+def analysis_cells(labels, bf, cfg, processor):
+    """Yield process_cell results for the cells the analysis keeps.
+
+    Cells must pass the size/shape filters and not be clipped by the image
+    border. The division-classifier package uses this so it offers exactly
+    the cells that appear in measurements.csv.
+    """
+    regions = filter_valid_cells(regionprops(labels), bf.shape, cfg)
+    valid_regions = list(regions.values())
+    cell_info = prepare_cell_info(valid_regions, labels, cfg)
+    for region in valid_regions:
+        result = processor.process_cell(region, labels, bf, cell_info)
+        if result is not None and result.get("seg_quality") != "border_clip":
+            yield result
 
 
 def sample_band(image, points_rc, normals_rc, half_width=2.0):
@@ -188,7 +226,20 @@ def save_profile(curvature, intensity, path, title):
     plt.close(fig)
 
 
+def nd2_um_per_px(path: Path):
+    """Pixel size recorded in the ND2 file (None if absent)."""
+    try:
+        with nd2_axes(path) as f:
+            return float(f.voxel_size().x)
+    except Exception:
+        return None
+
+
 def analyze_pair(bf_path, fl_path, output, segmenter, cfg, args):
+    um_per_px = nd2_um_per_px(bf_path) or cfg.PIXEL_SIZE_UM
+    if abs(um_per_px / cfg.PIXEL_SIZE_UM - 1) > 0.01:
+        print(f"  warning: {bf_path.name} is {um_per_px:.4f} um/px, not {cfg.PIXEL_SIZE_UM}; the cell size "
+              "filters are in pixels at 0.0647 um/px, so check which cells are kept")
     bf_frames = read_nd2_frames(bf_path)
     fl_frames = read_nd2_frames(fl_path)
     processor = CellProcessor(cfg)
@@ -207,23 +258,20 @@ def analyze_pair(bf_path, fl_path, output, segmenter, cfg, args):
                 f"Brightfield/fluorescence shape mismatch in frame {frame_idx}: "
                 f"{bf.shape} vs {fl.shape}. Check channel registration/cropping."
             )
-        labels = segmenter.segment(bf)
-        regions = filter_valid_cells(regionprops(labels), bf.shape, cfg)
-        if not regions:
-            continue
-        valid_regions = list(regions.values())
-        cell_info = prepare_cell_info(valid_regions, labels, cfg)
-        for region in valid_regions:
-            result = processor.process_cell(region, labels, bf, cell_info)
-            if result is None or result.get("seg_quality") == "border_clip":
-                continue
-            dbg = result["debug_info"]
-            points = np.asarray(dbg["smooth_pts"], dtype=float)
-            curvature = np.asarray(dbg["kappa"], dtype=float)
+        if args.masks:
+            labels = load_mask(args.masks, bf_path, frame_idx, bf)
+        else:
+            labels = segmenter.segment(bf)
+        for result in analysis_cells(labels, bf, cfg, processor):
+            # Fit the contour here rather than reuse the scar detector's, which
+            # ignores --smooth-factor/--contour-points. This spline gave the most
+            # accurate curvature in curvature_benchmark.py (see README).
+            points, curvature = compute_smoothed_curvature(
+                result["contour"], cfg.SMOOTH_FACTOR, cfg.N_CONTOUR_POINTS)
             intensity = sample_band(fl, points, contour_normals(points), args.band_width)
             background = float(np.percentile(fl, 10))
             intensity = intensity - background
-            cell_id = f"{bf_path.stem}_f{frame_idx:04d}_l{result['label']}"
+            cell_id = f"{mask_key(bf_path, frame_idx)}_l{result['label']}"
             overlay = output / "overlays" / f"{cell_id}.png"
             profile = output / "profiles" / f"{cell_id}.png"
             overlay.parent.mkdir(parents=True, exist_ok=True)
@@ -256,6 +304,8 @@ def analyze_pair(bf_path, fl_path, output, segmenter, cfg, args):
                 "max_abs_curvature": float(np.max(np.abs(curvature))),
                 "mean_fluorescence": float(np.mean(intensity)),
                 "max_fluorescence": float(np.max(intensity)),
+                "length_px": float(result["length"]),
+                "length_um": float(result["length"]) * um_per_px,
             })
         frame_dir = output / "frame_overlays"
         frame_dir.mkdir(parents=True, exist_ok=True)
@@ -276,6 +326,33 @@ def write_csv(rows, path):
         writer.writerows(rows)
 
 
+def measure(input_dir: Path, output: Path, masks: Path | None = None, band_width=2.0, fluor_channel=0,
+            smooth_factor=40.0, contour_points=300, limit_pairs=None, log=print):
+    """Curvature and fluorescence along every kept cell's outline -> measurements.csv, cell_summary.csv."""
+    import argparse
+    args = argparse.Namespace(band_width=band_width, fluor_channel=fluor_channel, masks=masks)
+    cfg = Config()
+    cfg.SMOOTH_FACTOR = smooth_factor
+    cfg.N_CONTOUR_POINTS = contour_points
+    pairs = pair_nd2_files(Path(input_dir))
+    if limit_pairs is not None:
+        pairs = pairs[:limit_pairs]
+    log(f"Found {len(pairs)} brightfield/fluorescence pair(s)")
+    for bf, fl in pairs:
+        log(f"  brightfield {bf.name}  +  fluorescence {fl.name}")
+    segmenter = None if masks else CellposeSegmenter(cfg)
+    all_measurements, all_summaries = [], []
+    for bf, fl in pairs:
+        log(f"Analyzing {bf.name} + {fl.name}")
+        m, summ = analyze_pair(bf, fl, Path(output), segmenter, cfg, args)
+        all_measurements.extend(m)
+        all_summaries.extend(summ)
+    write_csv(all_measurements, Path(output) / "measurements.csv")
+    write_csv(all_summaries, Path(output) / "cell_summary.csv")
+    log(f"Wrote {len(all_measurements)} contour samples and {len(all_summaries)} cells")
+    return len(all_summaries)
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--input", type=Path, required=True)
@@ -287,24 +364,12 @@ def main():
     parser.add_argument("--contour-points", type=int, default=300)
     parser.add_argument("--limit-pairs", type=int, default=None,
                         help="Only process the first N pairs (useful for validation)")
-    args = parser.parse_args()
-    cfg = Config()
-    cfg.SMOOTH_FACTOR = args.smooth_factor
-    cfg.N_CONTOUR_POINTS = args.contour_points
-    pairs = pair_nd2_files(args.input)
-    if args.limit_pairs is not None:
-        pairs = pairs[:args.limit_pairs]
-    print(f"Found {len(pairs)} brightfield/fluorescence pair(s)")
-    segmenter = CellposeSegmenter(cfg)
-    all_measurements, all_summaries = [], []
-    for bf, fl in pairs:
-        print(f"Analyzing {bf.name} + {fl.name}")
-        measurements, summaries = analyze_pair(bf, fl, args.output, segmenter, cfg, args)
-        all_measurements.extend(measurements)
-        all_summaries.extend(summaries)
-    write_csv(all_measurements, args.output / "measurements.csv")
-    write_csv(all_summaries, args.output / "cell_summary.csv")
-    print(f"Wrote {len(all_measurements)} contour samples and {len(all_summaries)} cells")
+    parser.add_argument("--masks", type=Path, default=None,
+                        help="Masks HDF5 from segment_fields.py; skips Cellpose so "
+                             "cell IDs match every other use of those masks")
+    a = parser.parse_args()
+    measure(a.input, a.output, a.masks, a.band_width, a.fluor_channel, a.smooth_factor, a.contour_points,
+            a.limit_pairs)
 
 
 if __name__ == "__main__":
