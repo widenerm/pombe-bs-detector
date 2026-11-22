@@ -31,15 +31,22 @@ REPO = Path(__file__).resolve().parent.parent
 
 
 def _git_commit():
-    try:
-        out = subprocess.run(['git', '-C', str(REPO), 'rev-parse', 'HEAD'], capture_output=True, text=True, timeout=5)
-        if out.returncode == 0:
-            dirty = subprocess.run(['git', '-C', str(REPO), 'status', '--porcelain', '--untracked-files=no'],
-                                   capture_output=True, text=True, timeout=5).stdout.strip()
-            return out.stdout.strip() + ('-dirty' if dirty else '')
+    """Commit of the code that ran: from a git checkout, or from pip's record of a git install."""
+    if (REPO / '.git').exists():
+        try:
+            out = subprocess.run(['git', '-C', str(REPO), 'rev-parse', 'HEAD'], capture_output=True, text=True, timeout=5)
+            if out.returncode == 0:
+                dirty = subprocess.run(['git', '-C', str(REPO), 'status', '--porcelain', '--untracked-files=no'],
+                                       capture_output=True, text=True, timeout=5).stdout.strip()
+                return out.stdout.strip() + ('-dirty' if dirty else '')
+        except Exception:
+            pass
+    try:                                  # pip install git+https://...  records the commit in direct_url.json
+        from importlib.metadata import distribution
+        info = json.loads(distribution('bs-detector').read_text('direct_url.json') or '{}')
+        return info.get('vcs_info', {}).get('commit_id')
     except Exception:
-        pass
-    return None
+        return None
 
 
 def _version():
