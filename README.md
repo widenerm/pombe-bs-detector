@@ -85,10 +85,17 @@ stopped if interrupted:
 
 | Step | Command | Writes |
 |---|---|---|
-| Read the movie (resampled to 0.0647 µm/px if needed) | `bsd prepare` | `run.json`, `frames.h5` |
-| Segment every frame with Cellpose-SAM (the GPU step) | `bsd segment` | `masks/` |
-| Track cells, assign poles, find birth scars | `bsd track` | `measurements.csv`, `qc/` |
-| Growth curves of every complete cell cycle | `bsd growth` | `growth/` |
+| Record the movie (resampled to 0.0647 µm/px only if needed) | `bsd prepare` | `run.json` |
+| Segment every frame with Cellpose-SAM (the GPU step) | `bsd segment` | `working/masks/` |
+| Track cells, assign poles, find birth scars | `bsd track` | `measurements.csv`, `review.csv` |
+| Apply corrections; growth curves of every complete cell cycle | `bsd growth` | `growth/` |
+
+**Checking and correcting.** `review.csv` lists, for each cell, the frames worth a look and why:
+the detector was unsure, or a length jumped. `bsd show RUN --cell A01` draws where the detector
+put the scar and poles, frame by frame. Fixes are recorded without touching the detector's
+output, and the next `bsd growth` uses them. They can come from `bsd fix`, from clicking on the
+cell in the Colab notebook, from the lab's Fiji macro ([`fiji/`](fiji/)), or from editing
+`corrections/edits.csv` directly.
 
 Inputs: Nikon `.nd2`, SlideBook `.sldy`, `.tif` stacks or `.h5`. Segmentation takes
 roughly 15–40 s per 2304 × 2304 frame on an NVIDIA GPU and about 90 s on an Apple M2.
@@ -140,14 +147,15 @@ are in pixels at 0.0647 µm/px.
 ## Repository
 
 ```
-pombe_tracker/       the library and the `bsd` command (cli.py, workflow.py)
+pombe_tracker/       the library and the `bsd` command (cli.py, workflow.py, review.py, corrections.py)
 septin_curve_vis/    septin intensity vs curvature
 notebooks/           Colab notebooks for movies and for septin stills
 docs/                user guide, septin guide, cluster recipe, validation summary
 validation/          annotation protocols, anonymized annotations, scripts and reports behind every number
 tests/               unit tests and an end-to-end regression on the sample movie
 data/sample/         5-frame sample movie with its saved masks
-hpc/                 SLURM array job for segmentation
+hpc/                 SLURM scripts: environment setup, segmentation array, full chain
+fiji/                Fiji macro for checking and correcting a cell's birth scar
 ```
 
 ## Citation and license

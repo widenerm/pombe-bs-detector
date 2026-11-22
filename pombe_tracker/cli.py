@@ -3,11 +3,17 @@
 Movies (birth scars, poles, lineages, growth curves):
 
     bsd info    MOVIE                          what is in the file (positions, channels, pixel size, frames)
-    bsd run     MOVIE --out RUN                everything below, in order
-    bsd prepare MOVIE --out RUN                read the movie into RUN/frames.h5 (resampled to 0.0647 um/px if needed)
+    bsd run     MOVIE --out RUN                prepare, segment, track and growth, in order
+    bsd prepare MOVIE --out RUN                record the movie (resampled to 0.0647 um/px only if needed)
     bsd segment MOVIE --out RUN | RUN          Cellpose masks, resumable; --block K/N for one of N parallel jobs
-    bsd track   RUN                            tracking, poles, scars -> RUN/measurements.csv, RUN/qc/
-    bsd growth  RUN [--hand WORKBOOK.xlsx]     complete cell cycles -> RUN/growth/
+    bsd track   RUN                            tracking, poles, scars -> measurements.csv, review.csv
+    bsd growth  RUN [--hand WORKBOOK.xlsx]     apply corrections; complete cell cycles -> growth/
+
+Checking and correcting:
+
+    bsd review  RUN                            which cells and frames to check, and why (review.csv)
+    bsd show    RUN --cell A01 [--frames 40-60]   draw the cell: lengths over time, scar and poles
+    bsd fix     RUN --cell A01 --frames 52 --scar X Y | --lengths NEW OLD | --swap-poles | --exclude | --checked
 
 Septin x curvature (paired brightfield + fluorescence ND2 stills):
 
@@ -16,9 +22,10 @@ Septin x curvature (paired brightfield + fluorescence ND2 stills):
     bsd septin measure INPUT_DIR --out RUN     curvature + intensity along each outline
     bsd septin stats   RUN [--exclude ...]     association tests -> RUN/statistics/
 
-A multi-position file gives one run folder per position inside --out. Every
-step skips work already done, so rerunning a command after an interruption
-picks up where it stopped. See docs/USER_GUIDE.md and docs/SEPTIN.md.
+Figures are saved to RUN/figures/ unless --no-figures (or --figures-dir DIR elsewhere). A
+multi-position file gives one run folder per position inside --out. Every step skips work
+already done, so rerunning a command after an interruption picks up where it stopped. See
+docs/USER_GUIDE.md and docs/SEPTIN.md.
 """
 import argparse
 import re
@@ -50,7 +57,20 @@ def _movie_runs(a):
 
 def _prepare(a, position, run_dir):
     from .workflow import prepare
-    return prepare(a.movie, run_dir, position, a.channel, a.z, a.pixel_size, a.frame_minutes, log=log)
+    return prepare(a.movie, run_dir, position, a.channel, a.z, a.pixel_size, a.frame_minutes,
+                   frames_dir=_frames_dir(a, run_dir), log=log)
+
+
+def _frames_dir(a, run_dir):
+    fd = getattr(a, 'frames_dir', None)
+    return Path(fd) / Path(run_dir).name if fd else None
+
+
+def _figures(a, run_dir):
+    if getattr(a, 'no_figures', False):
+        return None
+    fd = getattr(a, 'figures_dir', None)
+    return Path(fd) / Path(run_dir).name if fd else Path(run_dir) / 'figures'
 
 
 def _block(a, n_frames):
@@ -125,13 +145,62 @@ def cmd_segment(a):
 def cmd_track(a):
     from .workflow import run_dirs, track
     for run_dir in run_dirs(a.run):
-        track(run_dir, qc=not a.no_qc, log=log)
+        track(run_dir, figures_dir=_figures(a, run_dir), log=log)
 
 
 def cmd_growth(a):
     from .workflow import growth, run_dirs
     for run_dir in run_dirs(a.run):
-        growth(run_dir, a.hand, a.hand_type, a.frame_minutes, a.cells, a.featured, log=log)
+        growth(run_dir, a.hand, a.hand_type, a.frame_minutes, a.cells, a.featured,
+               figures_dir=_figures(a, run_dir), log=log)
+
+
+def cmd_review(a):
+    import pandas as pd
+    from .review import write_review
+    from .workflow import Run, run_dirs
+    for run_dir in run_dirs(a.run):
+        t = write_review(Run(run_dir), log=log)
+        if not t.empty:
+            cols = ['cell_name', 'in_growth_curves', 'frames_to_check', 'why', 'x', 'y', 'at_frame']
+            with pd.option_context('display.width', 160, 'display.max_colwidth', 50):
+                log(t[cols].head(a.top).to_string(index=False))
+            log(f'(all cells: {Path(run_dir) / "review.csv"})')
+
+
+def cmd_show(a):
+    import matplotlib
+    matplotlib.use('Agg')
+    from .review import show_cell
+    from .workflow import Run
+    run = Run(a.run)
+    fig = show_cell(run, a.cell, a.frames, a.max_panels)
+    out = Path(a.out) if a.out else run.path / 'figures' / f'cell_{a.cell}.png'
+    out.parent.mkdir(parents=True, exist_ok=True)
+    fig.savefig(out, dpi=150, bbox_inches='tight')
+    log(f'saved {out}')
+
+
+def cmd_fix(a):
+    from .corrections import add_edit, parse_frames
+    from .workflow import Run
+    run = Run(a.run)
+    fields = {}
+    if a.scar:
+        fields.update(scar_x=a.scar[0], scar_y=a.scar[1])
+    if a.lengths:
+        fields.update(new_end_length_um=a.lengths[0], old_end_length_um=a.lengths[1])
+    for flag in ('swap_poles', 'exclude', 'checked'):
+        if getattr(a, flag):
+            fields[flag] = 'yes'
+    if not fields:
+        raise SystemExit('say what to change: --scar X Y, --lengths NEW OLD, --swap-poles, --exclude or --checked')
+    if a.frames is None and (a.scar or a.lengths):
+        raise SystemExit('--scar and --lengths need --frames (one frame, or a list)')
+    parse_frames(a.frames)                       # fail early on a typo
+    row = add_edit(run, a.cell, a.frames or '', note=a.note or '', who=a.who or '', **fields)
+    log(f'recorded in {run.corrections_dir / "edits.csv"}: ' + ', '.join(f'{k}={v}' for k, v in row.items() if v))
+    log(f'run `bsd growth {run.path}` to apply it (or `bsd show {run.path} --cell {a.cell}` to look)')
 
 
 def cmd_run(a):
@@ -139,8 +208,8 @@ def cmd_run(a):
     for p, run_dir in _movie_runs(a):
         _prepare(a, p, run_dir)
         _segment(a, run_dir)
-        track(run_dir, qc=not a.no_qc, log=log)
-        growth(run_dir, a.hand, a.hand_type, a.frame_minutes, log=log)
+        track(run_dir, figures_dir=_figures(a, run_dir), log=log)
+        growth(run_dir, a.hand, a.hand_type, a.frame_minutes, figures_dir=_figures(a, run_dir), log=log)
         log(f'done: {run_dir}')
 
 
@@ -155,6 +224,12 @@ def cmd_septin_segment(a):
     segment([Path(d) for d in a.input], _septin_masks(a), log=log)
 
 
+def _septin_figs(a, default):
+    if getattr(a, 'no_figures', False):
+        return None
+    return a.figures_dir if getattr(a, 'figures_dir', None) else default
+
+
 def cmd_septin_measure(a):
     from septin_curve_vis.run_analysis import measure
     masks = _septin_masks(a)
@@ -162,13 +237,13 @@ def cmd_septin_measure(a):
         raise SystemExit(f'{masks} not found; run `bsd septin segment {a.input} --out {a.out}` first, '
                          'or point --masks at an existing masks file')
     measure(Path(a.input), Path(a.out), masks, a.band_width, a.fluor_channel, a.smooth_factor,
-            a.contour_points, a.limit_pairs, log=log)
+            a.contour_points, a.limit_pairs, figures_dir=_septin_figs(a, 'output'), log=log)
 
 
 def cmd_septin_stats(a):
     from septin_curve_vis.analyze_statistics import run
     run(Path(a.run), a.exclude, a.min_length_um, a.max_length_um, a.qc_threshold, a.primary_sigma,
-        a.permutations, log=log)
+        a.permutations, log=log, figures_dir=_septin_figs(a, 'out'))
 
 
 def cmd_septin_run(a):
@@ -178,9 +253,9 @@ def cmd_septin_run(a):
     masks = _septin_masks(a)
     segment([Path(a.input)], masks, log=log)
     measure(Path(a.input), Path(a.out), masks, a.band_width, a.fluor_channel, a.smooth_factor,
-            a.contour_points, a.limit_pairs, log=log)
+            a.contour_points, a.limit_pairs, figures_dir=_septin_figs(a, 'output'), log=log)
     run(Path(a.out), a.exclude, a.min_length_um, a.max_length_um, a.qc_threshold, a.primary_sigma,
-        a.permutations, log=log)
+        a.permutations, log=log, figures_dir=_septin_figs(a, 'out'))
     log(f'done: {a.out}')
 
 
@@ -195,6 +270,8 @@ def _movie_args(p, out_required=True):
     p.add_argument('--z', type=int, help='focal plane (0-based) if the file has a Z stack')
     p.add_argument('--pixel-size', type=float, help='um per pixel, if the file does not record it (or records it wrong)')
     p.add_argument('--frame-minutes', type=float, help='minutes between frames, if the file does not record it')
+    p.add_argument('--frames-dir', help='where a converted copy of the movie goes, if one is needed '
+                                        '(default RUN/working; e.g. a local disk when RUN is on Google Drive)')
 
 
 def _seg_args(p):
@@ -203,12 +280,19 @@ def _seg_args(p):
                    help='segment even if the Cellpose weights are not the validated cpsam weights')
 
 
+def _figure_args(p):
+    p.add_argument('--figures-dir', help='save figures here instead of RUN/figures')
+    p.add_argument('--no-figures', action='store_true', help="don't draw figures (tables only)")
+
+
 def _hand_args(p):
     p.add_argument('--hand', help="hand-tracked growth workbook (.xlsx) or converted CSV, to plot alongside")
     p.add_argument('--hand-type', help='which cells in --hand, e.g. y_wt (YE wild type); listed if omitted and ambiguous')
 
 
 def _septin_args(p, stats=True, measure=True):
+    p.add_argument('--figures-dir', help='save figures here instead of next to the tables')
+    p.add_argument('--no-figures', action='store_true', help="don't draw figures (tables only)")
     if measure:
         p.add_argument('--masks', help='masks HDF5 (default RUN/masks.h5); point at an existing one to keep its cell IDs')
         p.add_argument('--fluor-channel', type=int, default=0, help='fluorescence channel (default 0, Spn3-GFP)')
@@ -241,7 +325,7 @@ def parser():
     _movie_args(p)
     _seg_args(p)
     _hand_args(p)
-    p.add_argument('--no-qc', action='store_true', help='skip the QC figures')
+    _figure_args(p)
     p.set_defaults(fn=cmd_run)
 
     p = sub.add_parser('prepare', help='read a movie into a run folder (once, before parallel segment jobs)')
@@ -258,7 +342,7 @@ def parser():
 
     p = sub.add_parser('track', help='tracking, poles and birth scars -> measurements.csv')
     p.add_argument('run', help='run folder (or a folder of per-position run folders)')
-    p.add_argument('--no-qc', action='store_true')
+    _figure_args(p)
     p.set_defaults(fn=cmd_track)
 
     p = sub.add_parser('growth', help='growth curves of complete cell cycles')
@@ -267,7 +351,35 @@ def parser():
     p.add_argument('--frame-minutes', type=float, help='override the movie\'s frame interval')
     p.add_argument('--cells', nargs='+', help='only these complete cycles (default: all)')
     p.add_argument('--featured', nargs='+', help='cells for the per-cell panels (default: all plotted)')
+    _figure_args(p)
     p.set_defaults(fn=cmd_growth)
+
+    p = sub.add_parser('review', help='which cells and frames to check, and why')
+    p.add_argument('run')
+    p.add_argument('--top', type=int, default=20, help='how many cells to print (all are in review.csv)')
+    p.set_defaults(fn=cmd_review)
+
+    p = sub.add_parser('show', help='draw one cell: lengths over time, outline, scar and poles')
+    p.add_argument('run')
+    p.add_argument('--cell', required=True, help='lineage name, e.g. A01')
+    p.add_argument('--frames', help='e.g. 52 or 40-60 (default: the frames to check, else evenly spaced)')
+    p.add_argument('--max-panels', type=int, default=8)
+    p.add_argument('--out', help='PNG to write (default RUN/figures/cell_<name>.png)')
+    p.set_defaults(fn=cmd_show)
+
+    p = sub.add_parser('fix', help='record a correction in RUN/corrections/edits.csv')
+    p.add_argument('run')
+    p.add_argument('--cell', required=True)
+    p.add_argument('--frames', help='e.g. 52, 40-60, 40,42; omit for every frame of the cell')
+    p.add_argument('--scar', nargs=2, type=float, metavar=('X', 'Y'),
+                   help='scar midpoint in movie pixels (as Fiji shows them); end lengths are recomputed')
+    p.add_argument('--lengths', nargs=2, type=float, metavar=('NEW_UM', 'OLD_UM'), help='your own end lengths in µm')
+    p.add_argument('--swap-poles', action='store_true', help='the detector called the ends the wrong way round')
+    p.add_argument('--exclude', action='store_true', help='leave these frames out of growth curves')
+    p.add_argument('--checked', action='store_true', help='looked at; the detector is right')
+    p.add_argument('--note')
+    p.add_argument('--who')
+    p.set_defaults(fn=cmd_fix)
 
     sp = sub.add_parser('septin', help='septin intensity vs outline curvature on paired ND2 stills')
     ssub = sp.add_subparsers(dest='septin_cmd', required=True, metavar='STEP')

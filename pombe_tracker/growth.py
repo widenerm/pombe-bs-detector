@@ -416,8 +416,9 @@ def versus_hand_figure(t, path, ref, ref_label):
 
 
 def make_growth(measurements, out, cells=None, featured=None, frame_minutes=2.0, reference=None,
-                reference_label='Hand-tracked', verbose=True):
-    """Find complete cycles in a measurements table and write every growth figure and table to *out*.
+                reference_label='Hand-tracked', verbose=True, fig_dir=None):
+    """Find complete cycles in a measurements table; write the tables to *out* and, if fig_dir is
+    given, every growth figure (PNG and PDF) to fig_dir.
 
     measurements : DataFrame or path to a pipeline measurements CSV
     reference    : optional DataFrame of hand-tracked curves (TYPE, CELLNUM, END, LENGTH, TIME), one TYPE
@@ -435,7 +436,7 @@ def make_growth(measurements, out, cells=None, featured=None, frame_minutes=2.0,
     if not cells:
         if verbose:
             print('no complete cell cycles in this movie (a cell must be born and divide while tracked); '
-                  'no growth figures written')
+                  'no growth curves')
             for n, why in rejected.items():
                 print(f'  rejected {n}: {why}')
         return [], pd.DataFrame(), rejected
@@ -446,11 +447,14 @@ def make_growth(measurements, out, cells=None, featured=None, frame_minutes=2.0,
     featured = featured or cells
     if set(featured) - set(cells):
         raise ValueError(f'featured cells must be among the plotted cells {cells}')
-    figure(t, featured, out / 'growth_curves')
-    delta_figure(t, featured, out / 'growth_deltas', frame_minutes)
-    since_birth_figure(t, featured, out / 'growth_since_birth', reference, reference_label)
-    if reference is not None:
-        versus_hand_figure(t, out / 'growth_since_birth_vs_hand', reference, reference_label)
+    if fig_dir is not None:
+        fig_dir = Path(fig_dir)
+        fig_dir.mkdir(parents=True, exist_ok=True)
+        figure(t, featured, fig_dir / 'growth_curves')
+        delta_figure(t, featured, fig_dir / 'growth_deltas', frame_minutes)
+        since_birth_figure(t, featured, fig_dir / 'growth_since_birth', reference, reference_label)
+        if reference is not None:
+            versus_hand_figure(t, fig_dir / 'growth_since_birth_vs_hand', reference, reference_label)
     if verbose:
         print(f'{len(found)} complete cycles: {found}')
         for n, why in rejected.items():
@@ -471,7 +475,7 @@ def main():
     p.add_argument('--reference-label', default='Hand-tracked')
     a = p.parse_args()
     ref = read_reference(a.reference, a.reference_type) if a.reference else None
-    make_growth(a.measurements, a.out, a.cells, a.featured, a.frame_minutes, ref, a.reference_label)
+    make_growth(a.measurements, a.out, a.cells, a.featured, a.frame_minutes, ref, a.reference_label, fig_dir=a.out)
 
 
 if __name__ == '__main__':
