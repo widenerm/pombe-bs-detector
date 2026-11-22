@@ -1,206 +1,158 @@
 # BS-Detector
-### Birth Scar Detector for *Schizosaccharomyces pombe*
 
-Automated detection of birth scars, old/new pole identity, cell lineage tracking, and morphometric measurements in fission yeast time-lapse brightfield microscopy.
+**Birth scars, pole identity and polar growth of fission yeast, from ordinary brightfield time-lapse movies.**
 
-<img src="docs/figs/key_example.png" width="300" alt="Detected birth scar with new pole (green), old pole (magenta), and compartment lengths">
+[![tests](https://github.com/widenerm/pombe-bs-detector/actions/workflows/tests.yml/badge.svg)](https://github.com/widenerm/pombe-bs-detector/actions/workflows/tests.yml)
+[![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/widenerm/pombe-bs-detector/blob/main/notebooks/BS_Detector_Colab.ipynb)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
-*Birth scar detection output. Yellow line: newest birth scar. Green marker: new pole. Magenta marker: old pole. Dashed lines: new-end and old-end compartment lengths.*
+*Schizosaccharomyces pombe* grows only at its two ends. After a cell is born, it grows
+from its **old end** first and only later switches on growth at its **new end**
+(new-end take-off, NETO). Measuring each end separately requires knowing which end is
+which, and the only mark of that in a brightfield image is the **birth scar**: a faint
+ridge left on the cell wall by the division that made the cell. Following one cell from
+birth by hand takes 10–40 minutes, so hand-tracked studies stop at a handful of cells.
 
----
+BS-Detector finds the birth scar in every cell in every frame, assigns the old and new
+poles, follows each cell through its divisions, and writes the length of each end over
+time, so every cell in a movie can be measured.
 
-## What it does
+<p align="center">
+<img src="docs/figs/key_example.png" width="260" alt="A segmented S. pombe cell with its birth scar (yellow), new pole (green), old pole (magenta) and the two end lengths">
+</p>
 
-*S. pombe* cells divide asymmetrically: each daughter inherits an **old pole** (present before the division) and one inherits a **new pole** (the freshly formed division site). The division site leaves behind a **birth scar**: a subtle ridge of elevated curvature on opposite sides of the cell wall.
+*One cell: birth scar (yellow), its midpoint (white), new pole (green), old pole
+(magenta), and the new-end and old-end lengths (dashed).*
 
-BS-Detector finds these scars automatically by:
+## How well it works
 
-1. **Filtering** segmentation masks by area, aspect ratio, and circularity to reject debris before any tracking occurs
-2. **Segmenting** cells with [Cellpose](https://github.com/MouseLand/cellpose)
-3. **Computing** a smoothed curvature profile along each cell's contour
-4. **Finding** birth-scar candidates by summing local curvature excess in a
-   longitudinal window on both sides of the PCA axis. This allows a scar to
-   be prominent on only one side, while excluding the rounded pole caps:
-   - The pair must be on **opposite sides** of the cell
-   - Candidate windows in the first/last `SCAR_CAP_EXCLUSION` fraction of the
-     cell are rejected
-   - The connecting vector receives a soft perpendicularity weight, allowing
-     slightly diagonal scars
-   - The pair must span **≥ `MIN_SCAR_WIDTH_RATIO`** of the cell's **average mid-cell width** (sampled at seven cross-sections between 20–80% of cell length, which is more stable than the maximum width)
-5. **Scoring** candidates by the sum of positive local curvature excess in the
-   window multiplied by a soft perpendicularity weight
-6. **Identifying** new vs. old poles via, in priority order: lineage inheritance at division, birth scar geometry, unambiguous neighbor proximity, or pole morphology as a fallback. Chain cells (both poles touching credible neighbors) are detected explicitly and fall through to scar-based assignment rather than producing a false positive
-7. **Tracking** cells across frames with a Hungarian algorithm using center displacement, area change, and a curvature fingerprint. Ghost-track matching resumes lost tracks through bad-segmentation frames rather than minting new lineage names
-8. **Assigning lineage names**: `A → A0 / A1 → A00 / A01 / A10 / A11 → …` where `0` always denotes the new-end daughter and `1` the old-end daughter. Daughter pole assignments are corrected immediately at division using the parent's stored pole coordinates
-9. **Stabilizing** scar positions across frames via a consensus pass: all valid candidates from every frame are pooled, the most-supported position is found, and frames that deviate are corrected or interpolated retroactively
+**Scar position, single frames.** Two lab experts annotated the same cells
+independently. Neither saw the other's points until both had finished. BS-Detector's
+weights were fitted to Annotator A's labels; Annotator B's were never used for fitting.
 
-### Curvature analysis
+| 77 annotations in 61 cells, 4 movies | Within 5 px (0.32 µm) | Median error |
+|---|---:|---:|
+| Annotator A vs Annotator B (two experts) | 61 (79%) | 3.4 px |
+| **BS-Detector vs Annotator B** | **61 (79%)** | **2.8 px** |
+| BS-Detector vs Annotator A (labels it was fitted on) | 56 (73%) | 3.5 px |
+| First version: curvature of the segmented outline, vs Annotator B | 18 (23%) | 8.0 px |
 
-Signed curvature is computed along a smoothed B-spline contour. Birth scars are scored by windowed curvature excess on opposite sides of the cell; sharp paired peaks are useful diagnostics but are not required. The curvature heatmap and profile are available for every cell to aid manual inspection and parameter tuning.
+- **The detector reads the image, not just the outline.** Segmentation smooths the
+  scar away. The first version searched segmented outlines for curvature and placed
+  only 18 of 77 scars within 5 px. The current detector traces the membrane line in
+  the brightfield image across every cross-section near each pole, and scores each
+  candidate with a few named terms. Uncertain cells are flagged for review rather
+  than forced.
+- **These are development cells, so the numbers are likely optimistic.** A
+  **blind test** is under way on 135 cells from eight movies (two imaging days) that
+  were never used in development. The detector was frozen before anyone ran it on
+  those cells, and the result will be reported here whatever it is
+  ([validation/test_set/](validation/test_set/README.md)).
 
-<img src="docs/figs/heatmap.png" width="300" alt="Curvature heatmap overlaid on cell contour">
+**Growth curves.** In two strains (wild type, and *rgf1*Δ *gpd1*Δ), whole-cell growth
+since birth matches hand tracking within one standard error at every time compared. The
+split between the two ends is less settled. Against a second expert's through-time
+tracks of 6 cells, the new-end length has a mean error of 0.3–0.4 µm. By late in the
+cycle the old end has grown 1–1.3 µm less than in hand tracking; part of that gap is
+because the hand-tracked ends add up to more than the whole cell.
+[Details and caveats](docs/VALIDATION.md).
 
-*Curvature heatmap. Red regions indicate high positive curvature; blue regions indicate low or negative curvature. Yellow stars mark the selected scar endpoints; white star marks the scar midpoint.*
+<p align="center">
+<img src="validation/reports/growth_curves/03272025_xy1/growth_since_birth.png" width="560" alt="Growth since birth of whole cell, old end and new end for six wild-type cell cycles, pipeline vs hand tracking">
+</p>
 
-<img src="docs/figs/curvature.png" width="300" alt="Curvature profile plot showing peaks and selected scar pair">
+*Growth since birth in one 8-hour wild-type movie. (A) Six complete cell cycles,
+pipeline mean ± SE (solid) and hand-tracked cells from another movie (dashed).
+(B) Three single cells.*
 
-*Curvature profile. Red dots: detected peaks. Green triangles: the selected scar pair. Orange dotted lines: segmentation quality threshold.*
+## Quick start
 
-### Segmentation quality control
+**No install (Google Colab, free GPU).** Open
+[`notebooks/BS_Detector_Colab.ipynb`](notebooks/BS_Detector_Colab.ipynb) with the
+Colab badge above. Paste the Google Drive path of a movie and click *Run all*. The
+notebook runs on the bundled sample movie if you don't give one.
 
-Cellpose occasionally produces artifact segmentations, most commonly a septum fragment (one half of a dividing cell) or a cell whose mask clips the image boundary. Both produce pathological curvature spikes well above the range of a healthy contour. BS-Detector flags these automatically with an orange overlay so they can be reviewed or excluded without disrupting the rest of the analysis.
-
-<img src="docs/figs/bad_seg.png" width="300" alt="Example of flagged bad segmentations with orange outlines">
-
-*Orange outlines indicate cells flagged by the segmentation quality check. Green outlines are clean detections.*
-
----
-
-## Output
-
-For each frame and each cell, BS-Detector produces:
-
-| Column | Description |
-|---|---|
-| `cell_name` | Lineage-encoded name (`A`, `A0`, `A01` …) |
-| `frame` | Frame index |
-| `length` | Pole-to-pole distance [px] |
-| `width_centroid` | Width perpendicular to long axis at cell center [px] |
-| `width_scar` | Distance between the two scar endpoints [px] |
-| `new_end_length` | Scar midpoint → new pole [px] |
-| `old_end_length` | Scar midpoint → old pole [px] |
-| `area` | Cell area [px²] |
-| `scar_detected` | True / False |
-| `scar_source` | `raw`, `corrected`, or `interpolated` — how the final scar position was determined |
-| `scar_stable` | False if more than `SCAR_INSTABILITY_FRACTION` of the cell's frames were corrected or interpolated |
-| `seg_quality` | `ok`, `border_clip`, or `septum_fragment` |
-| `pole_method` | How poles were assigned (`lineage`, `scar_based`, `neighbor_proximity`, `neighbor_poles`, `morphology`) |
-| `pole_confidence` | Confidence level of pole assignment |
-
-Cells with `seg_quality = border_clip` are excluded from the CSV entirely (incompletely segmented). All other cells are included regardless of quality flag.
-
----
-
-## Sample dataset
-
-A 5-frame sample dataset is bundled at `data/sample/sample.h5` for testing and demonstration without needing your own data. The Colab notebook uses it by default; no configuration required for a first run.
-
----
-
-## Installation & usage (Google Colab)
-
-Open [`notebooks/BS_Detector_Colab.ipynb`](notebooks/BS_Detector_Colab.ipynb) in Colab.
-
-**Step 1** — the first two cells install dependencies and clone this repo automatically.  
-**Step 2** — the configuration cell defaults to the bundled sample dataset. Change `cfg.H5_FILE_PATH` to your own HDF5 file on Google Drive when you have real data. That is the only cell most users ever need to edit.  
-**Step 3** — run the remaining cells top-to-bottom.
-
-Results are saved to `cfg.OUTPUT_DIR` (a Google Drive folder for real data, or `/content/pombe_results` for the sample run).
-
-### Local installation
+**On your own computer:**
 
 ```bash
-git clone https://github.com/widenerm/pombe-bs-detector.git
-cd pombe-bs-detector
-pip install -r requirements.txt
+pip install "bs-detector @ git+https://github.com/widenerm/pombe-bs-detector"
+bsd info  my_movie.nd2                    # positions, channels, pixel size, frame interval
+bsd run   my_movie.nd2 --out runs/my_movie
 ```
 
-```python
-from pombe_tracker.config        import Config
-from pombe_tracker.pipeline      import run_pipeline
-from pombe_tracker.io_utils      import load_h5_data, export_csv
-from pombe_tracker.tracking      import CellTracker
-from pombe_tracker.postprocessing import stabilize_scars
+`bsd run` does four steps. Each can also be run on its own, and each picks up where it
+stopped if interrupted:
 
-cfg              = Config()
-cfg.H5_FILE_PATH = 'my_experiment.h5'
-cfg.NUM_FRAMES   = 10
-
-frames              = load_h5_data(cfg.H5_FILE_PATH, cfg.H5_DATASET_KEY)
-tracker             = CellTracker(cfg)
-results             = run_pipeline(frames, cfg, tracker=tracker)
-results, report     = stabilize_scars(results, cfg)
-export_csv(results, 'measurements.csv')
-```
-
-### Validation and hyperparameter tuning
-
-Use [`notebooks/BS_Detector_Validation_Tuning.ipynb`](notebooks/BS_Detector_Validation_Tuning.ipynb)
-to validate detector changes against manually collected ground truth. The
-notebook caches Cellpose labels once, then sweeps curvature-window, pole-cap,
-width, angle, and endpoint-offset parameters without rerunning segmentation.
-See [`validation/GROUND_TRUTH_PROTOCOL.md`](validation/GROUND_TRUTH_PROTOCOL.md)
-and [`validation/ground_truth_template.csv`](validation/ground_truth_template.csv)
-for the measurement format.
-
-Sparse TIFF packages can be converted for the notebook with:
-
-```bash
-python scripts/convert_validation_tifs_to_h5.py \
-    validation/package_for_carmen \
-    --output validation/h5_for_drive/carmen_package_1
-```
-
-The converter accepts either a package directory or ZIP file and preserves
-the original movie frame numbers in each H5's `frame_numbers` dataset.
-
----
-
-## Repository structure
-
-```
-pombe-bs-detector/
-├── data/
-│   └── README.md          ← dataset description and format notes
-│   └── sample/
-│       ├── sample.h5          ← bundled 5-frame test dataset 
-├── docs/
-│   └── figs/                  example figures
-├── notebooks/
-│   └── BS_Detector_Colab.ipynb   ← start here
-├── pombe_tracker/
-│   ├── config.py          central configuration (all tunable parameters)
-│   ├── geometry.py        curvature, PCA, width / length measurements
-│   ├── detection.py       BirthScarDetector — prominence + perpendicularity scoring
-│   ├── poles.py           new/old pole assignment; chain-cell detection
-│   ├── segmentation.py    Cellpose wrapper
-│   ├── tracking.py        Hungarian tracker + lineage naming + ghost-track matching
-│   ├── pipeline.py        CellProcessor, lineage pole correction, run_pipeline
-│   ├── visualization.py   all plotting functions
-│   ├── postprocessing.py  consensus-based temporal scar stabilization
-│   └── io_utils.py        HDF5 loading, CSV export
-├── requirements.txt
-├── .gitignore
-└── README.md
-```
-
----
-
-## Key parameters
-
-| Parameter | Default | Effect |
+| Step | Command | Writes |
 |---|---|---|
-| `SMOOTH_FACTOR` | 40.0 | B-spline smoothing; increase to reduce noise |
-| `MIN_SCAR_WIDTH_RATIO` | 0.80 | Minimum scar width as a fraction of average mid-cell width; increase to be stricter |
-| `SCAR_CURVATURE_WINDOW` | 0.08 | Longitudinal scoring-window width as a fraction of cell length |
-| `SCAR_CAP_EXCLUSION` | 0.12 | Fraction at each pole excluded from scar candidate windows |
-| `SCAR_MAX_LONGITUDINAL_OFFSET` | 0.08 | Maximum longitudinal offset between selected endpoints |
-| `SCAR_RECENCY_TARGET` | 0.22 | Preferred distance from the nearest pole for a recent scar |
-| `SCAR_RECENCY_SPREAD` | 0.16 | Softness of the near-pole preference |
-| `SCAR_WIDTH_SOFT_FLOOR` | 0.35 | Minimum relative weight for a narrow but valid scar |
-| `MAX_ANGLE_DEVIATION` | 30.0° | Retained for legacy pair validation; windowed scoring uses a soft angle weight |
-| `ASPECT_RATIO_MIN` | 1.5 | Minimum major/minor axis ratio; increase to reject shorter debris |
-| `MAX_CIRCULARITY` | 0.85 | Maximum 4π·area/perimeter²; decrease to be stricter about rod shape |
-| `POLE_PROXIMITY_THRESHOLD` | 100 px | Max tip-to-tip distance to call two cells neighbors |
-| `NEIGHBOR_HIGH_CONFIDENCE_DIST` | 75 px | Distance below which a neighbor match is considered high-confidence |
-| `MAX_TRACKING_DISTANCE` | 80 px | Max center displacement between frames |
-| `GHOST_FRAMES` | 3 | Frames a lost track is kept alive before being discarded |
-| `CURVATURE_QUALITY_THRESHOLD` | 0.10 | Max curvature before a cell is flagged as a segmentation artifact |
-| `SCAR_STABILITY_THRESHOLD` | 0.12 | Max scar position shift (normalized) before a frame is corrected |
-| `SCAR_INSTABILITY_FRACTION` | 0.30 | Fraction of corrected/interpolated frames before `scar_stable = False` |
+| Read the movie (resampled to 0.0647 µm/px if needed) | `bsd prepare` | `run.json`, `frames.h5` |
+| Segment every frame with Cellpose-SAM (the GPU step) | `bsd segment` | `masks/` |
+| Track cells, assign poles, find birth scars | `bsd track` | `measurements.csv`, `qc/` |
+| Growth curves of every complete cell cycle | `bsd growth` | `growth/` |
 
-All parameters are documented in [`pombe_tracker/config.py`](pombe_tracker/config.py).
+Inputs: Nikon `.nd2`, SlideBook `.sldy`, `.tif` stacks or `.h5`. Segmentation takes
+roughly 15–40 s per 2304 × 2304 frame on an NVIDIA GPU and about 90 s on an Apple M2.
+A cluster array job splits it across GPUs ([docs/HPC.md](docs/HPC.md)). The other
+steps run on a laptop CPU.
 
-## License
+The [user guide](docs/USER_GUIDE.md) covers inputs, every output column, the review
+flags and how to compare with hand tracking.
 
-MIT
+## Septin localization vs cell-outline curvature
+
+The same segmentation and contour code measures fluorescence along each cell outline
+on paired brightfield and fluorescence stills. Within-cell association tests treat each
+cell as the unit and use circular-shift nulls:
+
+```bash
+bsd septin run path/to/nd2_pairs --out runs/septin_080724
+```
+
+See [docs/SEPTIN.md](docs/SEPTIN.md).
+
+## How it works
+
+1. **Segment** each frame with [Cellpose-SAM](https://github.com/MouseLand/cellpose)
+   (pinned weights, float32), then reject debris by area, aspect ratio and
+   circularity.
+2. **Find the birth scar.** For every 1-px cross-section near each pole, trace the dark
+   membrane line in the brightfield image along the outline normals. Score each
+   cross-section with a few named terms (lengths in units of cell width): the expected
+   scar distance from the new pole, which grows with cell length; a bonus for the end
+   touching the sibling cell; and the traced membrane's width and ridge. The best
+   cross-section's midpoint is the scar. A `scar_confidence` and a `scar_needs_review`
+   flag (low confidence, or the scar nearer the end called old) mark cells to check.
+3. **Assign poles** by lineage inheritance at division, scar geometry, an unambiguous
+   neighbouring sibling, or pole shape as a fallback.
+4. **Track** cells with Hungarian matching on position, area and outline shape. Lost
+   tracks are kept alive through a few bad frames, and cells are named by lineage
+   (`A` → `A0`, `A1`, where `0` is always the new-end daughter).
+5. **Stabilise** the scar position across each cell's frames by consensus, correcting
+   or interpolating frames that jump.
+6. **Growth curves:** keep cell cycles that start and end in a real division
+   (each daughter under 75% of the mother's length), last at least an hour and have no
+   missed division. Then compute growth since birth and change per frame for the whole
+   cell and each end.
+
+Settings are in [`pombe_tracker/config.py`](pombe_tracker/config.py); lengths there
+are in pixels at 0.0647 µm/px.
+
+## Repository
+
+```
+pombe_tracker/       the library and the `bsd` command (cli.py, workflow.py)
+septin_curve_vis/    septin intensity vs curvature
+notebooks/           Colab notebooks: movies, septin, and the validation reviews
+docs/                user guide, septin guide, cluster recipe, validation summary
+validation/          annotation protocols, anonymized annotations, scripts and reports behind every number
+tests/               unit tests and an end-to-end regression on the sample movie
+data/sample/         5-frame sample movie with its saved masks
+hpc/                 SLURM array job for segmentation
+```
+
+## Citation and license
+
+If you use BS-Detector, please cite it using [CITATION.cff](CITATION.cff). MIT license.
+
+Developed by Xan Widener in the Das and Wei labs at Boston College. Thanks to the lab
+members who annotated the validation data.
