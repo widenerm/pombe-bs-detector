@@ -17,6 +17,7 @@ BSD_TORCH_INDEX=${BSD_TORCH_INDEX:-https://download.pytorch.org/whl/cu126}
 python -m venv "$BSD_ENV"
 source "$BSD_ENV/bin/activate"
 pip install -q --upgrade pip
-pip install -q torch --index-url "$BSD_TORCH_INDEX"          # CUDA build first, so cellpose keeps it
+# CUDA builds of torch and torchvision together, so they match; cellpose then keeps them
+pip install -q torch torchvision --index-url "$BSD_TORCH_INDEX"
 pip install -q "bs-detector @ $BSD_REPO" || pip install -q "$BSD_REPO"
 bsd --help >/dev/null && echo "ready: source $BSD_ENV/bin/activate"
