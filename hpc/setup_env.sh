@@ -19,5 +19,6 @@ source "$BSD_ENV/bin/activate"
 pip install -q --upgrade pip
 # CUDA builds of torch and torchvision together, so they match; cellpose then keeps them
 pip install -q torch torchvision --index-url "$BSD_TORCH_INDEX"
-pip install -q "bs-detector @ $BSD_REPO" || pip install -q "$BSD_REPO"
+if [ -d "$BSD_REPO" ]; then pip install -q "$BSD_REPO"       # a local checkout
+else pip install -q "bs-detector @ $BSD_REPO"; fi          # a git URL
 bsd --help >/dev/null && echo "ready: source $BSD_ENV/bin/activate"
