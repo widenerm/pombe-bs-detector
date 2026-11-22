@@ -10,12 +10,12 @@ set -euo pipefail
 MOVIE=${1:?movie file}; RUN=${2:?run folder}; N=${3:-4}; shift $(( $# < 3 ? $# : 3 ))
 HERE=$(cd "$(dirname "$0")" && pwd)
 GPU_P=${BSD_GPU_PARTITION:-gpu}; CPU_P=${BSD_CPU_PARTITION:-short}; GPU_T=${BSD_GPU_TIME:-01:30:00}
-prep=$(sbatch --parsable -J prepare -p "$CPU_P" -t 01:00:00 "$HERE/bsd_job.sbatch" prepare "$MOVIE" --out "$RUN" "$@")
+prep=$(sbatch --parsable -J prepare -p "$CPU_P" -t 01:00:00 -o "bsd_%x_%j.out" "$HERE/bsd_job.sbatch" prepare "$MOVIE" --out "$RUN" "$@")
 seg=$(sbatch --parsable -J segment -p "$GPU_P" --gres=gpu:1 -t "$GPU_T" --array=0-$((N - 1)) \
       --dependency=afterok:$prep "$HERE/bsd_job.sbatch" segment "$RUN" --block slurm)
-trk=$(sbatch --parsable -J track -p "$CPU_P" -t 03:00:00 --mem=64G --dependency=afterok:$seg \
+trk=$(sbatch --parsable -J track -p "$CPU_P" -t 03:00:00 --mem=64G -o "bsd_%x_%j.out" --dependency=afterok:$seg \
       "$HERE/bsd_job.sbatch" track "$RUN")
-grw=$(sbatch --parsable -J growth -p "$CPU_P" -t 00:30:00 --dependency=afterok:$trk \
+grw=$(sbatch --parsable -J growth -p "$CPU_P" -t 00:30:00 -o "bsd_%x_%j.out" --dependency=afterok:$trk \
       "$HERE/bsd_job.sbatch" growth "$RUN")
 echo "submitted: prepare $prep -> segment $seg (x$N) -> track $trk -> growth $grw"
 echo "watch with: squeue -u $USER"
